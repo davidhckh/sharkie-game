@@ -4,6 +4,8 @@ import Time from './Utils/Time.js'
 
 export default class Game {
 
+    static instance;
+
     constructor(canvas) {
         /**Singleton */
         if (Game.instance) {
