@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+canvas {
+    display: block;
+}
+
+@media only screen and (max-width: 1067px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    canvas {
+        height: 100vh;
+    }
+}
