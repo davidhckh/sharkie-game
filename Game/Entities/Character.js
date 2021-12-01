@@ -3,7 +3,7 @@ import MovableObject from "../Movable-Object.js";
 
 export default class Character extends MovableObject {
 
-    height = 180;
+    height = 110;
     y = 90;
     x = 10;
 

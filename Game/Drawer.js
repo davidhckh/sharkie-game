@@ -5,7 +5,7 @@ export default class Drawer {
         this.game = new Game();
 
         this.ctx = canvas.getContext('2d');
-        this.ctx.scale(2,2);
+        this.ctx.scale(6,6);
     };
 
     draw(object) {
