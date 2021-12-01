@@ -6,6 +6,11 @@ export default class Character extends MovableObject {
     height = 180;
     y = 90;
     x = 10;
+
+    SWIM_ANIMATION = {
+        frames: 5,
+        path: '../assets/sharkie/swim/'
+    }
     
     constructor() {
         super();
@@ -13,7 +18,9 @@ export default class Character extends MovableObject {
         this.game = new Game()
 
         this.loadImage('../assets/sharkie/swim/1.png');
-        this.playAnimation('../assets/sharkie/swim/', 5)
+        this.loadAnimation(this.SWIM_ANIMATION)
+
+        this.playAnimation(this.SWIM_ANIMATION)
     };
 
     update() {

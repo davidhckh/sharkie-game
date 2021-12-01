@@ -1,4 +1,6 @@
-export default class MovableObject {
+import Object from './Object.js'
+
+export default class MovableObject extends Object {
     width = 150;
     height = 250;
     x = 0;
@@ -6,17 +8,6 @@ export default class MovableObject {
     currentAnimationFrame = 0
     currentAnimationTotalFrames = 0
     currentAnimationPath = ''
-
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-
-        let self = this;
-        this.img.onload = function () {
-            self.adjustImageWidth(self.img);
-        };
-    };
 
     moveRight() {
         console.log('Moving right');
@@ -26,26 +17,33 @@ export default class MovableObject {
         console.log('Moving left');
     };
 
-    playAnimation(path, frames) {
-        this.currentAnimationPath = path
-
-        this.currentAnimationFrame = 0
-        this.currentAnimationTotalFrames = frames
-
-        let self = this
-
-        setInterval(function() {
-            if(self.currentAnimationTotalFrames > this.currentAnimationFrame) {
-                this.currentAnimationFrame += 1
-            } else {
-                this.currentAnimationFrame = 1
+    loadAnimation(animation) {
+        for(let i = 0; i < animation.frames; i++) {
+            animation.cache = []
+            let img = new Image()
+            img.src = animation.path + i + '.png'
+            animation.cache[i] = img
+            img.onload = function() {
+                animation.cache[i] = img
             }
-            self.img.src = path + this.currentAnimationFrame + '.png'
-        },150)
+        }
     }
 
-    /**adjust image width to original image aspect ratios (based on this.height) */
-    adjustImageWidth(img) {
-        this.width = this.img.width * (this.height / this.img.height);
-    };
+    playAnimation(animation) {
+        this.currentFrame = 0
+        this.currentMaximumFrame = animation.currentAnimationTotalFrames
+
+        let self = this
+        setInterval(function () {
+            if(animation.cache[self.currentFrame]) {
+                self.img = animation.cache[self.currentFrame]
+            }
+
+            if(self.currentFrame == animation.frames - 1) {
+                self.currentFrame = 0
+            } else {
+                self.currentFrame++
+            }
+        }, 150)
+    }
 };
