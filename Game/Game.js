@@ -25,9 +25,6 @@ export default class Game {
     update() {
         if (this.world) {
             this.world.update();
-
-            /**just for testing */
-            this.world.character.y = Math.cos(this.time.elapsed / 1000) * 5;
         };
 
         window.requestAnimationFrame(() => {

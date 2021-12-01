@@ -33,5 +33,9 @@ export default class World {
         this.game.drawer.drawAll(this.background);
         this.game.drawer.drawAll(this.enemies);
         this.game.drawer.draw(this.character);
+
+        if(this.character) {
+            this.character.update()
+        }
     };
 };
