@@ -1,6 +1,7 @@
 import World from "./World.js";
 import Drawer from "./Drawer.js";
 import Time from './Utils/Time.js'
+import Events from "./Events.js";
 
 export default class Game {
 
@@ -17,6 +18,7 @@ export default class Game {
         this.canvas = canvas;
         this.time = new Time();
         this.drawer = new Drawer();
+        this.events = new Events()
         this.world = new World();
 
         this.update();

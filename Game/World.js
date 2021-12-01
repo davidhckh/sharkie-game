@@ -1,14 +1,12 @@
 import BackgroundObject from "./Background-Object.js";
 import Character from "./Entities/Character.js";
-import Chicken from "./Entities/Pufferfish.js";
+import Pufferfish from "./Entities/Pufferfish.js";
 import Game from "./Game.js";
 
 export default class World {
     character = new Character();
-    enemies = [ 
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
+    pufferfishes = [ 
+        new Pufferfish(200, 80),
     ];
     background = [
         new BackgroundObject('./assets/landscape/bg/1.png', 0,),
@@ -31,11 +29,17 @@ export default class World {
 
         /**draw entities */
         this.game.drawer.drawAll(this.background);
-        this.game.drawer.drawAll(this.enemies);
+        this.game.drawer.drawAll(this.pufferfishes);
         this.game.drawer.draw(this.character);
 
+        /**update character */
         if(this.character) {
             this.character.update()
         }
+
+        /**update pufferfishes*/
+        this.pufferfishes.forEach(fish => {
+            fish.update()
+        })
     };
 };

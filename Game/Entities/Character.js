@@ -1,7 +1,8 @@
 import Game from "../Game.js";
-import MovableObject from "../Movable-Object.js";
+import KeyboardObject from "../Keyboard-Object.js";
+import EventEmitter from "../Utils/EventEmitter.js";
 
-export default class Character extends MovableObject {
+export default class Character extends KeyboardObject {
 
     height = 110;
     y = 90;
@@ -24,6 +25,6 @@ export default class Character extends MovableObject {
     };
 
     update() {
-        this.y = Math.cos(this.game.time.elapsed / 1000) * 5
+        this.y = Math.cos(this.game.time.elapsed) * 5
     }
 };

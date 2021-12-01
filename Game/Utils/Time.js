@@ -40,7 +40,7 @@ export default class Time extends EventEmitter
         const current = Date.now();
 
         this.delta = current - this.current;
-        this.elapsed += this.playing ? this.delta : 0;
+        this.elapsed += (this.playing ? this.delta : 0) / 1000;
         this.current = current;
 
         if(this.delta > 60)
