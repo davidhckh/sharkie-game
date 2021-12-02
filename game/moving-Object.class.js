@@ -1,4 +1,4 @@
-import Object from './Object.js'
+import Object from './object.class.js'
 
 export default class MovableObject extends Object {
     height = 28;

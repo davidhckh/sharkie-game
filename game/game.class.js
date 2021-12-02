@@ -1,7 +1,7 @@
-import World from "./World.js";
-import Drawer from "./Drawer.js";
-import Time from './Utils/Time.js'
-import Events from "./Events.js";
+import World from "./world.class.js";
+import Drawer from "./drawer.class.js";
+import Time from './utils/time.class.js'
+import Events from "./events.class.js";
 
 export default class Game {
 

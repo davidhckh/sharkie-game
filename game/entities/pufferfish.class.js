@@ -1,5 +1,5 @@
-import Game from "../Game.js";
-import MovableObject from "../Moving-Object.js";
+import Game from "../game.class.js";
+import MovableObject from "../moving-Object.class.js";
 
 export default class Pufferfish extends MovableObject {
 

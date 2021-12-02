@@ -1,5 +1,5 @@
-import Game from '../Game.js';
-import EventEmitter from './EventEmitter.js';
+import Game from '../game.class.js';
+import EventEmitter from './event-emitter.class.js';
 
 export default class Time extends EventEmitter
 {

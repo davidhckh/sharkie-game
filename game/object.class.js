@@ -1,6 +1,8 @@
-import EventEmitter from "./Utils/EventEmitter.js";
+import EventEmitter from "./utils/event-emitter.class.js";
 
 export default class Object{
+    drawReverse = false
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -28,13 +30,18 @@ export default class Object{
         }
     }
 
-    playAnimation(animation, reverse) {
+    playAnimation(animation) {
         this.currentFrame = 0
         this.currentMaximumFrame = animation.currentAnimationTotalFrames
         clearInterval(this.animationInterval)
-
         let self = this
+
+        nextFrame()
         this.animationInterval = setInterval(() => {
+            nextFrame()
+        },150)
+
+        function nextFrame() {
             if(animation.cache[self.currentFrame]) {
                 self.img = animation.cache[self.currentFrame]
             }
@@ -44,16 +51,21 @@ export default class Object{
             } else {
                 self.currentFrame++
             }
-        }, 150)
+        }
     }
 
-    playReverseAnimation(animation, reverse) {
+    playReverseAnimation(animation) {
         this.currentFrame = animation.frames
         this.currentMinimumFrame = 0 
         clearInterval(this.animationInterval)
-
         let self = this
+
+        nextFrame()
         this.animationInterval = setInterval(() => {
+            nextFrame()
+        }, 150)
+
+        function nextFrame() {
             if(animation.cache[self.currentFrame]) {
                 self.img = animation.cache[self.currentFrame]
             }
@@ -63,6 +75,6 @@ export default class Object{
             } else {
                 self.currentFrame--
             }
-        }, 150)
+        }
     }
 }

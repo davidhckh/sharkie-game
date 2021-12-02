@@ -1,5 +1,5 @@
-import Object from "./Object.js";
-import Game from "./Game.js"
+import Object from "./object.class.js";
+import Game from "./game.class.js"
 
 export default class BackgroundObject extends Object {
 

@@ -1,7 +1,7 @@
-import BackgroundObject from "./Background-Object.js";
-import Character from "./Entities/Character.js";
-import Pufferfish from "./Entities/Pufferfish.js";
-import Game from "./Game.js";
+import BackgroundObject from "./background-object.class.js";
+import Character from "./entities/character.class.js";
+import Pufferfish from "./entities/pufferfish.class.js";
+import Game from "./game.class.js";
 
 export default class World {
     character = new Character();
@@ -15,6 +15,8 @@ export default class World {
         new BackgroundObject('./assets/landscape/bg-0/1.png', 0,),
         new BackgroundObject('./assets/landscape/floor/1.png', 0,),
     ];
+
+    camera_x
 
     /**
      * constructor
