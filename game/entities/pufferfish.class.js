@@ -33,10 +33,7 @@ export default class Pufferfish extends MovableObject {
         this.x = x
         this.y = y
 
-        this.loadImage('../assets/puffer/swim/' +  this.type + '-0.png');
-        this.loadAnimation(this.SWIM_ANIMATION)
-        this.loadAnimation(this.TRANSITION_ANIMATION)
-        this.loadAnimation(this.SWIM_BIG_ANIMATION)
+        this.load()
 
         this.playAnimation(this.SWIM_ANIMATION)
 
@@ -44,6 +41,13 @@ export default class Pufferfish extends MovableObject {
             this.getBig()
         }, this.speed)
     };
+
+    load() {
+        this.loadImage('../assets/puffer/swim/' +  this.type + '-0.png');
+        this.loadAnimation(this.SWIM_ANIMATION)
+        this.loadAnimation(this.TRANSITION_ANIMATION)
+        this.loadAnimation(this.SWIM_BIG_ANIMATION)
+    }
 
     getBig() {
         this.isBig = true
@@ -72,8 +76,8 @@ export default class Pufferfish extends MovableObject {
     }
 
     moveInCircle() {
-        let angle = (this.game.time.elapsed) * (0.5 + (this.speed / 10000))
-        let radius = 0.2
+        let angle = (this.game.time.elapsed) * (1 + (this.speed / 10000))
+        let radius = 1.5
 
         this.x += Math.cos(angle) * radius
         this.y += Math.sin(angle) * radius

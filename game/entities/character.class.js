@@ -6,10 +6,10 @@ export default class Character extends Object {
     left = false
     right = false
 
-    speed = 1.5
-    height = 110;
+    speed = 10
+    height = 600;
     y = 10;
-    x = 100;
+    x = 15;
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -90,11 +90,13 @@ export default class Character extends Object {
     update() {
         //this.y = Math.cos(this.game.time.elapsed) * 5
 
-        /**update position */
+        /**update sharkie position and camera_x */
         if(this.right) {
             this.x += this.speed
-        } else if(this.left) {
+            this.game.world.camera_x -= this.speed
+        } else if(this.left && this.game.world.camera_x < 0) {
             this.x -= this.speed
+            this.game.world.camera_x += this.speed
         }
     }
 };

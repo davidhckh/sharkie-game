@@ -1,7 +1,7 @@
 import Object from './object.class.js'
 
 export default class MovableObject extends Object {
-    height = 28;
+    height = 160;
     x = 0;
     y = 0;
     speed = Math.random() * 5000

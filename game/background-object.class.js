@@ -11,7 +11,7 @@ export default class BackgroundObject extends Object {
         
         this.game = new Game()
 
-        this.height = this.game.canvas.height / 6;
+        this.height = this.game.canvas.height;
 
         this.loadImage(img);
         this.x = x;
