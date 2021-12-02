@@ -3,22 +3,22 @@ import MovableObject from "../moving-Object.class.js";
 
 export default class Pufferfish extends MovableObject {
 
-    type = Math.floor(1 + Math.random() * 3)
+    color = Math.floor(1 + Math.random() * 3)
     isBig = false
 
     SWIM_ANIMATION = {
         frames: 5,
-        path: '../assets/puffer/swim/' + this.type + '-'
+        path: '../assets/puffer/swim/' + this.color + '-'
     }
 
     SWIM_BIG_ANIMATION = {
         frames: 5,
-        path: '../assets/puffer/swim-big/' + this.type + '-'
+        path: '../assets/puffer/swim-big/' + this.color + '-'
     }
 
     TRANSITION_ANIMATION = {
         frames: 5,
-        path: '../assets/puffer/transition/' + this.type + '-'
+        path: '../assets/puffer/transition/' + this.color + '-'
     }
 
 
@@ -43,7 +43,7 @@ export default class Pufferfish extends MovableObject {
     };
 
     load() {
-        this.loadImage('../assets/puffer/swim/' +  this.type + '-0.png');
+        this.loadImage('../assets/puffer/swim/' +  this.color + '-0.png');
         this.loadAnimation(this.SWIM_ANIMATION)
         this.loadAnimation(this.TRANSITION_ANIMATION)
         this.loadAnimation(this.SWIM_BIG_ANIMATION)
