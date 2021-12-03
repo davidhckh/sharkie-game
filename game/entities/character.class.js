@@ -5,11 +5,12 @@ import Object from "../object.class.js";
 export default class Character extends Object {
     left = false
     right = false
-
     speed = 10
-    height = 600;
-    y = 10;
-    x = 15;
+    height = 600
+    y = 10
+    x = 200
+    speedY = 0
+    acceleration = 0.5
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -36,7 +37,7 @@ export default class Character extends Object {
     };
 
     activateKeyboard() {
-        /**move event emitter */
+        /**stop swimming on key up */
         this.game.events.on('keyup', () => {
             if(event.code == 'ArrowRight') {
                 this.stopSwimming('right')
@@ -45,12 +46,15 @@ export default class Character extends Object {
             }
         })
 
-        /**move event emitter */
+        /**start swimming and jump on key down */
         this.game.events.on('keydown', () => {
             if(event.code == 'ArrowRight' && !event.repeat) {
                 this.startSwimming('right')
             } else if(event.code == 'ArrowLeft' && !event.repeat) {
                 this.startSwimming('left')
+            } else if(event.code == 'Space' && !event.repeat) {
+                this.speedY = 15
+                this.isJumping = true
             }
         })
     }
@@ -87,9 +91,7 @@ export default class Character extends Object {
         }
     }
 
-    update() {
-        //this.y = Math.cos(this.game.time.elapsed) * 5
-
+    updateSwim() {
         /**update sharkie position and camera_x */
         if(this.right) {
             this.x += this.speed
@@ -98,5 +100,29 @@ export default class Character extends Object {
             this.x -= this.speed
             this.game.world.camera_x += this.speed
         }
+    }
+
+    applyPhysics() {
+        /**maximum jump height */
+        if(this.y < -250) {
+            this.y = -250
+        }
+
+        /**apply physics and jump */
+        if(this.y <= 500 || this.isJumping) {
+            this.y -= this.speedY
+            if(this.speedY > -8) {
+                this.speedY -= this.acceleration
+            }
+        }
+
+        if(this.speedY < 0) {
+            this.isJumping = false
+        }
+    }
+
+    update() {
+        this.updateSwim()
+        this.applyPhysics()
     }
 };

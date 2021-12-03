@@ -5,6 +5,7 @@ export default class Pufferfish extends MovableObject {
 
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
+    radius = 1.5
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -25,13 +26,14 @@ export default class Pufferfish extends MovableObject {
     /**
      * constructor
      */
-    constructor(x, y) {
+    constructor(x, y, radius) {
         super();
 
         this.game = new Game()
 
         this.x = x
         this.y = y
+        this.radius = radius
 
         this.load()
 
@@ -76,11 +78,8 @@ export default class Pufferfish extends MovableObject {
     }
 
     moveInCircle() {
-        let angle = (this.game.time.elapsed) * (1 + (this.speed / 10000))
-        let radius = 1.5
-
-        this.x += Math.cos(angle) * radius
-        this.y += Math.sin(angle) * radius
+        this.x += Math.cos(this.game.time.elapsed) * this.radius
+        this.y += Math.sin(this.game.time.elapsed) * this.radius
     }
 
     update() {
