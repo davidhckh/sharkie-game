@@ -40,9 +40,11 @@ export default class World {
 
     draw() {
         this.game.drawer.ctx.translate(this.camera_x, 0)
-        this.game.drawer.drawAll(this.background);
+
+        //this.game.drawer.drawAll(this.background);
         this.game.drawer.drawAll(this.level.enemies);
         this.game.drawer.draw(this.level.character);
+
         this.game.drawer.ctx.translate(-this.camera_x, 0)
     }
 
