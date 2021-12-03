@@ -18,8 +18,8 @@ export default class MovableObject extends Object {
     isCollidingWith(object) {
         return this.x + this.width - this.hitbox_padding_left > object.x &&
             this.x -  this.hitbox_padding_left < object.x &&
-            this.y - (this.hitbox_padding_top * 0.36) + this.height > object.y &&
-            this.y + (this.hitbox_padding_bottom * 0.69) < object.y + object.height
+            this.y - this.hitbox_padding_top + this.height > object.y &&
+            this.y + this.hitbox_padding_bottom < object.y + object.height
     }
 
 }
