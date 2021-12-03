@@ -40,10 +40,11 @@ export default class Drawer {
             this.ctx.beginPath()
             this.ctx.lineWidth = '5'
             this.ctx.strokeStyle = 'blue'
-            this.ctx.rect(object.x + object.hitboxLeft, 
-                object.y + object.hitboxTop, 
-                object.width - object.hitboxRight, 
-                object.height - object.hitboxBottom)
+            this.ctx.rect(
+                object.x + object.hitboxLeft, /**left */
+                object.y + object.hitboxTop,  /**top */
+                object.width - object.hitboxLeft - object.hitboxRight, /**right */
+                object.height - object.hitboxBottom - object.hitboxTop) /**bottom */
             this.ctx.stroke()
         }
     }

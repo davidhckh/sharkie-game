@@ -15,8 +15,8 @@ export default class Character extends MovableObject {
     acceleration = 0.5
     hitboxLeft = 95
     hitboxRight = 95
-    hitboxTop = 100
-    hitboxBottom = 290
+    hitboxTop = 290
+    hitboxBottom = 130
 
     SWIM_ANIMATION = {
         frames: 5,
