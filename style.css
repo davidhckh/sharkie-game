@@ -3,12 +3,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     height: 100vh;
     background: #221b5e
 }
 
 canvas {
     display: block;
+}
+
+span {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 @media only screen and (max-width: 1920px) {

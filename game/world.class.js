@@ -7,6 +7,7 @@ export default class World {
     camera_x = 0
     current_world_repetitions = 0
     level = new Level()
+    bubbles = []
 
     /**
      * constructor
@@ -15,15 +16,11 @@ export default class World {
         this.game = new Game();
     };
 
-    /**update every frame */
+    /**update on every frame */
     update() {
-        /**clear canvas */
         this.game.drawer.clear();
 
-        /**repeat background world */
         this.repeatBackground()
-
-        /**draw entities with camera position */
         this.draw()
 
         /**update character */
@@ -35,7 +32,6 @@ export default class World {
         this.level.enemies.forEach(enemy => {
             enemy.update()
         })
-
     };
 
     draw() {
@@ -43,6 +39,7 @@ export default class World {
 
         this.game.drawer.drawAll(this.background);
         this.game.drawer.drawAll(this.level.enemies);
+        this.game.drawer.drawAll(this.bubbles)
         this.game.drawer.draw(this.level.character);
 
         this.game.drawer.ctx.translate(-this.camera_x, 0)

@@ -24,6 +24,7 @@ export default class Game {
         this.update();
     }
 
+    /**update on every frame */
     update() {
         if (this.world) {
             this.world.update();
@@ -32,7 +33,5 @@ export default class Game {
         window.requestAnimationFrame(() => {
             this.update();
         });
-
-        //console.log(this.world)
     };
 };

@@ -9,21 +9,27 @@ export default class Drawer {
 
     draw(object) {
         if(object.drawReverse) {
-            this.ctx.save()
-            this.ctx.translate(object.width, 0)
-            this.ctx.scale(-1, 1)
-            object.x = object.x * -1
+            this.drawReverse(object)
+        } else {
+            this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
         }
+        //this.drawHitbox(object)
+    };
 
+    drawReverse(object) {
+        /**flip */
+        this.ctx.save()
+        this.ctx.translate(object.width, 0)
+        this.ctx.scale(-1, 1)
+        object.x = object.x * -1
+
+        /**draw */
         this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
 
-        //this.drawHitbox(object)
-
-        if(object.drawReverse) {
-            object.x = object.x * -1
-            this.ctx.restore()
-        }
-    };
+        /**flip back */
+        object.x = object.x * -1
+        this.ctx.restore()
+    }
 
     drawAll(array) {
         array.forEach(object => {

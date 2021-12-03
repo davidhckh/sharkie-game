@@ -9,10 +9,6 @@ export default class Pufferfish extends MovableObject {
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
     radius = 1.5
-    hitboxLeft = 0
-    hitboxRight = 0
-    hitboxTop = 0
-    hitboxBottom = 0
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -51,6 +47,7 @@ export default class Pufferfish extends MovableObject {
         }, this.speed)
     };
 
+    /**load assets */
     load() {
         this.loadImage('../assets/puffer/swim/' +  this.color + '-0.png');
         this.loadAnimation(this.SWIM_ANIMATION)

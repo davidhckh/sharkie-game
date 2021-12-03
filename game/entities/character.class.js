@@ -1,23 +1,31 @@
 import Game from "../game.class.js";
 import MovableObject from "../movable-object.class.js";
+import Bubble from './bubble.class.js'
 
 
 export default class Character extends MovableObject {
 
     name = 'character'
-    left = false
-    right = false
     speed = 10
     height = 600
     width = 489
+
     y = 10
     x = 200
+
+    left = false
+    right = false
+
     speedY = 0
     acceleration = 0.5
+
     hitboxLeft = 95
     hitboxRight = 95
     hitboxTop = 290
     hitboxBottom = 130
+
+    isSwimming = false
+    isAttacking = false
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -27,6 +35,16 @@ export default class Character extends MovableObject {
     IDLE_ANIMATION = {
         frames: 18,
         path: '../assets/sharkie/idle/'
+    }
+
+    SLAP_ANIMATION = {
+        frames: 3,
+        path: '../assets/sharkie/attack/fin-slap/'
+    }
+
+    BUBBLE_ANIMATION = {
+        frames: 4,
+        path: '../assets/sharkie/attack/bubble-tap/'
     }
     
     constructor() {
@@ -47,7 +65,7 @@ export default class Character extends MovableObject {
             this.game.world.level.enemies.forEach(enemy => {
                 this.checkCollisionsWith(enemy)
             })
-        }, 25)
+        }, 50)
     };
 
     checkCollisionsWith(object) {
@@ -66,7 +84,7 @@ export default class Character extends MovableObject {
             }
         })
 
-        /**start swimming and jump on key down */
+        /**start swimming, jump, slap and shoot on key down */
         this.game.events.on('keydown', () => {
             if(event.code == 'ArrowRight' && !event.repeat) {
                 this.startSwimming('right')
@@ -75,8 +93,45 @@ export default class Character extends MovableObject {
             } else if(event.code == 'Space' && !event.repeat) {
                 this.speedY = 15
                 this.isJumping = true
+            } else if(event.key == 'y' && !event.repeat) {
+                if(!this.isAttacking) {
+                    this.slap()
+                }
+            } else if(event.key == 'x' && !event.repeat) {
+                this.shootBubble()
             }
         })
+    }
+
+    slap() {
+        if(!this.isAttacking) {
+            this.isAttacking = true
+            this.playAnimation(this.SLAP_ANIMATION)
+            setTimeout(() => { 
+                if(this.isSwimming) {
+                    this.playAnimation(this.SWIM_ANIMATION)
+                } else {
+                    this.playAnimation(this.IDLE_ANIMATION)
+                }
+                this.isAttacking = false
+            }, 600)
+        }
+    }
+
+    shootBubble() {
+        if(!this.isAttacking) {
+            this.isAttacking = true
+            this.playAnimation(this.BUBBLE_ANIMATION)
+            setTimeout(() => { 
+                if(this.isSwimming) {
+                    this.playAnimation(this.SWIM_ANIMATION)
+                } else {
+                    this.playAnimation(this.IDLE_ANIMATION)
+                }
+                this.isAttacking = false
+                this.game.world.bubbles.push(new Bubble(this.game.world.bubbles.length))
+            }, 600)
+        }
     }
 
     /**load assets */
@@ -84,10 +139,14 @@ export default class Character extends MovableObject {
         this.loadImage('../assets/sharkie/swim/1.png');
         this.loadAnimation(this.SWIM_ANIMATION)
         this.loadAnimation(this.IDLE_ANIMATION)
+        this.loadAnimation(this.SLAP_ANIMATION)
+        this.loadAnimation(this.BUBBLE_ANIMATION)
     }
 
     startSwimming(direction) {
-        this.playAnimation(this.SWIM_ANIMATION)
+        if(!this.isAttacking) {
+            this.playAnimation(this.SWIM_ANIMATION)
+        }
 
         /**activate direciton boolean */
         this.left = direction == 'left'
@@ -95,6 +154,8 @@ export default class Character extends MovableObject {
 
         /**draw reverse */
         this.drawReverse = direction == 'left'
+
+        this.isSwimming = true
     }
 
     stopSwimming(direction) {
@@ -106,9 +167,11 @@ export default class Character extends MovableObject {
         }
 
         /**disable animation */
-        if(!this.left && !this.right) {
+        if(!this.left && !this.right && !this.isAttacking) {
             this.playAnimation(this.IDLE_ANIMATION)
         }
+
+        this.isSwimming = false
     }
 
     updateSwim() {
