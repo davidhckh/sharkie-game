@@ -1,5 +1,5 @@
 import Game from "../game.class.js";
-import MovableObject from "../moving-object.class.js";
+import MovableObject from "../movable-object.class.js";
 
 
 export default class Character extends MovableObject {
@@ -13,10 +13,10 @@ export default class Character extends MovableObject {
     x = 200
     speedY = 0
     acceleration = 0.5
-    hitbox_padding_left = 95
-    hitbox_padding_right = 190
-    hitbox_padding_top = 100
-    hitbox_padding_bottom = 290
+    hitboxLeft = 95
+    hitboxRight = 95
+    hitboxTop = 100
+    hitboxBottom = 290
 
     SWIM_ANIMATION = {
         frames: 5,

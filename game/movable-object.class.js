@@ -16,10 +16,10 @@ export default class MovableObject extends Object {
 
     /**character.isColliding(enemy) */
     isCollidingWith(object) {
-        return this.x + this.width - this.hitbox_padding_left > object.x &&
-            this.x -  this.hitbox_padding_left < object.x &&
-            this.y - this.hitbox_padding_top + this.height > object.y &&
-            this.y + this.hitbox_padding_bottom < object.y + object.height
+        return this.x + this.width - this.hitboxRight > object.x &&
+            this.x -  this.hitboxLeft < object.x &&
+            this.y - this.hitboxTop + this.height > object.y &&
+            this.y + this.hitboxBottom< object.y + object.height
     }
 
 }

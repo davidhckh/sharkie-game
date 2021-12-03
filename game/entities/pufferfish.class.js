@@ -1,5 +1,5 @@
 import Game from "../game.class.js";
-import MovableObject from "../moving-object.class.js";
+import MovableObject from "../movable-object.class.js";
 
 export default class Pufferfish extends MovableObject {
 
@@ -7,10 +7,11 @@ export default class Pufferfish extends MovableObject {
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
     radius = 1.5
-    hitbox_padding_left = 0
-    hitbox_padding_right = 0
-    hitbox_padding_top = 0
-    hitbox_padding_bottom = 0
+    hitboxLeft = 0
+    hitboxRight = 0
+    hitboxTop = 0
+    hitboxBottom = 0
+
     SWIM_ANIMATION = {
         frames: 5,
         path: '../assets/puffer/swim/' + this.color + '-'
