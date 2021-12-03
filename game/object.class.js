@@ -5,15 +5,16 @@ export default class Object{
         this.img = new Image();
         this.img.src = path;
 
+        let self = this
         this.img.onload = function () {
-            self.adjustImageWidth();
+            self.adjustImageWidth(self.img.width);
         };
     };
 
     /**adjust image width to original image aspect ratios (based on this.height) */
-    adjustImageWidth() {
+    adjustImageWidth(width) {
         console.log(this)
-        this.width = this.img.width * (this.height / this.img.height);
+        this.width = width * (this.height / this.img.height);
     };
 
     loadAnimation(animation) {
