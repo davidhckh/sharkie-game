@@ -7,15 +7,16 @@ export default class Object{
 
         let self = this
         this.img.onload = function () {
-            self.adjustImageWidth(self.img.width);
+            self.adjustImageWidth();
+            console.log(self.image.width)
         };
     };
 
     /**adjust image width to original image aspect ratios (based on this.height) */
-    adjustImageWidth(width) {
+    adjustImageWidth() {
         console.log(this)
         this.width = width * (this.height / this.img.height);
-        this. width = 500
+        //this. width = 500
     };
 
     loadAnimation(animation) {
