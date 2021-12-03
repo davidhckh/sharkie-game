@@ -32,5 +32,7 @@ export default class Game {
         window.requestAnimationFrame(() => {
             this.update();
         });
+
+        console.log(this.world)
     };
 };
