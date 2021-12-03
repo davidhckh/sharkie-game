@@ -33,6 +33,6 @@ export default class Game {
             this.update();
         });
 
-        console.log(this.world)
+        //console.log(this.world)
     };
 };
