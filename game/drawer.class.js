@@ -17,7 +17,7 @@ export default class Drawer {
 
         this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
 
-        this.drawHitbox(object)
+        //this.drawHitbox(object)
 
         if(object.drawReverse) {
             object.x = object.x * -1
