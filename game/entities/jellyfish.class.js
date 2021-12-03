@@ -49,8 +49,8 @@ export default class Pufferfish extends MovableObject {
     }
     
     move() {
-        // gsap.to(this, { duration: this.speed, delay: 0, y: 980 - this.height, ease:  Power1.easeInOut })
-        // gsap.to(this, { duration: this.speed, delay: this.speed, y: 100, ease: Power1.easeInOut })
+        gsap.to(this, { duration: this.speed, delay: 0, y: 980 - this.height, ease:  Power1.easeInOut })
+        gsap.to(this, { duration: this.speed, delay: this.speed, y: 100, ease: Power1.easeInOut })
     }
 
     update() {
