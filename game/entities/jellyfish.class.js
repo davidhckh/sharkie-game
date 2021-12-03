@@ -6,6 +6,7 @@ export default class Pufferfish extends MovableObject {
     name = 'jellyfish'
     color = Math.floor(1 + Math.random() * 2)
     height = 260
+    width = 183
     y = 640 - this.height
     speed = 2
     hitboxLeft = 0

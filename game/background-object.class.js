@@ -3,6 +3,7 @@ import Game from "./game.class.js"
 
 export default class BackgroundObject extends Object {
 
+    width = 1920
     x = 0;
     y = 0;
     hasHitbox = false

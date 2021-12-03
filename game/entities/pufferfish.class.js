@@ -4,6 +4,8 @@ import MovableObject from "../movable-object.class.js";
 export default class Pufferfish extends MovableObject {
 
     name='pufferfish'
+    height = 160
+    width = 195
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
     radius = 1.5

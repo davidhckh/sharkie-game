@@ -9,6 +9,7 @@ export default class Character extends MovableObject {
     right = false
     speed = 10
     height = 600
+    width = 489
     y = 10
     x = 200
     speedY = 0
