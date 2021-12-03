@@ -3,10 +3,15 @@ import MovableObject from "../moving-Object.class.js";
 
 export default class Pufferfish extends MovableObject {
 
+    name = 'jellyfish'
     color = Math.floor(1 + Math.random() * 2)
     height = 260
     y = 640 - this.height
     speed = 2
+    hitbox_padding_left = 0
+    hitbox_padding_right = 0
+    hitbox_padding_top = 0
+    hitbox_padding_bottom = 0
     
     SWIM_ANIMATION = {
         frames: 4,
@@ -44,8 +49,8 @@ export default class Pufferfish extends MovableObject {
     }
     
     move() {
-        gsap.to(this, { duration: this.speed, delay: 0, y: 980 - this.height, ease:  Power1.easeInOut })
-        gsap.to(this, { duration: this.speed, delay: this.speed, y: 100, ease: Power1.easeInOut })
+        // gsap.to(this, { duration: this.speed, delay: 0, y: 980 - this.height, ease:  Power1.easeInOut })
+        // gsap.to(this, { duration: this.speed, delay: this.speed, y: 100, ease: Power1.easeInOut })
     }
 
     update() {

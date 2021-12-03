@@ -4,7 +4,8 @@ export default class MovableObject extends Object {
     height = 160;
     x = 0;
     y = 0;
-    speed = Math.random() * 5000
+    speed = Math.random() * 5000;
+    hasHitbox = true;
 
     constructor(x, y) {
         super()
@@ -13,11 +14,12 @@ export default class MovableObject extends Object {
         this.y = y
     }
 
-    moveRight() {
-        console.log('Moving right');
-    };
+    /**character.isColliding(enemy) */
+    isCollidingWith(object) {
+        return this.x + this.width - this.hitbox_padding_left > object.x &&
+            this.x -  this.hitbox_padding_left < object.x &&
+            this.y - (this.hitbox_padding_top * 0.36) + this.height > object.y &&
+            this.y + (this.hitbox_padding_bottom * 0.69) < object.y + object.height
+    }
 
-    moveLeft() {
-        console.log('Moving left');
-    };
-};
+}

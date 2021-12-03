@@ -5,6 +5,7 @@ export default class BackgroundObject extends Object {
 
     x = 0;
     y = 0;
+    hasHitbox = false
 
     constructor(img, x) {
         super()

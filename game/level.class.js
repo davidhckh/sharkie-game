@@ -12,7 +12,7 @@ export default class Level {
      * Enemies
      */
     enemies = [
-        new Pufferfish(600, 600, 2),
+        new Pufferfish(2000, 600, 2),
         new Jellyfish(1000, 'regular'),
         new Jellyfish(800, 'electric'),
     ];
@@ -30,6 +30,14 @@ export default class Level {
             position: 1920
         },
         {
+            path: './assets/landscape/bg-0/1.png',
+            position: 0
+        },
+        {
+            path: './assets/landscape/bg-0/2.png',
+            position: 1920
+        },
+        {
             path: './assets/landscape/light/2.png',
             position: 1920
         },
@@ -38,19 +46,11 @@ export default class Level {
             position: 0
         },
         {
-            path: './assets/landscape/bg-0/1.png',
-            position: 0
-        },
-        {
             path: './assets/landscape/bg-1/1.png',
             position: 0
         },
         {
             path: './assets/landscape/bg-1/2.png',
-            position: 1920
-        },
-        {
-            path: './assets/landscape/bg-0/2.png',
             position: 1920
         },
         {

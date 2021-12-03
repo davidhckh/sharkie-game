@@ -1,8 +1,10 @@
 import Game from "../game.class.js";
-import Object from "../object.class.js";
+import MovableObject from "../moving-object.class.js";
 
 
-export default class Character extends Object {
+export default class Character extends MovableObject {
+
+    name = 'character'
     left = false
     right = false
     speed = 10
@@ -11,6 +13,10 @@ export default class Character extends Object {
     x = 200
     speedY = 0
     acceleration = 0.5
+    hitbox_padding_left = 95
+    hitbox_padding_right = 190
+    hitbox_padding_top = 290
+    hitbox_padding_bottom = 420
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -34,7 +40,20 @@ export default class Character extends Object {
 
         /**play idle */
         this.playAnimation(this.IDLE_ANIMATION)
+
+        /**checkCollisions */
+        setInterval(() => {
+            this.game.world.level.enemies.forEach(enemy => {
+                this.checkCollisionsWith(enemy)
+            })
+        }, 25)
     };
+
+    checkCollisionsWith(object) {
+        if(this.isCollidingWith(object)) {
+            console.log('Character is colliding with ' + object.name)
+        }
+    }
 
     activateKeyboard() {
         /**stop swimming on key up */
