@@ -30,9 +30,6 @@ export default class Pufferfish extends MovableObject {
         this.type = type
         this.SWIM_ANIMATION.path = '../assets/jellyfish/' + this.type +'/' + this.color + '-'
 
-
-
-
         this.load()
 
         this.playAnimation(this.SWIM_ANIMATION)

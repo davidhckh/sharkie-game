@@ -15,6 +15,7 @@ export default class Object{
     adjustImageWidth(width) {
         console.log(this)
         this.width = width * (this.height / this.img.height);
+        this. width = 500
     };
 
     loadAnimation(animation) {
