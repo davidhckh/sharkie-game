@@ -15,7 +15,7 @@ export default class Object{
 
     /**adjust image width to original image aspect ratios (based on this.height) */
     adjustImageWidth(img) {
-        this.width = this.img.width * (this.height / this.img.height);
+        this.width = img.width * (this.height / this.img.height);
     };
 
     loadAnimation(animation) {
