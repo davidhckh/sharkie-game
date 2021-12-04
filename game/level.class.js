@@ -1,6 +1,7 @@
 import Character from "./entities/character.class.js";
 import Jellyfish from "./entities/jellyfish.class.js";
 import Pufferfish from "./entities/pufferfish.class.js";
+import Coin from "./entities/coin.class.js";
 
 export default class Level {
     /**
@@ -12,10 +13,25 @@ export default class Level {
      * Enemies
      */
     enemies = [
-        new Pufferfish(1800, 600),
-        new Jellyfish(800, 'regular'),
-        new Jellyfish(1000, 'electric'),
+        new Pufferfish(2800, 600),
+        new Jellyfish(1800, 'regular'),
+        new Jellyfish(1000, 'regular'),
+        new Jellyfish(1200, 'regular'),
+        new Jellyfish(1400, 'regular'),
+        new Jellyfish(1600, 'regular'),
+        new Jellyfish(2000, 'electric'),
     ];
+
+    /**
+     * Coins
+     */
+    coins = [
+        new Coin(800, 500),
+        new Coin(1000, 500),
+        new Coin(1200, 500), 
+        new Coin(1400, 500),
+        new Coin(1600, 500),
+    ]
 
     /**
      * Background

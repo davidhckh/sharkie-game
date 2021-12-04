@@ -85,14 +85,14 @@ export default class Character extends MovableObject {
         /**play idle */
         this.playAnimation(this.IDLE_ANIMATION)
 
-        /**load bubbles */
-        this.bubble = new Image();
-        this.bubble.src = '../assets/sharkie/attack/bubble-tap/bubble.png';
 
         /**checkCollisions */
         setInterval(() => {
             this.game.world.level.enemies.forEach(enemy => {
                 this.checkCollisionsWith(enemy)
+            })
+            this.game.world.level.coins.forEach(coin => {
+                this.checkCollisionsWith(coin)
             })
         }, 50)
     };
@@ -154,6 +154,8 @@ export default class Character extends MovableObject {
                 }
             } else if(object.name == 'pufferfish') {
                 this.onCollisionWithPufferfish(object)
+            } else if(object.name == 'coin' && !object.isCollected) {
+                object.collect()
             }
         }
     }

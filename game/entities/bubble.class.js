@@ -22,7 +22,7 @@ export default class Pufferfish extends MovableObject {
         this.game = new Game()
 
         this.character = this.game.world.level.character
-        this.img = this.game.world.level.character.bubble
+        this.img = this.game.bubble
         this.left = this.character.drawReverse
         this.index = index
 

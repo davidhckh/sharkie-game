@@ -68,11 +68,11 @@ export default class Pufferfish extends MovableObject {
         gsap.to(this, {duration: 2, y: this.y - 1080, ease: Power1.easeInOut})
 
         setTimeout(() => {
-            this.game.world.level.enemies.splice(this.game.world.level.enemies.indexOf(this), 1)
+            this.remove()
         }, 2000)
     }
 
     remove() {
-
+        this.game.world.level.enemies.splice(this.game.world.level.enemies.indexOf(this), 1)
     }
 };
