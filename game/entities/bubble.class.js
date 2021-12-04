@@ -18,12 +18,12 @@ export default class Pufferfish extends MovableObject {
         this.game = new Game()
 
         this.character = this.game.world.level.character
+        this.img = this.game.world.level.character.bubble
         this.left = this.character.drawReverse
         this.index = index
 
         this.setPosition()
         this.move()
-        this.load()
 
         setTimeout(() => {
             this.selfDestruct()
@@ -46,10 +46,6 @@ export default class Pufferfish extends MovableObject {
         } else {
             gsap.to(this, { duration: 4, x: this.x + 2100})
         }
-    }
-
-    load() {
-        this.loadImage('../assets/sharkie/attack/bubble-tap/bubble.png');
     }
 
     selfDestruct() {

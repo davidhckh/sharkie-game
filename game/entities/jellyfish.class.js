@@ -9,6 +9,7 @@ export default class Pufferfish extends MovableObject {
     width = 183
     y = 640 - this.height
     speed = 2
+    damage = 50
     
     SWIM_ANIMATION = {
         frames: 4,

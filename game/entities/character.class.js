@@ -9,6 +9,7 @@ export default class Character extends MovableObject {
     speed = 10
     height = 600
     width = 489
+    health = 100
 
     y = 10
     x = 200
@@ -25,7 +26,9 @@ export default class Character extends MovableObject {
     hitboxBottom = 130
 
     isSwimming = false
-    isAttacking = false
+    isShooting = false
+    isHitting = false
+    isInvincible = false
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -46,6 +49,26 @@ export default class Character extends MovableObject {
         frames: 4,
         path: '../assets/sharkie/attack/bubble-tap/'
     }
+
+    NORMAL_HURT_ANIMATION = {
+        frames: 1,
+        path: '../assets/sharkie/hurt/'
+    }
+
+    ELECTRIC_HURT_ANIMATION = {
+        frames: 2,
+        path: '../assets/sharkie/hurt/electric/'
+    }
+
+    POISON_HURT_ANIMATION = {
+        frames: 5,
+        path: '../assets/sharkie/hurt/poison/'
+    }
+
+    DEATH_ANIMATION = {
+        frames: 8,
+        path: '../assets/sharkie/dead/'
+    }
     
     constructor() {
         super();
@@ -54,11 +77,17 @@ export default class Character extends MovableObject {
         this.game = new Game()
 
         /**setup*/
+        this.fillHealthbar()
         this.load()
-        this.activateKeyboard()
+        this.onKeyUp()
+        this.onKeyDown()
 
         /**play idle */
         this.playAnimation(this.IDLE_ANIMATION)
+
+        /**load bubbles */
+        this.bubble = new Image();
+        this.bubble.src = '../assets/sharkie/attack/bubble-tap/bubble.png';
 
         /**checkCollisions */
         setInterval(() => {
@@ -68,13 +97,76 @@ export default class Character extends MovableObject {
         }, 50)
     };
 
-    checkCollisionsWith(object) {
-        if(this.isCollidingWith(object)) {
-            console.log('Character is colliding with ' + object.name)
+    updateHealthbar() {
+        this.healthbar.style.width = this.health + '%'
+
+        if(this.health > 50) {
+            this.healthbar.style.background = 'linear-gradient(#b5ff2b, #82c900)'
+        } else if(this.health <= 50 && this.health > 30) {
+            this.healthbar.style.background = 'linear-gradient(#FFE47C, #FFCF00)'
+        } else {
+            this.healthbar.style.background = 'linear-gradient(#FF9C75, #FF4B00)'
         }
     }
 
-    activateKeyboard() {
+    fillHealthbar() {
+        this.healthbar = document.getElementById('health-bar')
+        this.healthbar.style.width = '100%'
+    }
+ 
+    takeDmg(amount, type) {
+        if(!this.isInvincible) {
+            this.health -= amount
+            this.updateHealthbar()
+            this.becomeInvincible()
+            this.jump()
+
+            if(type == 'electric') {
+                this.playAnimation(this.ELECTRIC_HURT_ANIMATION)
+            } else if(type == 'poison') {
+                this.playAnimation(this.POISON_HURT_ANIMATION)
+            } else {
+                this.playAnimation(this.NORMAL_HURT_ANIMATION)
+            }
+        }
+    }
+
+    becomeInvincible() {
+        this.isInvincible = true
+        setTimeout(() => {
+            this.isInvincible = false
+
+            if(this.isSwimming) {
+                this.playAnimation(this.SWIM_ANIMATION)
+             } else {
+                this.playAnimation(this.IDLE_ANIMATION)
+             }
+        },1000)
+    }
+
+    checkCollisionsWith(object) {
+        if(this.isCollidingWith(object)) {
+            if(object.name == 'jellyfish') {
+                if(object.type == 'electric') {
+                    this.takeDmg(30, 'electric')
+                } else {
+                    this.takeDmg(20, 'regular')
+                }
+            } else if(object.name == 'pufferfish') {
+                this.onCollisionWithPufferfish(object)
+            }
+        }
+    }
+
+    onCollisionWithPufferfish(pufferfish) {
+        if(pufferfish.isBig) {
+            this.takeDmg(15, 'poison')
+        } else if(this.isHitting) {
+            pufferfish.die()
+        }
+    }
+
+    onKeyUp() {
         /**stop swimming on key up */
         this.game.events.on('keyup', () => {
             if(event.code == 'ArrowRight') {
@@ -83,7 +175,9 @@ export default class Character extends MovableObject {
                 this.stopSwimming('left')
             }
         })
+    }
 
+    onKeyDown() {
         /**start swimming, jump, slap and shoot on key down */
         this.game.events.on('keydown', () => {
             if(event.code == 'ArrowRight' && !event.repeat) {
@@ -91,21 +185,23 @@ export default class Character extends MovableObject {
             } else if(event.code == 'ArrowLeft' && !event.repeat) {
                 this.startSwimming('left')
             } else if(event.code == 'Space' && !event.repeat) {
-                this.speedY = 15
-                this.isJumping = true
+                this.jump()
             } else if(event.key == 'y' && !event.repeat) {
-                if(!this.isAttacking) {
-                    this.slap()
-                }
+                this.slap()
             } else if(event.key == 'x' && !event.repeat) {
                 this.shootBubble()
             }
         })
     }
 
+    jump() {
+        this.speedY = 15
+        this.isJumping = true
+    } 
+
     slap() {
-        if(!this.isAttacking) {
-            this.isAttacking = true
+        if(!this.isShooting && !this.isHitting && !this.isInvincible) {
+            this.isHitting = true
             this.playAnimation(this.SLAP_ANIMATION)
             setTimeout(() => { 
                 if(this.isSwimming) {
@@ -113,14 +209,14 @@ export default class Character extends MovableObject {
                 } else {
                     this.playAnimation(this.IDLE_ANIMATION)
                 }
-                this.isAttacking = false
+                this.isHitting = false
             }, 600)
         }
     }
 
     shootBubble() {
-        if(!this.isAttacking) {
-            this.isAttacking = true
+        if(!this.isShooting && !this.isHitting && !this.isInvincible) {
+            this.isShooting = true
             this.playAnimation(this.BUBBLE_ANIMATION)
             setTimeout(() => { 
                 if(this.isSwimming) {
@@ -128,7 +224,7 @@ export default class Character extends MovableObject {
                 } else {
                     this.playAnimation(this.IDLE_ANIMATION)
                 }
-                this.isAttacking = false
+                this.isShooting = false
                 this.game.world.bubbles.push(new Bubble(this.game.world.bubbles.length))
             }, 600)
         }
@@ -136,15 +232,20 @@ export default class Character extends MovableObject {
 
     /**load assets */
     load() {
-        this.loadImage('../assets/sharkie/swim/1.png');
+        this.loadImage('../assets/sharkie/swim/1.png')
+        this.loadImage('')
         this.loadAnimation(this.SWIM_ANIMATION)
         this.loadAnimation(this.IDLE_ANIMATION)
         this.loadAnimation(this.SLAP_ANIMATION)
         this.loadAnimation(this.BUBBLE_ANIMATION)
+        this.loadAnimation(this.NORMAL_HURT_ANIMATION)
+        this.loadAnimation(this.ELECTRIC_HURT_ANIMATION)
+        this.loadAnimation(this.POISON_HURT_ANIMATION)
+        this.loadAnimation(this.DEATH_ANIMATION)
     }
 
     startSwimming(direction) {
-        if(!this.isAttacking) {
+        if(!this.isHitting && !this.isShooting && !this.isInvincible) {
             this.playAnimation(this.SWIM_ANIMATION)
         }
 
@@ -167,7 +268,7 @@ export default class Character extends MovableObject {
         }
 
         /**disable animation */
-        if(!this.left && !this.right && !this.isAttacking) {
+        if(!this.left && !this.right && !this.isShooting && !this.isHitting && !this.isInvincible) {
             this.playAnimation(this.IDLE_ANIMATION)
         }
 

@@ -47,13 +47,14 @@ canvas {
 }
 
 #health-bar {
-    width: 50%;
+    width: 100%;
     height: 100%;
     border-radius: 40px;
     background: linear-gradient(#b5ff2b, #82c900);
     border: white solid 3px;
     top: -3px;
     position: absolute;
+    transition: 300ms;
 }
 
 

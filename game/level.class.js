@@ -12,9 +12,9 @@ export default class Level {
      * Enemies
      */
     enemies = [
-        new Pufferfish(2000, 600, 2),
-        new Jellyfish(1000, 'regular'),
-        new Jellyfish(800, 'electric'),
+        new Pufferfish(800, 600, 2),
+        new Jellyfish(2400, 'regular'),
+        new Jellyfish(2200, 'electric'),
     ];
 
     /**
