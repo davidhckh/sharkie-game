@@ -26,6 +26,10 @@ canvas {
     position: relative;
 }
 
+.icon {
+    height: 100px;
+}
+
 /*Health Bar Container*/
 #health-bar-container {
     background: linear-gradient(white, #AAE8FF);
@@ -40,7 +44,6 @@ canvas {
 #health-icon {
     top: -45px;
     left: -50px;
-    height: 100px;
 }
 
 #health-bar {
@@ -75,7 +78,6 @@ canvas {
 #coin-icon {
     top: -30px;
     right: -50px;
-    height: 100px;
 }
 
 /*Poison Container*/
@@ -84,13 +86,12 @@ canvas {
 }
 
 #poison-icon {
-    top: -45px;
-    right: -56px;
-    height: 110px;
+    top: -40px;
+    right: -53px;
 }
 
 
-/*Responsive*/
+/*Responsive Canvas*/
 @media only screen and (max-width: 1920px) {
     canvas {
         max-width: 100%;
@@ -102,3 +103,59 @@ canvas {
         max-height: 100vh;
     }
 }
+
+/*Responsive UI*/
+@media (max-width: 1200px) {
+    #health-bar-container {
+        transform: scale(0.8);
+        left: 10px;
+    }
+
+    .amount-container {
+        transform: scale(0.8);
+        right: 15px;
+        top: 2vh
+    }
+
+    #posion-container {
+        top: 90px;
+    }
+}
+
+@media(max-width: 900px) {
+    #health-bar-container {
+        transform: scale(0.6);
+        left: -30px;
+        top: 10px;
+    }
+
+    .amount-container {
+        transform: scale(0.6);
+        top: 1.5vh;
+        right: -3px;
+    }
+
+    #posion-container {
+        top: 70px;
+    } 
+}
+
+@media(max-width: 600px) {
+    #health-bar-container {
+        transform: scale(0.4);
+        left: -70px;
+        top: 5px;
+    }
+
+    .amount-container {
+        transform: scale(0.4);
+        right: -1000px;
+        top: 0.5vh;
+        right: -30px;
+    }
+
+    #posion-container {
+        top: 40px;
+    } 
+}
+
