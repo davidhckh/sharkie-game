@@ -27,11 +27,6 @@ export default class World {
         if (this.level.character) {
             this.level.character.update()
         }
-
-        /**update enemies*/
-        this.level.enemies.forEach(enemy => {
-            enemy.update()
-        })
     };
 
     draw() {

@@ -9,6 +9,12 @@ export default class Pufferfish extends MovableObject {
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
     damage = 20
+    hasHitbox = true
+
+    hitboxRight = 0
+    hitboxLeft = 0
+    hitboxTop = 0
+    hitboxBottom = 0    
 
     SWIM_ANIMATION = {
         frames: 5,
@@ -25,26 +31,21 @@ export default class Pufferfish extends MovableObject {
         path: '../assets/puffer/transition/' + this.color + '-'
     }
 
-    DEATH_ANIMATION = {
-        frames: 3,
-        path: '../assets/puffer/die/' + this.color + '-'
-    }
-
 
     /**
      * constructor
      */
-    constructor(x, y, radius) {
+    constructor(x, y) {
         super();
 
         this.game = new Game()
 
         this.x = x
         this.y = y
-        this.radius = radius
 
         this.load()
         this.setBigInterval()
+        this.movement()
 
         this.playAnimation(this.SWIM_ANIMATION)
     };
@@ -55,27 +56,46 @@ export default class Pufferfish extends MovableObject {
         this.loadAnimation(this.SWIM_ANIMATION)
         this.loadAnimation(this.TRANSITION_ANIMATION)
         this.loadAnimation(this.SWIM_BIG_ANIMATION)
-        this.loadAnimation(this.DEATH_ANIMATION)
+    }
+
+    movement() {
+        this.movementAnimation = gsap.to(this, { duration: 3, x: this.x  - 800, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
+
+        this.movementInterval = setInterval(() => {
+            this.changeDirection()
+        }, 3000) 
+    }
+
+    changeDirection() {
+        if(this.drawReverse) {
+            this.drawReverse = false
+        } else {
+            this.drawReverse = true
+        }
     }
 
     die() {
         if(!this.isDeath) {
             clearInterval(this.interval)
-
-            this.playAnimation(this.DEATH_ANIMATION)
+            clearInterval(this.movementInterval)
+            this.movementAnimation.kill()
     
             let interval = setInterval(() => {
-                this.y -= 50
-                this.x += 50
-            },1000 / 25)
+                this.y -= 100
+                this.x += 100
+            }, 1000 / 25)
     
             setTimeout(() => {
                 clearInterval(interval)
-                this.game.world.level.enemies.splice(this.game.world.level.enemies.indexOf(this), 1)
+                this.remove()
             },300)
         }
 
         this.isDeath = true
+    }
+
+    remove() {
+        this.game.world.level.enemies.splice(this.game.world.level.enemies.indexOf(this), 1)
     }
 
     setBigInterval() {
@@ -85,7 +105,7 @@ export default class Pufferfish extends MovableObject {
             } else {
                 this.getBig()
             }
-        },3000)
+        },2500)
     }
 
     getBig() {
@@ -104,9 +124,5 @@ export default class Pufferfish extends MovableObject {
         setTimeout(() => {
             this.playAnimation(this.SWIM_ANIMATION)
         },750)
-    }
-
-    update() {
-
     }
 };

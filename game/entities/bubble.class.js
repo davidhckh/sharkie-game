@@ -7,7 +7,11 @@ export default class Pufferfish extends MovableObject {
     height = 90
     width = 90
     speed = 2
-    
+
+    hitboxRight = 20
+    hitboxLeft = 20
+    hitboxTop = 20
+    hitboxBottom = 20    
 
     /**
      * constructor
@@ -25,7 +29,13 @@ export default class Pufferfish extends MovableObject {
         this.setPosition()
         this.move()
 
-        setTimeout(() => {
+        this.collisionInterval = setInterval(() => {
+            this.game.world.level.enemies.forEach(enemy => {
+                this.checkCollisionsWith(enemy)
+            })
+        }, 50)
+
+        this.selfDestructionTimeout = setTimeout(() => {
             this.selfDestruct()
         }, 4000)
     };
@@ -48,7 +58,20 @@ export default class Pufferfish extends MovableObject {
         }
     }
 
+    checkCollisionsWith(object) {
+        if(this.isCollidingWith(object)) {
+            if(object.name == 'jellyfish' || object.name == 'pufferfish') {
+                this.selfDestruct()
+            }
+            if(object.name == 'jellyfish' && object.type == 'regular' && !object.isDead) {
+                object.die()
+            } 
+        }
+    }
+
     selfDestruct() {
         this.game.world.bubbles.splice( this.game.world.bubbles.indexOf(this), 1)
+        clearInterval(this.collisionInterval)
+        clearTimeout(this.selfDestructionTimeout)
     }
 };

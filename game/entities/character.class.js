@@ -146,7 +146,7 @@ export default class Character extends MovableObject {
 
     checkCollisionsWith(object) {
         if(this.isCollidingWith(object)) {
-            if(object.name == 'jellyfish') {
+            if(object.name == 'jellyfish' && !object.isDead) {
                 if(object.type == 'electric') {
                     this.takeDmg(30, 'electric')
                 } else {

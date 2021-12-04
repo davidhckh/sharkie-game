@@ -13,6 +13,7 @@ export default class Drawer {
         } else {
             this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
         }
+        
         //this.drawHitbox(object)
     };
 
