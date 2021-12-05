@@ -2,6 +2,7 @@ import Character from "./entities/character.class.js";
 import Jellyfish from "./entities/jellyfish.class.js";
 import Pufferfish from "./entities/pufferfish.class.js";
 import Coin from "./entities/coin.class.js";
+import Poison from "./entities/poison.class.js";
 
 export default class Level {
     /**
@@ -31,6 +32,18 @@ export default class Level {
         new Coin(1200, 500), 
         new Coin(1400, 500),
         new Coin(1600, 500),
+    ]
+
+    /**
+     * Poison
+     */
+    poison = [
+        new Poison(750, 800),
+        new Poison(900, 800),
+        new Poison(1050, 800),
+        new Poison(1200, 800),
+        new Poison(1350, 800),
+        new Poison(1500, 800),
     ]
 
     /**

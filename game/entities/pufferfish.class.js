@@ -59,7 +59,7 @@ export default class Pufferfish extends MovableObject {
     }
 
     movement() {
-        this.movementAnimation = gsap.to(this, { duration: 3, x: this.x  - 800, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
+        this.movementAnimation = gsap.to(this, { duration: 3, delay: Math.random(), x: this.x  - 800, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
 
         this.movementInterval = setInterval(() => {
             this.changeDirection()

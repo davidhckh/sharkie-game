@@ -91,8 +91,11 @@ export default class Character extends MovableObject {
             this.game.world.level.enemies.forEach(enemy => {
                 this.checkCollisionsWith(enemy)
             })
-            this.game.world.level.coins.forEach(coin => {
-                this.checkCollisionsWith(coin)
+            this.game.world.level.coins.forEach(item => {
+                this.checkCollisionsWith(item)
+            })
+            this.game.world.level.poison.forEach(item => {
+                this.checkCollisionsWith(item)
             })
         }, 50)
     };
@@ -154,7 +157,7 @@ export default class Character extends MovableObject {
                 }
             } else if(object.name == 'pufferfish') {
                 this.onCollisionWithPufferfish(object)
-            } else if(object.name == 'coin' && !object.isCollected) {
+            } else if((object.name == 'coin' || object.name == 'poison') && !object.isCollected) {
                 object.collect()
             }
         }

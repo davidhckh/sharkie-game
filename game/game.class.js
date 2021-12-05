@@ -27,6 +27,9 @@ export default class Game {
         this.collectedCoins = 0
         this.totalCoins = this.world.level.coins.length
 
+        this.poisonCounter = document.getElementById('poison-amount-label')
+        this.collectedPoison = 0
+
         this.updateCoins()
         this.update();
     }
@@ -38,6 +41,15 @@ export default class Game {
     addCoin() {
         this.collectedCoins += 1
         this.updateCoins()
+    }
+
+    updatePoison() {
+        this.poisonCounter.innerHTML = this.collectedPoison
+    }
+
+    addPoison() {
+        this.collectedPoison += 1
+        this.updatePoison()
     }
 
     /**update on every frame */
@@ -59,5 +71,9 @@ export default class Game {
         /**load coin */
         this.coin = new Image()
         this.coin.src = '../assets/items/coin.png'
+
+        /**load poison */
+        this.poisonLeft = new Image()
+        this.poisonLeft.src = '../assets/items/poison.png'
     }
 };

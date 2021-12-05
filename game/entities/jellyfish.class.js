@@ -57,7 +57,7 @@ export default class Pufferfish extends MovableObject {
             gsap.to(this, { duration: 3, y: 980 - this.height, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
             gsap.to(this, { duration: 1, x: this.x + 300, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
         } else {
-            this.movementAnimation = gsap.to(this, { duration: 2, y: 980 - this.height, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
+            this.movementAnimation = gsap.to(this, { duration: 2, delay: Math.random(), y: 980 - this.height, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
         }
     }
 
