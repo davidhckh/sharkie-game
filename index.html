@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharkie</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+</head>
+
+<body>
+    <div id="game-container">
+        <!--health container-->
+        <div id="health-bar-container" class="absolute">
+            <div id="health-bar"></div>
+            <img id="health-icon" class="absolute icon" src="assets/icons/life-icon.png"></img>
+        </div>
+
+        <!--coin container-->
+        <div class="amount-container absolute">
+            <img id="coin-icon" class="absolute icon" src="assets/icons/coin-icon.png"></img>
+            <span id="coin-amount-label">0 / 20</span>
+        </div>
+
+        <!--poison cotainer-->
+        <div id="posion-container" class="amount-container absolute">
+            <img id="poison-icon" class="absolute icon" src="assets/icons/posion-icon.png"></img>
+            <span id="poison-amount-label">0</span>
+        </div>
+
+        <!--canvas-->
+        <canvas id="canvas" height="1080" width="1920"></canvas>
+    </div>
+</body>
+
+</html>
