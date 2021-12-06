@@ -8,12 +8,12 @@ export default class Drawer {
     };
 
     draw(object) {
-        if(object.drawReverse) {
+        if (object.drawReverse) {
             this.drawReverse(object)
         } else {
             this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
         }
-        
+
         //this.drawHitbox(object)
     };
 
@@ -43,10 +43,10 @@ export default class Drawer {
     };
 
     drawHitbox(object) {
-        if(object.hasHitbox) {
+        if (object.hasHitbox) {
             this.ctx.beginPath()
             this.ctx.lineWidth = '5'
-            this.ctx.strokeStyle = 'blue'
+            this.ctx.strokeStyle = 'yellow'
             this.ctx.rect(
                 object.x + object.hitboxLeft, /**left */
                 object.y + object.hitboxTop,  /**top */

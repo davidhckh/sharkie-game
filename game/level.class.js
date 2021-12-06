@@ -3,6 +3,7 @@ import Jellyfish from "./entities/jellyfish.class.js";
 import Pufferfish from "./entities/pufferfish.class.js";
 import Coin from "./entities/coin.class.js";
 import Poison from "./entities/poison.class.js";
+import Barrier from "./entities/barrier.class.js";
 
 export default class Level {
     /**
@@ -14,36 +15,33 @@ export default class Level {
      * Enemies
      */
     enemies = [
-        new Pufferfish(2800, 600),
-        new Jellyfish(1800, 'regular'),
-        new Jellyfish(1000, 'regular'),
-        new Jellyfish(1200, 'regular'),
-        new Jellyfish(1400, 'regular'),
-        new Jellyfish(1600, 'regular'),
-        new Jellyfish(2000, 'electric'),
+        new Pufferfish(6800, 600),
+        new Jellyfish(5600, 'regular'), 
+        new Jellyfish(6200, 'electric'),
     ];
 
     /**
      * Coins
      */
     coins = [
-        new Coin(800, 500),
-        new Coin(1000, 500),
-        new Coin(1200, 500), 
-        new Coin(1400, 500),
-        new Coin(1600, 500),
+        new Coin(300, 900),
     ]
 
     /**
      * Poison
      */
     poison = [
-        new Poison(750, 800),
-        new Poison(900, 800),
-        new Poison(1050, 800),
-        new Poison(1200, 800),
-        new Poison(1350, 800),
-        new Poison(1500, 800),
+        new Poison(860, 750),
+        new Poison(2500, 850),
+    ]
+
+    /**Barriers */
+    barriers = [
+        new Barrier(750, -100, 0),
+        new Barrier(750, -100, 1),
+        new Barrier(2750, -100, 2),
+        new Barrier(4350, 400, 3),
+        new Barrier(5000, -100, 3),
     ]
 
     /**

@@ -1,6 +1,13 @@
 export default class Object{
     drawReverse = false
 
+    hasHitbox = true
+    hitboxBottom = 0
+    hitboxLeft = 0
+    hitboxRight = 0
+    hitboxTop = 0
+
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;

@@ -15,7 +15,7 @@ export default class Game {
         Game.instance = this;
 
         /**Setup everything */
-        this.loadItems()
+        this.loadAssets()
 
         this.canvas = canvas;
         this.time = new Time();
@@ -29,8 +29,10 @@ export default class Game {
 
         this.poisonCounter = document.getElementById('poison-amount-label')
         this.collectedPoison = 0
+        this.totalPoison = this.world.level.poison.length
 
         this.updateCoins()
+        this.updatePoison()
         this.update();
     }
 
@@ -44,7 +46,7 @@ export default class Game {
     }
 
     updatePoison() {
-        this.poisonCounter.innerHTML = this.collectedPoison
+        this.poisonCounter.innerHTML = this.collectedPoison + ' / ' + this.totalPoison
     }
 
     addPoison() {
@@ -63,7 +65,7 @@ export default class Game {
         });
     };
 
-    loadItems() {
+    loadAssets() {
         /**load bubble */
         this.bubble = new Image()
         this.bubble.src = '../assets/sharkie/attack/bubble-tap/bubble.png';
@@ -73,7 +75,17 @@ export default class Game {
         this.coin.src = '../assets/items/coin.png'
 
         /**load poison */
-        this.poisonLeft = new Image()
+        this.poisonLeft = new Image({src: '../assets/items/poison.png'})
         this.poisonLeft.src = '../assets/items/poison.png'
+
+        /**load barriers */
+        this.barrier0 = new Image()
+        this.barrier1 = new Image()
+        this.barrier2 = new Image()
+        this.barrier3 = new Image()
+        this.barrier0.src = '../assets/barriers/0.png'
+        this.barrier1.src = '../assets/barriers/1.png'
+        this.barrier2.src = '../assets/barriers/2.png'
+        this.barrier3.src = '../assets/barriers/3.png'
     }
 };
