@@ -33,6 +33,10 @@ export default class Pufferfish extends MovableObject {
             this.game.world.level.enemies.forEach(enemy => {
                 this.checkCollisionsWith(enemy)
             })
+            this.game.world.level.barriers.forEach(barrier => {
+                this.checkCollisionsWith(barrier)
+            })
+            this.checkCollisionsWith(this.game.world.level.boss)
         }, 50)
 
         this.selfDestructionTimeout = setTimeout(() => {
@@ -60,7 +64,7 @@ export default class Pufferfish extends MovableObject {
 
     checkCollisionsWith(object) {
         if(this.isCollidingWith(object)) {
-            if(object.name == 'jellyfish' || object.name == 'pufferfish') {
+            if(object.name == 'jellyfish' || object.name == 'pufferfish' || object.name == 'barrier' || object.name == 'boss') {
                 this.selfDestruct()
             }
             if(object.name == 'jellyfish' && object.type == 'regular' && !object.isDead) {

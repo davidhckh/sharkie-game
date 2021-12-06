@@ -27,6 +27,11 @@ export default class World {
         if (this.level.character) {
             this.level.character.update()
         }
+
+        /**update boss */
+        if (this.level.boss) {
+            this.level.boss.update()
+        }
     };
 
     draw() {
@@ -37,6 +42,7 @@ export default class World {
         this.game.drawer.drawAll(this.bubbles)
         this.game.drawer.drawAll(this.level.coins)
         this.game.drawer.drawAll(this.level.poison)
+        this.game.drawer.draw(this.level.boss);
         this.game.drawer.draw(this.level.character);
         this.game.drawer.drawAll(this.level.barriers)
 
@@ -48,13 +54,13 @@ export default class World {
         if (this.camera_x <= -this.current_world_repetitions * 1920) {
             let increase_x_by = this.current_world_repetitions * 1920 * 2
 
-            for(let i = 0; i < this.level.backgroundFiles.length; i++) {
+            for (let i = 0; i < this.level.backgroundFiles.length; i++) {
                 this.background.push(
                     new BackgroundObject(this.level.backgroundFiles[i].path, this.level.backgroundFiles[i].position + increase_x_by)
                 )
             }
 
-            this.current_world_repetitions ++
+            this.current_world_repetitions++
         }
     }
 };

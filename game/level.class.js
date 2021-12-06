@@ -4,12 +4,18 @@ import Pufferfish from "./entities/pufferfish.class.js";
 import Coin from "./entities/coin.class.js";
 import Poison from "./entities/poison.class.js";
 import Barrier from "./entities/barrier.class.js";
+import Boss from "./entities/boss.class.js";
 
 export default class Level {
     /**
      * Character
      */
     character = new Character();
+
+    /**
+     * Boss
+     */
+    boss = new Boss()
 
     /**
      * Enemies
@@ -37,11 +43,7 @@ export default class Level {
 
     /**Barriers */
     barriers = [
-        new Barrier(750, -100, 0),
         new Barrier(750, -100, 1),
-        new Barrier(2750, -100, 2),
-        new Barrier(4350, 400, 3),
-        new Barrier(5000, -100, 3),
     ]
 
     /**

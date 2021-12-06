@@ -201,15 +201,15 @@ export default class Character extends MovableObject {
     onKeyDown() {
         /**start swimming, jump, slap and shoot on key down */
         this.game.events.on('keydown', () => {
-            if (event.code == 'ArrowRight' && !event.repeat) {
+            if (event.code == 'ArrowRight' && !event.repeat && !this.freeze) {
                 this.startSwimming('right')
-            } else if (event.code == 'ArrowLeft' && !event.repeat) {
+            } else if (event.code == 'ArrowLeft' && !event.repeat && !this.freeze) {
                 this.startSwimming('left')
-            } else if (event.code == 'Space' && !event.repeat) {
+            } else if (event.code == 'Space' && !event.repeat && !this.freeze) {
                 this.jump()
-            } else if (event.key == 'y' && !event.repeat) {
+            } else if (event.key == 'y' && !event.repeat && !this.freeze) {
                 this.slap()
-            } else if (event.key == 'x' && !event.repeat) {
+            } else if (event.key == 'x' && !event.repeat && !this.freeze) {
                 this.shootBubble()
             }
         })
@@ -325,7 +325,7 @@ export default class Character extends MovableObject {
                 this.speedY -= this.acceleration
             }
         }
-        
+
     }
 
     applyJump() {
@@ -364,7 +364,9 @@ export default class Character extends MovableObject {
     }
 
     update() {
-        this.updateSwim()
-        this.applyPhysics()
+        if (!this.freeze) {
+            this.updateSwim()
+            this.applyPhysics()
+        }
     }
 };
