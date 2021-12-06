@@ -23,17 +23,17 @@ export default class Game {
         this.events = new Events()
         this.world = new World();
 
+        this.setupCoins()
+        this.setupPoison()
+        this.update();
+    }
+
+    setupCoins() {
         this.coinCounter = document.getElementById('coin-amount-label')
         this.collectedCoins = 0
         this.totalCoins = this.world.level.coins.length
 
-        this.poisonCounter = document.getElementById('poison-amount-label')
-        this.collectedPoison = 0
-        this.totalPoison = this.world.level.poison.length
-
         this.updateCoins()
-        this.updatePoison()
-        this.update();
     }
 
     updateCoins() {
@@ -43,6 +43,14 @@ export default class Game {
     addCoin() {
         this.collectedCoins += 1
         this.updateCoins()
+    }
+
+    setupPoison() {
+        this.poisonCounter = document.getElementById('poison-amount-label')
+        this.collectedPoison = 0
+        this.totalPoison = this.world.level.poison.length
+
+        this.updatePoison()
     }
 
     updatePoison() {
@@ -75,7 +83,7 @@ export default class Game {
         this.coin.src = '../assets/items/coin.png'
 
         /**load poison */
-        this.poisonLeft = new Image({src: '../assets/items/poison.png'})
+        this.poisonLeft = new Image({ src: '../assets/items/poison.png' })
         this.poisonLeft.src = '../assets/items/poison.png'
 
         /**load barriers */

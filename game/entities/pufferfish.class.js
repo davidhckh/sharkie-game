@@ -62,11 +62,11 @@ export default class Pufferfish extends MovableObject {
         this.movementAnimation = gsap.to(this, { duration: 3, delay: Math.random(), x: this.x  - 800, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
 
         this.movementInterval = setInterval(() => {
-            this.changeDirection()
+            this.changeDrawDirection()
         }, 3000) 
     }
 
-    changeDirection() {
+    changeDrawDirection() {
         if(this.drawReverse) {
             this.drawReverse = false
         } else {
@@ -78,20 +78,24 @@ export default class Pufferfish extends MovableObject {
         if(!this.isDeath) {
             clearInterval(this.interval)
             clearInterval(this.movementInterval)
+
             this.movementAnimation.kill()
-    
-            let interval = setInterval(() => {
-                this.y -= 100
-                this.x += 100
-            }, 1000 / 25)
-    
+            this.flyOutOfScene()
+
             setTimeout(() => {
-                clearInterval(interval)
+                clearInterval(this.flyOutInterval)
                 this.remove()
             },300)
         }
 
         this.isDeath = true
+    }
+
+    flyOutOfScene() {
+        this.flyOutInterval = setInterval(() => {
+            this.y -= 100
+            this.x += 100
+        }, 1000 / 25)
     }
 
     remove() {
@@ -109,20 +113,16 @@ export default class Pufferfish extends MovableObject {
     }
 
     getBig() {
-        this.playAnimation(this.TRANSITION_ANIMATION)
+        this.isBig = true
 
-        setTimeout(() => {
-            this.playAnimation(this.SWIM_BIG_ANIMATION)
-            this.isBig = true
-        },750)
+        this.playAnimation(this.TRANSITION_ANIMATION)
+        this.playAnimation(this.SWIM_BIG_ANIMATION, 750)
     }
 
     getSmall() {
         this.isBig = false
-        this.playReverseAnimation(this.TRANSITION_ANIMATION, true)
 
-        setTimeout(() => {
-            this.playAnimation(this.SWIM_ANIMATION)
-        },750)
+        this.playReverseAnimation(this.TRANSITION_ANIMATION, true)
+        this.playAnimation(this.SWIM_ANIMATION, 750)
     }
 };

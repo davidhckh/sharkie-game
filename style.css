@@ -30,23 +30,19 @@ canvas {
     height: 100px;
 }
 
-/*Health Bar Container*/
-#health-bar-container {
+.hide {
+    display:none !important
+}
+
+/*Health Bars*/
+.health-bar-container {
     background: linear-gradient(white, #AAE8FF);
-    top: 23px;
-    left: 45px;
     height: 32px;
-    width: 300px;
     border-radius: 40px;
     border: white solid 3px;
 }
 
-#health-icon {
-    top: -45px;
-    left: -50px;
-}
-
-#health-bar {
+.health-bar {
     width: 100%;
     height: 100%;
     border-radius: 40px;
@@ -55,6 +51,37 @@ canvas {
     top: -3px;
     position: absolute;
     transition: 300ms;
+}
+
+/*Character Health Bar*/
+#health-bar-container {
+    top: 23px;
+    left: 45px;
+    width: 300px;
+}
+
+#health-icon {
+    top: -45px;
+    left: -50px;
+}
+
+/*Final Boss Health Bar*/
+#final-boss-healt-bar-container {
+    height: 23px;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px
+}
+
+#final-boss-health-icon {
+    top: -32px;
+    left: -53px;
+    border: 3px white solid;
+    border-radius: 50%;
+    height: 70px;
 }
 
 

@@ -14,8 +14,8 @@
 <body>
     <div id="game-container">
         <!--health container-->
-        <div id="health-bar-container" class="absolute">
-            <div id="health-bar"></div>
+        <div id="health-bar-container" class="absolute health-bar-container">
+            <div id="health-bar" class="health-bar"></div>
             <img id="health-icon" class="absolute icon" src="assets/icons/life-icon.png"></img>
         </div>
 
@@ -29,6 +29,12 @@
         <div id="posion-container" class="amount-container absolute">
             <img id="poison-icon" class="absolute icon" src="assets/icons/posion-icon.png"></img>
             <span id="poison-amount-label">0</span>
+        </div>
+
+        <!--final boss health bar-->
+        <div id="final-boss-healt-bar-container" class="absolute health-bar-container hide">
+            <div id="final-boss-health-bar" class="health-bar"></div>
+            <img id="final-boss-health-icon" class="absolute icon" src="assets/icons/boss-icon.png"></img>
         </div>
 
         <!--canvas-->

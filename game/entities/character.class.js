@@ -97,6 +97,49 @@ export default class Character extends MovableObject {
         }, 50)
     };
 
+    /**load assets */
+    load() {
+        this.loadImage('../assets/sharkie/swim/1.png')
+        this.loadImage('')
+        this.loadAnimation(this.SWIM_ANIMATION)
+        this.loadAnimation(this.IDLE_ANIMATION)
+        this.loadAnimation(this.SLAP_ANIMATION)
+        this.loadAnimation(this.BUBBLE_ANIMATION)
+        this.loadAnimation(this.NORMAL_HURT_ANIMATION)
+        this.loadAnimation(this.ELECTRIC_HURT_ANIMATION)
+        this.loadAnimation(this.POISON_HURT_ANIMATION)
+        this.loadAnimation(this.DEATH_ANIMATION)
+    }
+
+
+    onKeyUp() {
+        /**stop swimming on key up */
+        this.game.events.on('keyup', () => {
+            if (event.code == 'ArrowRight') {
+                this.stopSwimming('right')
+            } else if (event.code == 'ArrowLeft') {
+                this.stopSwimming('left')
+            }
+        })
+    }
+
+    onKeyDown() {
+        /**start swimming, jump, slap and shoot on key down */
+        this.game.events.on('keydown', () => {
+            if (event.code == 'ArrowRight' && !event.repeat && !this.freeze) {
+                this.startSwimming('right')
+            } else if (event.code == 'ArrowLeft' && !event.repeat && !this.freeze) {
+                this.startSwimming('left')
+            } else if (event.code == 'Space' && !event.repeat && !this.freeze) {
+                this.jump()
+            } else if (event.key == 'y' && !event.repeat && !this.freeze) {
+                this.slap()
+            } else if (event.key == 'x' && !event.repeat && !this.freeze) {
+                this.shootBubble()
+            }
+        })
+    }
+
     updateHealthbar() {
         this.healthbar.style.width = this.health + '%'
 
@@ -175,44 +218,12 @@ export default class Character extends MovableObject {
         }
     }
 
-    setBarrierCollisionDirection(object) {
-        this.collidingRight = this.isCollidingRight(object)
-    }
-
     onCollisionWithPufferfish(pufferfish) {
         if (pufferfish.isBig) {
             this.takeDmg(15, 'poison')
         } else if (this.isHitting) {
             pufferfish.die()
         }
-    }
-
-    onKeyUp() {
-        /**stop swimming on key up */
-        this.game.events.on('keyup', () => {
-            if (event.code == 'ArrowRight') {
-                this.stopSwimming('right')
-            } else if (event.code == 'ArrowLeft') {
-                this.stopSwimming('left')
-            }
-        })
-    }
-
-    onKeyDown() {
-        /**start swimming, jump, slap and shoot on key down */
-        this.game.events.on('keydown', () => {
-            if (event.code == 'ArrowRight' && !event.repeat && !this.freeze) {
-                this.startSwimming('right')
-            } else if (event.code == 'ArrowLeft' && !event.repeat && !this.freeze) {
-                this.startSwimming('left')
-            } else if (event.code == 'Space' && !event.repeat && !this.freeze) {
-                this.jump()
-            } else if (event.key == 'y' && !event.repeat && !this.freeze) {
-                this.slap()
-            } else if (event.key == 'x' && !event.repeat && !this.freeze) {
-                this.shootBubble()
-            }
-        })
     }
 
     jump() {
@@ -249,21 +260,6 @@ export default class Character extends MovableObject {
             }, 600)
         }
     }
-
-    /**load assets */
-    load() {
-        this.loadImage('../assets/sharkie/swim/1.png')
-        this.loadImage('')
-        this.loadAnimation(this.SWIM_ANIMATION)
-        this.loadAnimation(this.IDLE_ANIMATION)
-        this.loadAnimation(this.SLAP_ANIMATION)
-        this.loadAnimation(this.BUBBLE_ANIMATION)
-        this.loadAnimation(this.NORMAL_HURT_ANIMATION)
-        this.loadAnimation(this.ELECTRIC_HURT_ANIMATION)
-        this.loadAnimation(this.POISON_HURT_ANIMATION)
-        this.loadAnimation(this.DEATH_ANIMATION)
-    }
-
     startSwimming(direction) {
         if (!this.isHitting && !this.isShooting && !this.isInvincible) {
             this.playAnimation(this.SWIM_ANIMATION)
@@ -299,7 +295,7 @@ export default class Character extends MovableObject {
         this.checkBarrierCollisions()
 
         /**update sharkie position and camera_x */
-        if (this.right && !this.barrierRight) {
+        if (this.right && !this.barrierRight && this.x < this.game.world.level.boss.introAtX) {
             this.x += this.speed
             this.game.world.camera_x -= this.speed
         } else if ((this.left && !this.barrierLeft) && this.game.world.camera_x < 0) {

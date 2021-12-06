@@ -8,8 +8,12 @@ export default class Boss extends MovableObject {
     width = 968
     y = 0
     damage = 50
+    speed = 5
     hasHitbox = true
-    isIntroducded = false
+    isIntroducing = false
+    isIntroduced = false
+    drawReverse = false
+    introAtX = 5000
 
     hitboxRight = 70
     hitboxLeft = 60
@@ -40,40 +44,12 @@ export default class Boss extends MovableObject {
 
         this.game = new Game()
 
-        this.x = 3600
+        this.x = this.introAtX
+
+        this.healtbar = document.getElementById('final-boss-healt-bar-container')
 
         this.load()
     };
-
-    introduce() {
-        this.isIntroducded = true
-        this.playAnimation(this.INTRO_ANIMATION)
-        gsap.to(this, {duration: 2, delay: 0.5, y: -200})
-        this.game.world.level.character.freeze = true
-
-        setTimeout(() => {
-            this.playAnimation(this.SWIM_ANIMATION)
-        },900)
-
-        setTimeout(() => {
-            this.game.world.level.character.freeze = false
-            this.attack()
-        }, 2500)
-    }
-
-    attack() {
-        if(this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
-            gsap.to(this, {y: -400, delay: 0.25, duration: .5})
-        } else {
-            gsap.to(this, {y: 100, delay: 0.25, duration: .5})
-        }
-        gsap.to(this, {x: this.x - 400, delay: 0.25, duration: .5})
-
-        this.playAnimation(this.ATTACK_ANIMATION)
-        setTimeout(() => {
-            this.playAnimation(this.SWIM_ANIMATION)
-        },750)
-    }
 
     load() {
         this.loadImage('')
@@ -82,13 +58,87 @@ export default class Boss extends MovableObject {
         this.loadAnimation(this.ATTACK_ANIMATION)
     }
 
+    introduce() {
+        this.isIntroducing = true
+
+        this.playAnimation(this.INTRO_ANIMATION)
+        this.playAnimation(this.SWIM_ANIMATION, 900)
+
+        gsap.to(this, {duration: 2, delay: 0.5, y: -200})
+
+        this.freezeCharacer()
+        this.fadeInHealthbar()
+    }
+
+    freezeCharacer() {
+        this.game.world.level.character.freeze = true
+
+        setTimeout(() => {
+            this.game.world.level.character.freeze = false
+        }, 1750)
+
+        setTimeout(() => {
+            this.attack()
+            this.isIntroduced = true
+
+            setInterval(() => {
+                this.attack()
+            }, 2000)
+        },2500)
+    }
+
+    fadeInHealthbar() {
+        this.healtbar.classList.remove('hide')
+        gsap.fromTo(this.healtbar, {opacity: 0,}, {opacity: 1, duration: 0.5, delay: 1.6})
+    }
+
+    attack() {
+        if(this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
+            gsap.to(this, {y: -400, delay: 0.25, duration: .5})
+            gsap.to(this, {y: -200, delay: 0.75, duration: .5})
+        } else {
+            gsap.to(this, {y: 100, delay: 0.25, duration: .5})
+            gsap.to(this, {y: -200, delay: 0.75, duration: .5})
+        }
+
+        if(this.drawReverse) {
+            gsap.to(this, {x: this.x + 400, delay: 0.25, duration: .5})
+        } else {
+            gsap.to(this, {x: this.x - 400, delay: 0.25, duration: .5})
+        }
+
+        this.playAnimation(this.ATTACK_ANIMATION)
+        this.playAnimation(this.SWIM_ANIMATION, 750)
+    }
+
     remove() {
         this.game.world.level.enemies.splice(this.game.world.level.enemies.indexOf(this), 1)
     }
 
-    update() {
-        if(this.game.world.level.character.x >= this.x - 1000 && !this.isIntroducded) {
+    updateIntro() {
+        if(this.game.world.level.character.x >= this.x - 900 && !this.isIntroducing) {
             this.introduce()
         }
+    }
+
+    updateMovement() {
+        if(this.isIntroduced) {
+            if(!this.drawReverse) {
+                this.x -= this.speed
+            } else {
+                this.x += this.speed
+            }
+    
+            if(this.x < 200) {
+                this.drawReverse = true
+            } else if(this.x >= this.introAtX) {
+                this.drawReverse = false
+            }
+        }
+    }
+
+    update() {
+        this.updateIntro()
+        this.updateMovement()
     }
 };

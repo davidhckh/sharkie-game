@@ -34,7 +34,9 @@ export default class World {
         }
     };
 
+    /**draw all elements on each frame */
     draw() {
+        /**flip */
         this.game.drawer.ctx.translate(this.camera_x, 0)
 
         this.game.drawer.drawAll(this.background);
@@ -42,10 +44,11 @@ export default class World {
         this.game.drawer.drawAll(this.bubbles)
         this.game.drawer.drawAll(this.level.coins)
         this.game.drawer.drawAll(this.level.poison)
-        this.game.drawer.draw(this.level.boss);
         this.game.drawer.draw(this.level.character);
         this.game.drawer.drawAll(this.level.barriers)
+        this.game.drawer.draw(this.level.boss);
 
+        /**flip back */
         this.game.drawer.ctx.translate(-this.camera_x, 0)
     }
 

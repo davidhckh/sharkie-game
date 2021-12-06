@@ -25,28 +25,30 @@ export default class Object{
         }
     }
 
-    playAnimation(animation) {
-        this.currentFrame = 0
-        this.currentMaximumFrame = animation.currentAnimationTotalFrames
-        clearInterval(this.animationInterval)
-        let self = this
-
-        nextFrame()
-        this.animationInterval = setInterval(() => {
+    playAnimation(animation, delay = 0) {
+        setTimeout(() => {
+            this.currentFrame = 0
+            this.currentMaximumFrame = animation.currentAnimationTotalFrames
+            clearInterval(this.animationInterval)
+            let self = this
+    
             nextFrame()
-        },150)
-
-        function nextFrame() {
-            if(animation.cache[self.currentFrame]) {
-                self.img = animation.cache[self.currentFrame]
+            this.animationInterval = setInterval(() => {
+                nextFrame()
+            },150)
+    
+            function nextFrame() {
+                if(animation.cache[self.currentFrame]) {
+                    self.img = animation.cache[self.currentFrame]
+                }
+    
+                if(self.currentFrame == animation.frames - 1) {
+                    self.currentFrame = 0
+                } else {
+                    self.currentFrame++
+                }
             }
-
-            if(self.currentFrame == animation.frames - 1) {
-                self.currentFrame = 0
-            } else {
-                self.currentFrame++
-            }
-        }
+        }, delay)
     }
 
     playReverseAnimation(animation) {
