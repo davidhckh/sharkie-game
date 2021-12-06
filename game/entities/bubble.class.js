@@ -11,7 +11,9 @@ export default class Pufferfish extends MovableObject {
     hitboxRight = 20
     hitboxLeft = 20
     hitboxTop = 20
-    hitboxBottom = 20    
+    hitboxBottom = 20
+    
+    poisonBubble = false
 
     /**
      * constructor
@@ -22,27 +24,27 @@ export default class Pufferfish extends MovableObject {
         this.game = new Game()
 
         this.character = this.game.world.level.character
-        this.img = this.game.bubble
         this.left = this.character.drawReverse
         this.index = index
 
+        this.loadBubble()
         this.setPosition()
         this.move()
-
-        this.collisionInterval = setInterval(() => {
-            this.game.world.level.enemies.forEach(enemy => {
-                this.checkCollisionsWith(enemy)
-            })
-            this.game.world.level.barriers.forEach(barrier => {
-                this.checkCollisionsWith(barrier)
-            })
-            this.checkCollisionsWith(this.game.world.level.boss)
-        }, 50)
+        this.collisionCheck()
 
         this.selfDestructionTimeout = setTimeout(() => {
             this.selfDestruct()
         }, 4000)
     };
+
+    loadBubble() {
+        if(this.character.poisonBubbles) {
+            this.img = this.game.poisonBubble
+            this.poisonBubble = true
+        } else {
+            this.img = this.game.bubble
+        }
+    }
 
     setPosition() {
         if(this.character.drawReverse) {
@@ -62,6 +64,18 @@ export default class Pufferfish extends MovableObject {
         }
     }
 
+    collisionCheck() {
+        this.collisionInterval = setInterval(() => {
+            this.game.world.level.enemies.forEach(enemy => {
+                this.checkCollisionsWith(enemy)
+            })
+            this.game.world.level.barriers.forEach(barrier => {
+                this.checkCollisionsWith(barrier)
+            })
+            this.checkCollisionsWith(this.game.world.level.boss)
+        }, 50)
+    }
+
     checkCollisionsWith(object) {
         if(this.isCollidingWith(object)) {
             if(object.name == 'jellyfish' || object.name == 'pufferfish' || object.name == 'barrier' || object.name == 'boss') {
@@ -70,6 +84,9 @@ export default class Pufferfish extends MovableObject {
             if(object.name == 'jellyfish' && object.type == 'regular' && !object.isDead) {
                 object.die()
             } 
+            if(object.name == 'boss' && this.poisonBubble) {
+                object.takeDmg()
+            }
         }
     }
 

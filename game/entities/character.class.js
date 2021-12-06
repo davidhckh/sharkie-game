@@ -6,13 +6,15 @@ import Bubble from './bubble.class.js'
 export default class Character extends MovableObject {
 
     name = 'character'
-    speed = 10
+    speed = 25
     height = 600
     width = 489
     health = 100
 
     y = 10
     x = 200
+
+    poisonBubbles = false
 
     left = false
     right = false

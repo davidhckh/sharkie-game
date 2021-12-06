@@ -11,6 +11,8 @@ export default class Object{
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
+
+        clearInterval(this.animationInterval)
     };
 
     loadAnimation(animation) {

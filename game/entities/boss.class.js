@@ -8,6 +8,7 @@ export default class Boss extends MovableObject {
     width = 968
     y = 0
     damage = 50
+    health = 100
     speed = 5
     hasHitbox = true
     isIntroducing = false
@@ -35,6 +36,16 @@ export default class Boss extends MovableObject {
         path: '../assets/boss/attack/'
     }
 
+    HURT_ANIMATION = {
+        frames: 4,
+        path: '../assets/boss/hurt/'
+    }
+
+    DEAD_ANIMATION = {
+        frames: 5,
+        path: '../assets/boss/dead/'
+    }
+
 
     /**
      * constructor
@@ -46,7 +57,7 @@ export default class Boss extends MovableObject {
 
         this.x = this.introAtX
 
-        this.healtbar = document.getElementById('final-boss-healt-bar-container')
+        this.healthbar = document.getElementById('final-boss-health-bar')
 
         this.load()
     };
@@ -56,6 +67,8 @@ export default class Boss extends MovableObject {
         this.loadAnimation(this.SWIM_ANIMATION)
         this.loadAnimation(this.INTRO_ANIMATION)
         this.loadAnimation(this.ATTACK_ANIMATION)
+        this.loadAnimation(this.HURT_ANIMATION)
+        this.loadAnimation(this.DEAD_ANIMATION)
     }
 
     introduce() {
@@ -64,13 +77,25 @@ export default class Boss extends MovableObject {
         this.playAnimation(this.INTRO_ANIMATION)
         this.playAnimation(this.SWIM_ANIMATION, 900)
 
-        gsap.to(this, {duration: 2, delay: 0.5, y: -200})
+        gsap.to(this, { duration: 2, delay: 0.5, y: -200 })
 
-        this.freezeCharacer()
+        this.freezeCharacterForIntro()
         this.fadeInHealthbar()
     }
 
-    freezeCharacer() {
+    updateHealthbar() {
+        this.healthbar.style.width = this.health + '%'
+
+        if (this.health > 50) {
+            this.healthbar.style.background = 'linear-gradient(#b5ff2b, #82c900)'
+        } else if (this.health <= 50 && this.health > 30) {
+            this.healthbar.style.background = 'linear-gradient(#FFE47C, #FFCF00)'
+        } else {
+            this.healthbar.style.background = 'linear-gradient(#FF9C75, #FF4B00)'
+        }
+    }
+
+    freezeCharacterForIntro() {
         this.game.world.level.character.freeze = true
 
         setTimeout(() => {
@@ -84,54 +109,103 @@ export default class Boss extends MovableObject {
             setInterval(() => {
                 this.attack()
             }, 2000)
-        },2500)
+        }, 2500)
     }
 
     fadeInHealthbar() {
-        this.healtbar.classList.remove('hide')
-        gsap.fromTo(this.healtbar, {opacity: 0,}, {opacity: 1, duration: 0.5, delay: 1.6})
+        let container = document.getElementById('final-boss-healt-bar-container')
+
+        container.classList.remove('hide')
+        gsap.fromTo(container, { opacity: 0, }, { opacity: 1, duration: 0.5, delay: 1.6 })
     }
 
     attack() {
-        if(this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
-            gsap.to(this, {y: -400, delay: 0.25, duration: .5})
-            gsap.to(this, {y: -200, delay: 0.75, duration: .5})
-        } else {
-            gsap.to(this, {y: 100, delay: 0.25, duration: .5})
-            gsap.to(this, {y: -200, delay: 0.75, duration: .5})
-        }
+        if (!this.isTakingDmg && !this.isDead) {
+            if (this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
+                gsap.to(this, { y: -400, delay: 0.25, duration: .5 })
+                gsap.to(this, { y: -200, delay: 0.75, duration: .5 })
+            } else {
+                gsap.to(this, { y: 100, delay: 0.25, duration: .5 })
+                gsap.to(this, { y: -200, delay: 0.75, duration: .5 })
+            }
 
-        if(this.drawReverse) {
-            gsap.to(this, {x: this.x + 400, delay: 0.25, duration: .5})
-        } else {
-            gsap.to(this, {x: this.x - 400, delay: 0.25, duration: .5})
-        }
+            if (this.drawReverse) {
+                gsap.to(this, { x: this.x + 400, delay: 0.25, duration: .5 })
+            } else {
+                gsap.to(this, { x: this.x - 400, delay: 0.25, duration: .5 })
+            }
 
-        this.playAnimation(this.ATTACK_ANIMATION)
-        this.playAnimation(this.SWIM_ANIMATION, 750)
+            this.playAnimation(this.ATTACK_ANIMATION)
+
+            this.swimTimeout = setTimeout(() => {
+                this.playAnimation(this.SWIM_ANIMATION)
+            }, 750)
+        }
     }
 
-    remove() {
-        this.game.world.level.enemies.splice(this.game.world.level.enemies.indexOf(this), 1)
+    takeDmg() {
+        if (!this.isTakingDmg && this.isIntroduced && !this.isDead) {
+            this.playAnimation(this.HURT_ANIMATION)
+
+            this.dmgSwimTimeout = setTimeout(() => {
+                this.playAnimation(this.SWIM_ANIMATION)
+            }, 600)
+
+            clearTimeout(this.swimTimeout)
+
+            this.isTakingDmg = true
+            setTimeout(() => {
+                this.isTakingDmg = false
+            }, 600)
+
+            this.health -= 20
+            this.updateHealthbar()
+
+            if (this.health == 0) {
+                this.die()
+            }
+        }
+    }
+
+    die() {
+        clearTimeout(this.swimTimeout)
+        clearTimeout(this.dmgSwimTimeout)
+
+        this.drawReverse = false
+
+
+        this.playAnimation(this.DEAD_ANIMATION)
+        this.game.world.level.character.freeze = true
+
+        gsap.globalTimeline.clear()
+
+        gsap.to(this, { y: -200, duration: 0.2})
+        gsap.to(this, { y: 0, delay: 0.2, duration: 5, repeat: -1, yoyo: true, ease: Power1.easeInOut})
+
+        this.isDead = true
+
+        setTimeout(() => {
+            this.loadImage('../assets/boss/dead/4.png')
+        }, 750);
     }
 
     updateIntro() {
-        if(this.game.world.level.character.x >= this.x - 900 && !this.isIntroducing) {
+        if (this.game.world.level.character.x >= this.x - 900 && !this.isIntroducing) {
             this.introduce()
         }
     }
 
     updateMovement() {
-        if(this.isIntroduced) {
-            if(!this.drawReverse) {
+        if (this.isIntroduced && !this.isTakingDmg && !this.isDead) {
+            if (!this.drawReverse) {
                 this.x -= this.speed
             } else {
                 this.x += this.speed
             }
-    
-            if(this.x < 200) {
+
+            if (this.x < 200) {
                 this.drawReverse = true
-            } else if(this.x >= this.introAtX) {
+            } else if (this.x >= this.introAtX) {
                 this.drawReverse = false
             }
         }

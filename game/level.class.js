@@ -38,7 +38,6 @@ export default class Level {
      */
     poison = [
         new Poison(860, 750),
-        new Poison(2500, 850),
     ]
 
     /**Barriers */

@@ -55,6 +55,16 @@ export default class Game {
 
     updatePoison() {
         this.poisonCounter.innerHTML = this.collectedPoison + ' / ' + this.totalPoison
+
+        if(this.collectedPoison == this.totalPoison) {
+            this.unlockPoisonBubbles()
+        }
+    }
+
+    unlockPoisonBubbles() {
+        document.getElementById('poison-container').style.boxShadow = '0 0 15px #00FF00'
+
+        this.world.level.character.poisonBubbles = true
     }
 
     addPoison() {
@@ -74,9 +84,12 @@ export default class Game {
     };
 
     loadAssets() {
-        /**load bubble */
+        /**load bubbles */
         this.bubble = new Image()
         this.bubble.src = '../assets/sharkie/attack/bubble-tap/bubble.png';
+
+        this.poisonBubble = new Image()
+        this.poisonBubble.src = '../assets/sharkie/attack/bubble-tap/poison-bubble.png';
 
         /**load coin */
         this.coin = new Image()
