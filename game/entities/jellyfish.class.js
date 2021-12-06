@@ -14,10 +14,10 @@ export default class Pufferfish extends MovableObject {
     hitboxRight = 0
     hitboxLeft = 0
     hitboxTop = 0
-    hitboxBottom = 0    
+    hitboxBottom = 0
 
     isDead = false
-    
+
     SWIM_ANIMATION = {
         frames: 4,
     }
@@ -36,8 +36,8 @@ export default class Pufferfish extends MovableObject {
 
         this.x = x
         this.type = type
-        this.SWIM_ANIMATION.path = '../assets/jellyfish/' + this.type +'/' + this.color + '-'
-        this.DEATH_ANIMATION.path = '../assets/jellyfish/' + this.type +'-dead/' + this.color + '-'
+        this.SWIM_ANIMATION.path = '../assets/jellyfish/' + this.type + '/' + this.color + '-'
+        this.DEATH_ANIMATION.path = '../assets/jellyfish/' + this.type + '-dead/' + this.color + '-'
 
         this.load()
 
@@ -47,17 +47,17 @@ export default class Pufferfish extends MovableObject {
     };
 
     load() {
-        this.loadImage('../assets/jellyfish/' + this.type + '/' +  this.color + '-0.png');
+        this.loadImage('../assets/jellyfish/' + this.type + '/' + this.color + '-0.png');
         this.loadAnimation(this.SWIM_ANIMATION)
         this.loadAnimation(this.DEATH_ANIMATION)
     }
-    
+
     move() {
-        if(this.type == 'electric') {
-            gsap.to(this, { duration: 3, y: 980 - this.height, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
-            gsap.to(this, { duration: 1, x: this.x + 300, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
+        if (this.type == 'electric') {
+            gsap.to(this, { duration: 3, y: 980 - this.height, ease: Power1.easeInOut, repeat: -1, yoyo: true })
+            gsap.to(this, { duration: 1, x: this.x + 300, ease: Power1.easeInOut, repeat: -1, yoyo: true })
         } else {
-            this.movementAnimation = gsap.to(this, { duration: 2, delay: Math.random(), y: 980 - this.height, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
+            this.movementAnimation = gsap.to(this, { duration: 2, delay: Math.random(), y: 980 - this.height, ease: Power1.easeInOut, repeat: -1, yoyo: true })
         }
     }
 
@@ -65,7 +65,7 @@ export default class Pufferfish extends MovableObject {
         this.isDead = true
         this.playAnimation(this.DEATH_ANIMATION)
         this.movementAnimation.kill()
-        gsap.to(this, {duration: 2, y: this.y - 1080, ease: Power1.easeInOut})
+        gsap.to(this, { duration: 2, y: this.y - 1080, ease: Power1.easeInOut })
 
         setTimeout(() => {
             this.remove()

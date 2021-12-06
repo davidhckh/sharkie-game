@@ -10,10 +10,6 @@ export default class Coin extends Object {
     isCollected = false
 
     hasHitbox = true
-    hitboxRight = 0
-    hitboxLeft = 0
-    hitboxTop = 0
-    hitboxBottom = 0
 
     /**
      * constructor

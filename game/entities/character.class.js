@@ -30,6 +30,11 @@ export default class Character extends MovableObject {
     isHitting = false
     isInvincible = false
 
+    barrierRight = false
+    barrierLeft = false
+    barrierTop = false
+    barrierBottom = false
+
     SWIM_ANIMATION = {
         frames: 5,
         path: '../assets/sharkie/swim/'
@@ -69,7 +74,7 @@ export default class Character extends MovableObject {
         frames: 8,
         path: '../assets/sharkie/dead/'
     }
-    
+
     constructor() {
         super();
 
@@ -88,24 +93,16 @@ export default class Character extends MovableObject {
 
         /**checkCollisions */
         setInterval(() => {
-            this.game.world.level.enemies.forEach(enemy => {
-                this.checkCollisionsWith(enemy)
-            })
-            this.game.world.level.coins.forEach(item => {
-                this.checkCollisionsWith(item)
-            })
-            this.game.world.level.poison.forEach(item => {
-                this.checkCollisionsWith(item)
-            })
+            this.checkAllCollisions()
         }, 50)
     };
 
     updateHealthbar() {
         this.healthbar.style.width = this.health + '%'
 
-        if(this.health > 50) {
+        if (this.health > 50) {
             this.healthbar.style.background = 'linear-gradient(#b5ff2b, #82c900)'
-        } else if(this.health <= 50 && this.health > 30) {
+        } else if (this.health <= 50 && this.health > 30) {
             this.healthbar.style.background = 'linear-gradient(#FFE47C, #FFCF00)'
         } else {
             this.healthbar.style.background = 'linear-gradient(#FF9C75, #FF4B00)'
@@ -116,17 +113,17 @@ export default class Character extends MovableObject {
         this.healthbar = document.getElementById('health-bar')
         this.healthbar.style.width = '100%'
     }
- 
+
     takeDmg(amount, type) {
-        if(!this.isInvincible) {
+        if (!this.isInvincible) {
             this.health -= amount
             this.updateHealthbar()
             this.becomeInvincible()
             this.jump()
 
-            if(type == 'electric') {
+            if (type == 'electric') {
                 this.playAnimation(this.ELECTRIC_HURT_ANIMATION)
-            } else if(type == 'poison') {
+            } else if (type == 'poison') {
                 this.playAnimation(this.POISON_HURT_ANIMATION)
             } else {
                 this.playAnimation(this.NORMAL_HURT_ANIMATION)
@@ -139,34 +136,53 @@ export default class Character extends MovableObject {
         setTimeout(() => {
             this.isInvincible = false
 
-            if(this.isSwimming) {
+            if (this.isSwimming) {
                 this.playAnimation(this.SWIM_ANIMATION)
-             } else {
+            } else {
                 this.playAnimation(this.IDLE_ANIMATION)
-             }
-        },1000)
+            }
+        }, 1000)
+    }
+
+    checkAllCollisions() {
+        this.game.world.level.enemies.forEach(enemy => {
+            this.checkCollisionsWith(enemy)
+        })
+        this.game.world.level.coins.forEach(item => {
+            this.checkCollisionsWith(item)
+        })
+        this.game.world.level.poison.forEach(item => {
+            this.checkCollisionsWith(item)
+        })
+        this.game.world.level.barriers.forEach(barrier => {
+            this.checkCollisionsWith(barrier)
+        })
     }
 
     checkCollisionsWith(object) {
-        if(this.isCollidingWith(object)) {
-            if(object.name == 'jellyfish' && !object.isDead) {
-                if(object.type == 'electric') {
+        if (this.isCollidingWith(object)) {
+            if (object.name == 'jellyfish' && !object.isDead) {
+                if (object.type == 'electric') {
                     this.takeDmg(30, 'electric')
                 } else {
                     this.takeDmg(20, 'regular')
                 }
-            } else if(object.name == 'pufferfish') {
+            } else if (object.name == 'pufferfish') {
                 this.onCollisionWithPufferfish(object)
-            } else if((object.name == 'coin' || object.name == 'poison') && !object.isCollected) {
+            } else if ((object.name == 'coin' || object.name == 'poison') && !object.isCollected) {
                 object.collect()
             }
         }
     }
 
+    setBarrierCollisionDirection(object) {
+        this.collidingRight = this.isCollidingRight(object)
+    }
+
     onCollisionWithPufferfish(pufferfish) {
-        if(pufferfish.isBig) {
+        if (pufferfish.isBig) {
             this.takeDmg(15, 'poison')
-        } else if(this.isHitting) {
+        } else if (this.isHitting) {
             pufferfish.die()
         }
     }
@@ -174,9 +190,9 @@ export default class Character extends MovableObject {
     onKeyUp() {
         /**stop swimming on key up */
         this.game.events.on('keyup', () => {
-            if(event.code == 'ArrowRight') {
+            if (event.code == 'ArrowRight') {
                 this.stopSwimming('right')
-            } else if(event.code == 'ArrowLeft') {
+            } else if (event.code == 'ArrowLeft') {
                 this.stopSwimming('left')
             }
         })
@@ -185,15 +201,15 @@ export default class Character extends MovableObject {
     onKeyDown() {
         /**start swimming, jump, slap and shoot on key down */
         this.game.events.on('keydown', () => {
-            if(event.code == 'ArrowRight' && !event.repeat) {
+            if (event.code == 'ArrowRight' && !event.repeat) {
                 this.startSwimming('right')
-            } else if(event.code == 'ArrowLeft' && !event.repeat) {
+            } else if (event.code == 'ArrowLeft' && !event.repeat) {
                 this.startSwimming('left')
-            } else if(event.code == 'Space' && !event.repeat) {
+            } else if (event.code == 'Space' && !event.repeat) {
                 this.jump()
-            } else if(event.key == 'y' && !event.repeat) {
+            } else if (event.key == 'y' && !event.repeat) {
                 this.slap()
-            } else if(event.key == 'x' && !event.repeat) {
+            } else if (event.key == 'x' && !event.repeat) {
                 this.shootBubble()
             }
         })
@@ -201,15 +217,14 @@ export default class Character extends MovableObject {
 
     jump() {
         this.speedY = 15
-        this.isJumping = true
-    } 
+    }
 
     slap() {
-        if(!this.isShooting && !this.isHitting && !this.isInvincible) {
+        if (!this.isShooting && !this.isHitting && !this.isInvincible) {
             this.isHitting = true
             this.playAnimation(this.SLAP_ANIMATION)
-            setTimeout(() => { 
-                if(this.isSwimming) {
+            setTimeout(() => {
+                if (this.isSwimming) {
                     this.playAnimation(this.SWIM_ANIMATION)
                 } else {
                     this.playAnimation(this.IDLE_ANIMATION)
@@ -220,11 +235,11 @@ export default class Character extends MovableObject {
     }
 
     shootBubble() {
-        if(!this.isShooting && !this.isHitting && !this.isInvincible) {
+        if (!this.isShooting && !this.isHitting && !this.isInvincible) {
             this.isShooting = true
             this.playAnimation(this.BUBBLE_ANIMATION)
-            setTimeout(() => { 
-                if(this.isSwimming) {
+            setTimeout(() => {
+                if (this.isSwimming) {
                     this.playAnimation(this.SWIM_ANIMATION)
                 } else {
                     this.playAnimation(this.IDLE_ANIMATION)
@@ -250,7 +265,7 @@ export default class Character extends MovableObject {
     }
 
     startSwimming(direction) {
-        if(!this.isHitting && !this.isShooting && !this.isInvincible) {
+        if (!this.isHitting && !this.isShooting && !this.isInvincible) {
             this.playAnimation(this.SWIM_ANIMATION)
         }
 
@@ -266,14 +281,14 @@ export default class Character extends MovableObject {
 
     stopSwimming(direction) {
         /**disable direction boolean */
-        if(direction == 'left') {
+        if (direction == 'left') {
             this.left = false
         } else if (direction == 'right') {
             this.right = false
         }
 
         /**disable animation */
-        if(!this.left && !this.right && !this.isShooting && !this.isHitting && !this.isInvincible) {
+        if (!this.left && !this.right && !this.isShooting && !this.isHitting && !this.isInvincible) {
             this.playAnimation(this.IDLE_ANIMATION)
         }
 
@@ -281,33 +296,71 @@ export default class Character extends MovableObject {
     }
 
     updateSwim() {
+        this.checkBarrierCollisions()
+
         /**update sharkie position and camera_x */
-        if(this.right) {
+        if (this.right && !this.barrierRight) {
             this.x += this.speed
             this.game.world.camera_x -= this.speed
-        } else if(this.left && this.game.world.camera_x < 0) {
+        } else if ((this.left && !this.barrierLeft) && this.game.world.camera_x < 0) {
             this.x -= this.speed
             this.game.world.camera_x += this.speed
         }
     }
 
     applyPhysics() {
-        /**maximum jump height */
-        if(this.y < -250) {
-            this.y = -250
+        if (this.speedY <= 0) {
+            /**is sinking */
+            this.applySink()
+        } else {
+            /**is jumping */
+            this.applyJump()
         }
+    }
 
-        /**apply physics and jump */
-        if(this.y <= 500 || this.isJumping) {
+    applySink() {
+        if ((this.y <= 530 && !this.barrierBottom)) {
             this.y -= this.speedY
-            if(this.speedY > -8) {
+            if (this.speedY > -8) {
                 this.speedY -= this.acceleration
             }
         }
+        
+    }
 
-        if(this.speedY < 0) {
-            this.isJumping = false
+    applyJump() {
+        if (!this.barrierTop) {
+            this.y -= this.speedY
+        } else {
+            this.speedY = 0
         }
+        this.speedY -= this.acceleration
+
+        /**maximum jump height */
+        if (this.y < -250) {
+            this.y = -250
+        }
+    }
+
+    checkBarrierCollisions() {
+        this.barrierRight = false
+        this.barrierLeft = false
+        this.barrierTop = false
+        this.barrierBottom = false
+
+        this.game.world.level.barriers.forEach((barrier) => {
+            if (this.isCollidingWith(barrier)) {
+                if (this.x + this.width - this.hitboxRight <= barrier.x + this.speed + barrier.hitboxLeft) {
+                    this.barrierRight = true
+                } else if (this.x + this.hitboxLeft >= barrier.x + barrier.width - barrier.hitboxRight - this.speed) {
+                    this.barrierLeft = true
+                } else if (this.y + this.height - this.hitboxBottom <= barrier.y + barrier.hitboxTop + this.speed) {
+                    this.barrierBottom = true
+                } else if (this.y + this.hitboxTop <= barrier.y + barrier.height - barrier.hitboxBottom) {
+                    this.barrierTop = true
+                }
+            }
+        })
     }
 
     update() {
