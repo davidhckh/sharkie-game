@@ -11,6 +11,11 @@ export default class Coin extends Object {
 
     hasHitbox = true
 
+    COIN_ANIMATION = {
+        frames: 4,
+        path: '../assets/items/coin-animated/'
+    }
+
     /**
      * constructor
      */
@@ -22,7 +27,7 @@ export default class Coin extends Object {
         this.x = x
         this.y = y
 
-        this.img = this.game.coin
+        this.loadImage('../assets/items/coin.png')
     };
 
     collect() {

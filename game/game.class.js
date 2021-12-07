@@ -62,7 +62,12 @@ export default class Game {
     }
 
     unlockPoisonBubbles() {
-        document.getElementById('poison-container').style.boxShadow = '0 0 15px #00FF00'
+        let poisonContainer = document.getElementById('poison-container')
+
+        poisonContainer.style.color = '#00ff00'
+        poisonContainer.style.boxShadow = '0 0 15px #00FF00'
+        
+        gsap.to(poisonContainer, {yoyo: true, scale: 1.1, duration: 0.5, repeat: 1})
 
         this.world.level.character.poisonBubbles = true
     }
@@ -90,14 +95,6 @@ export default class Game {
 
         this.poisonBubble = new Image()
         this.poisonBubble.src = '../assets/sharkie/attack/bubble-tap/poison-bubble.png';
-
-        /**load coin */
-        this.coin = new Image()
-        this.coin.src = '../assets/items/coin.png'
-
-        /**load poison */
-        this.poisonLeft = new Image({ src: '../assets/items/poison.png' })
-        this.poisonLeft.src = '../assets/items/poison.png'
 
         /**load barriers */
         this.barrier0 = new Image()

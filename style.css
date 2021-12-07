@@ -145,8 +145,13 @@ canvas {
         top: 2vh
     }
 
-    #posion-container {
+    #poison-container {
         top: 90px;
+    }
+
+    #final-boss-healt-bar-container {
+        transform: scale(0.85);
+        bottom: 20px;
     }
 }
 
@@ -163,12 +168,17 @@ canvas {
         right: -3px;
     }
 
-    #posion-container {
+    #poison-container {
         top: 70px;
     } 
+
+    #final-boss-healt-bar-container {
+        transform: scale(0.65);
+        bottom: 15px;
+    }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 700px) {
     #health-bar-container {
         transform: scale(0.4);
         left: -70px;
@@ -177,13 +187,40 @@ canvas {
 
     .amount-container {
         transform: scale(0.4);
-        right: -1000px;
         top: 0.5vh;
         right: -30px;
     }
 
-    #posion-container {
+    #poison-container {
         top: 40px;
     } 
+
+    #final-boss-healt-bar-container {
+        transform: scale(0.45);
+        bottom: 3px;
+    }
+}
+
+@media(max-width: 500px) {
+    #health-bar-container {
+        transform: scale(0.3);
+        left: -90px;
+        top: -2px;
+    }
+
+    .amount-container {
+        transform: scale(0.3);
+        top: 0;
+        right: -42px;
+    }
+
+    #poison-container {
+        top: 30px;
+    } 
+
+    #final-boss-healt-bar-container {
+        transform: scale(0.35);
+        bottom: 2px;
+    }
 }
 

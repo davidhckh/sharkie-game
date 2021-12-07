@@ -15,6 +15,11 @@ export default class Poison extends Object {
     hitboxTop = 0
     hitboxBottom = 0
 
+    POISON_ANIMATION = {
+        frames: 8,
+        path: '../assets/items/poison-animated/'
+    }
+
     /**
      * constructor
      */
@@ -26,16 +31,11 @@ export default class Poison extends Object {
         this.x = x
         this.y = y
 
-        this.setImage()
+        this.loadImage('../assets/items/poison-animated/0.png')
+        this.loadAnimation(this.POISON_ANIMATION)
+        this.playAnimation(this.POISON_ANIMATION)
     };
 
-    setImage() {
-        this.img = this.game.poisonLeft
-
-        if(Math.floor(Math.random() * 2) == 0) {
-            this.drawReverse = true
-        }
-    }
 
     collect() {
         this.isCollected = true

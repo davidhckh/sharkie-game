@@ -14,7 +14,7 @@ export default class Boss extends MovableObject {
     isIntroducing = false
     isIntroduced = false
     drawReverse = false
-    introAtX = 5000
+    introAtX = 9500
 
     hitboxRight = 70
     hitboxLeft = 60
@@ -180,7 +180,7 @@ export default class Boss extends MovableObject {
         gsap.globalTimeline.clear()
 
         gsap.to(this, { y: -200, duration: 0.2})
-        gsap.to(this, { y: 0, delay: 0.2, duration: 5, repeat: -1, yoyo: true, ease: Power1.easeInOut})
+        gsap.to(this, { y: -this.height, delay: 0.2, duration: 8})
 
         this.isDead = true
 
@@ -203,9 +203,9 @@ export default class Boss extends MovableObject {
                 this.x += this.speed
             }
 
-            if (this.x < 200) {
+            if (this.x < 200 || this.x + (this.width / 2) - this.hitboxRight < this.game.world.level.character.x) {
                 this.drawReverse = true
-            } else if (this.x >= this.introAtX) {
+            } else if (this.x >= this.introAtX || this.x + this.hitboxRight  + (this.width / 2) > this.game.world.level.character.x) {
                 this.drawReverse = false
             }
         }

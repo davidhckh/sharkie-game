@@ -6,7 +6,7 @@ import Bubble from './bubble.class.js'
 export default class Character extends MovableObject {
 
     name = 'character'
-    speed = 25
+    speed = 10
     height = 600
     width = 489
     health = 100
@@ -202,10 +202,11 @@ export default class Character extends MovableObject {
         this.game.world.level.barriers.forEach(barrier => {
             this.checkCollisionsWith(barrier)
         })
+        this.checkCollisionsWith(this.game.world.level.boss)
     }
 
     checkCollisionsWith(object) {
-        if (this.isCollidingWith(object)) {
+        if (this.isCollidingWith(object) && !this.freeze) {
             if (object.name == 'jellyfish' && !object.isDead) {
                 if (object.type == 'electric') {
                     this.takeDmg(30, 'electric')
@@ -216,6 +217,8 @@ export default class Character extends MovableObject {
                 this.onCollisionWithPufferfish(object)
             } else if ((object.name == 'coin' || object.name == 'poison') && !object.isCollected) {
                 object.collect()
+            } else if(object.name == 'boss') {
+                this.takeDmg(30, 'regular')
             }
         }
     }

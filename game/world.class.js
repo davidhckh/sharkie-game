@@ -40,10 +40,10 @@ export default class World {
         this.game.drawer.ctx.translate(this.camera_x, 0)
 
         this.game.drawer.drawAll(this.background);
-        this.game.drawer.drawAll(this.level.enemies);
-        this.game.drawer.drawAll(this.bubbles)
         this.game.drawer.drawAll(this.level.coins)
         this.game.drawer.drawAll(this.level.poison)
+        this.game.drawer.drawAll(this.level.enemies);
+        this.game.drawer.drawAll(this.bubbles)
         this.game.drawer.draw(this.level.character);
         this.game.drawer.drawAll(this.level.barriers)
         this.game.drawer.draw(this.level.boss);
