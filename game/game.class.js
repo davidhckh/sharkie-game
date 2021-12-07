@@ -1,7 +1,7 @@
 import World from "./world.class.js";
 import Drawer from "./drawer.class.js";
-import Time from './utils/time.class.js'
 import Events from "./events.class.js";
+import UI from "./ui.class.js";
 
 export default class Game {
 
@@ -18,63 +18,23 @@ export default class Game {
         this.loadAssets()
 
         this.canvas = canvas;
-        this.time = new Time();
         this.drawer = new Drawer();
         this.events = new Events()
-        this.world = new World();
+        this.world = new World()
+        this.ui = new UI()
 
-        this.setupCoins()
-        this.setupPoison()
         this.update();
     }
 
-    setupCoins() {
-        this.coinCounter = document.getElementById('coin-amount-label')
-        this.collectedCoins = 0
-        this.totalCoins = this.world.level.coins.length
+    win() {
+        this.world.level.character.freeze = true
 
-        this.updateCoins()
+        this.ui.showWinContainer()
     }
 
-    updateCoins() {
-        this.coinCounter.innerHTML = this.collectedCoins + ' / ' + this.totalCoins
-    }
-
-    addCoin() {
-        this.collectedCoins += 1
-        this.updateCoins()
-    }
-
-    setupPoison() {
-        this.poisonCounter = document.getElementById('poison-amount-label')
-        this.collectedPoison = 0
-        this.totalPoison = this.world.level.poison.length
-
-        this.updatePoison()
-    }
-
-    updatePoison() {
-        this.poisonCounter.innerHTML = this.collectedPoison + ' / ' + this.totalPoison
-
-        if(this.collectedPoison == this.totalPoison) {
-            this.unlockPoisonBubbles()
-        }
-    }
-
-    unlockPoisonBubbles() {
-        let poisonContainer = document.getElementById('poison-container')
-
-        poisonContainer.style.color = '#00ff00'
-        poisonContainer.style.boxShadow = '0 0 15px #00FF00'
-        
-        gsap.to(poisonContainer, {yoyo: true, scale: 1.1, duration: 0.5, repeat: 1})
-
-        this.world.level.character.poisonBubbles = true
-    }
-
-    addPoison() {
-        this.collectedPoison += 1
-        this.updatePoison()
+    restart() {
+        this.world = new World()
+        this.ui = new UI()
     }
 
     /**update on every frame */

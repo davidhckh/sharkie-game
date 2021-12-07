@@ -39,7 +39,7 @@ export default class Poison extends Object {
 
     collect() {
         this.isCollected = true
-        this.game.addPoison()
+        this.game.ui.addPoison()
         this.remove()
     }
 

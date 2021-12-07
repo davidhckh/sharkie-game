@@ -37,7 +37,6 @@ export default class World {
     killAllEnemies() {
         this.level.enemies.forEach((enemy) => {
             enemy.die()
-            console.log(enemy.name)
         })
     }
 

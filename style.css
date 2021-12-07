@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
 body {
     margin: 0;
@@ -9,6 +10,7 @@ body {
     height: 100vh;
     background: #221b5e;
     overflow: hidden;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .absolute {
@@ -19,6 +21,7 @@ body {
 #game-container {
     background-color: black;
     position: relative;
+    overflow: hidden
 }
 
 canvas {
@@ -32,6 +35,39 @@ canvas {
 
 .hide {
     display:none !important
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    width:200px;
+    background-color: #9FC805;
+    border-radius: 10px;
+    height: 45px;
+    color:white;
+    font-size: 20px;
+    box-shadow: 0px 4px #718E04;
+    text-shadow: 0px 2px 2px #718E04;
+    position: relative;
+    bottom: 0;
+    transition: .1s;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.button:hover {
+    bottom: -4px;
+    box-shadow: none;
 }
 
 /*Health Bars*/
@@ -66,7 +102,7 @@ canvas {
 }
 
 /*Final Boss Health Bar*/
-#final-boss-healt-bar-container {
+#final-boss-health-bar-container {
     height: 23px;
     bottom: 30px;
     left: 0;
@@ -84,7 +120,6 @@ canvas {
     height: 70px;
 }
 
-
 /*Coin Contaienr**/
 .amount-container {
     background: rgba(0, 0, 0, 0.2);
@@ -96,7 +131,6 @@ canvas {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-family: 'Varela Round', sans-serif;
     font-weight: 600;
     color: white;
     font-size: 22px;
@@ -116,6 +150,25 @@ canvas {
 #poison-icon {
     top: -40px;
     right: -53px;
+}
+
+/*Win Container*/
+#win-container {
+    height: 100%;
+    width: 100%;
+    background: #1616669a;
+}
+
+#win-label {
+    color: white;
+    margin-bottom: 100px;
+    font-size: 92px;
+    font-family: 'Fredoka One';
+}
+
+#win-sharkie {
+    height: 250px;
+    transform: translateX(-270px) translateY(50px);
 }
 
 
@@ -149,7 +202,7 @@ canvas {
         top: 90px;
     }
 
-    #final-boss-healt-bar-container {
+    #final-boss-health-bar-container {
         transform: scale(0.85);
         bottom: 20px;
     }
@@ -172,7 +225,7 @@ canvas {
         top: 70px;
     } 
 
-    #final-boss-healt-bar-container {
+    #final-boss-health-bar-container {
         transform: scale(0.65);
         bottom: 15px;
     }
@@ -195,7 +248,7 @@ canvas {
         top: 40px;
     } 
 
-    #final-boss-healt-bar-container {
+    #final-boss-health-bar-container {
         transform: scale(0.45);
         bottom: 3px;
     }
@@ -218,7 +271,7 @@ canvas {
         top: 30px;
     } 
 
-    #final-boss-healt-bar-container {
+    #final-boss-health-bar-container {
         transform: scale(0.35);
         bottom: 2px;
     }

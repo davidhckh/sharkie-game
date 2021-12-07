@@ -6,7 +6,7 @@ import Bubble from './bubble.class.js'
 export default class Character extends MovableObject {
 
     name = 'character'
-    speed = 10
+    speed = 20
     height = 600
     width = 489
     health = 100
@@ -84,7 +84,6 @@ export default class Character extends MovableObject {
         this.game = new Game()
 
         /**setup*/
-        this.fillHealthbar()
         this.load()
         this.onKeyUp()
         this.onKeyDown()
@@ -142,27 +141,10 @@ export default class Character extends MovableObject {
         })
     }
 
-    updateHealthbar() {
-        this.healthbar.style.width = this.health + '%'
-
-        if (this.health > 50) {
-            this.healthbar.style.background = 'linear-gradient(#b5ff2b, #82c900)'
-        } else if (this.health <= 50 && this.health > 30) {
-            this.healthbar.style.background = 'linear-gradient(#FFE47C, #FFCF00)'
-        } else {
-            this.healthbar.style.background = 'linear-gradient(#FF9C75, #FF4B00)'
-        }
-    }
-
-    fillHealthbar() {
-        this.healthbar = document.getElementById('health-bar')
-        this.healthbar.style.width = '100%'
-    }
-
     takeDmg(amount, type) {
         if (!this.isInvincible) {
             this.health -= amount
-            this.updateHealthbar()
+            this.game.ui.updateHealthbar()
             this.becomeInvincible()
             this.jump()
 

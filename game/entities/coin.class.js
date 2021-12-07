@@ -32,7 +32,7 @@ export default class Coin extends Object {
 
     collect() {
         this.isCollected = true
-        this.game.addCoin()
+        this.game.ui.addCoin()
         this.remove()
     }
 

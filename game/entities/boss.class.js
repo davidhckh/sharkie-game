@@ -80,20 +80,8 @@ export default class Boss extends MovableObject {
         gsap.to(this, { duration: 2, delay: 0.5, y: -200 })
 
         this.freezeCharacterForIntro()
-        this.fadeInHealthbar()
+        this.game.ui.fadeInBossHealthbar()
         this.game.world.killAllEnemies()
-    }
-
-    updateHealthbar() {
-        this.healthbar.style.width = this.health + '%'
-
-        if (this.health > 50) {
-            this.healthbar.style.background = 'linear-gradient(#b5ff2b, #82c900)'
-        } else if (this.health <= 50 && this.health > 30) {
-            this.healthbar.style.background = 'linear-gradient(#FFE47C, #FFCF00)'
-        } else {
-            this.healthbar.style.background = 'linear-gradient(#FF9C75, #FF4B00)'
-        }
     }
 
     freezeCharacterForIntro() {
@@ -111,13 +99,6 @@ export default class Boss extends MovableObject {
                 this.attack()
             }, 2000)
         }, 2500)
-    }
-
-    fadeInHealthbar() {
-        let container = document.getElementById('final-boss-healt-bar-container')
-
-        container.classList.remove('hide')
-        gsap.fromTo(container, { opacity: 0, }, { opacity: 1, duration: 0.5, delay: 1.6 })
     }
 
     attack() {
@@ -160,7 +141,7 @@ export default class Boss extends MovableObject {
             }, 600)
 
             this.health -= 20
-            this.updateHealthbar()
+            this.game.ui.updateBossHealthbar()
 
             if (this.health == 0) {
                 this.die()
@@ -174,12 +155,9 @@ export default class Boss extends MovableObject {
 
         this.drawReverse = false
 
-
         this.playAnimation(this.DEAD_ANIMATION)
-        this.game.world.level.character.freeze = true
 
         gsap.globalTimeline.clear()
-
         gsap.to(this, { y: -200, duration: 0.2})
         gsap.to(this, { y: -this.height, delay: 0.2, duration: 8})
 
@@ -188,6 +166,8 @@ export default class Boss extends MovableObject {
         setTimeout(() => {
             this.loadImage('../assets/boss/dead/4.png')
         }, 750);
+
+        this.game.win()
     }
 
     updateIntro() {
