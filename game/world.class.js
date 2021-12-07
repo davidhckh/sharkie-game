@@ -34,6 +34,13 @@ export default class World {
         }
     };
 
+    killAllEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            enemy.die()
+            console.log(enemy.name)
+        })
+    }
+
     /**draw all elements on each frame */
     draw() {
         /**flip */

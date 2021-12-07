@@ -64,7 +64,9 @@ export default class Pufferfish extends MovableObject {
     die() {
         this.isDead = true
         this.playAnimation(this.DEATH_ANIMATION)
-        this.movementAnimation.kill()
+        if(this.movementAnimation) {
+            this.movementAnimation.kill()
+        }
         gsap.to(this, { duration: 2, y: this.y - 1080, ease: Power1.easeInOut })
 
         setTimeout(() => {

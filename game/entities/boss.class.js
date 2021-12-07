@@ -81,6 +81,7 @@ export default class Boss extends MovableObject {
 
         this.freezeCharacterForIntro()
         this.fadeInHealthbar()
+        this.game.world.killAllEnemies()
     }
 
     updateHealthbar() {

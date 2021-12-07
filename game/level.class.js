@@ -53,9 +53,10 @@ export default class Level {
         new Coin(7050, 300),
         new Coin(7050, 500),
         new Coin(7050, 700),
-        new Coin(7800, 450),
-        new Coin(8000, 450),
-        new Coin(8200, 450),
+        new Coin(7700, 450),
+        new Coin(7900, 450),
+        new Coin(8100, 450),
+        new Coin(8300, 450),
     ]
 
     /**
