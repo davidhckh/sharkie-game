@@ -9,7 +9,6 @@ export default class Pufferfish extends MovableObject {
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
     damage = 20
-    hasHitbox = true
 
     hitboxRight = 0
     hitboxLeft = 0
@@ -43,10 +42,9 @@ export default class Pufferfish extends MovableObject {
         this.x = x
         this.y = y
 
-        this.load()
         this.setBigInterval()
+        this.load()
         this.movement()
-
         this.playAnimation(this.SWIM_ANIMATION)
     };
 
@@ -59,11 +57,12 @@ export default class Pufferfish extends MovableObject {
     }
 
     movement() {
-        this.movementAnimation = gsap.to(this, { duration: 3, delay: Math.random(), x: this.x  - 800, ease:  Power1.easeInOut, repeat: -1, yoyo: true })
-
-        this.movementInterval = setInterval(() => {
-            this.changeDrawDirection()
-        }, 3000) 
+        setTimeout(() => {
+            this.movementAnimation = gsap.to(this, { duration: 3, x: this.x - 800, ease: Power1.easeInOut, yoyo: true, repeat: -1})
+            this.movementInterval = setInterval(() => {
+                this.changeDrawDirection()
+            }, 3000)
+        }, (Math.random() * 4) * 1000) 
     }
 
     changeDrawDirection() {
@@ -103,13 +102,15 @@ export default class Pufferfish extends MovableObject {
     }
 
     setBigInterval() {
-        this.interval = setInterval(() => {
-            if(this.isBig) {
-                this.getSmall()
-            } else {
-                this.getBig()
-            }
-        },2500)
+        setTimeout(() => {
+            this.interval = setInterval(() => {
+                if(this.isBig) {
+                    this.getSmall()
+                } else {
+                    this.getBig()
+                }
+            },2500)
+        }, (Math.random() * 3) * 1000)
     }
 
     getBig() {
