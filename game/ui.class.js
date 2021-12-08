@@ -13,12 +13,14 @@ export default class UI {
         this.coinCounter = document.getElementById('coin-amount-label')
         this.poisonCounter = document.getElementById('poison-amount-label')
         this.winContainer = document.getElementById('win-container')
+        this.deadContainer = document.getElementById('dead-container')
         this.healthbar = document.getElementById('health-bar')
         this.bossHealthbar = document.getElementById('final-boss-health-bar')
     }
 
     setup() {
         this.winContainer.classList.add('hide')
+        this.deadContainer.classList.add('hide')
 
         this.setupCoins()
         this.setupPoison()
@@ -36,8 +38,17 @@ export default class UI {
         document.getElementById('win-collected-coins-label').innerHTML = 'You collected ' + this.collectedCoins + ' out of ' + this.totalCoins + ' coins!'
     }
 
+    showDeadContainer() {
+        this.deadContainer.classList.remove('hide')
+        gsap.fromTo(this.deadContainer, { opacity: 0 }, { opacity: 1, delay: 2, duration: 1 })
+    }
+
     restartButtonClick() {
         document.getElementById('restart-button').addEventListener('click', () => {
+            this.game.restart()
+        })
+
+        document.getElementById('dead-restart-button').addEventListener('click', () => {
             this.game.restart()
         })
     }

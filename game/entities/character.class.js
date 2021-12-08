@@ -91,7 +91,6 @@ export default class Character extends MovableObject {
         /**play idle */
         this.playAnimation(this.IDLE_ANIMATION)
 
-
         /**checkCollisions */
         setInterval(() => {
             this.checkAllCollisions()
@@ -142,7 +141,9 @@ export default class Character extends MovableObject {
     }
 
     takeDmg(amount, type) {
-        if (!this.isInvincible) {
+        if (this.health - amount <= 0) {
+            this.die()
+        } else if (!this.isInvincible) {
             this.health -= amount
             this.game.ui.updateHealthbar()
             this.becomeInvincible()
@@ -161,12 +162,14 @@ export default class Character extends MovableObject {
     becomeInvincible() {
         this.isInvincible = true
         setTimeout(() => {
-            this.isInvincible = false
+            if(!this.isDead) {
+                this.isInvincible = false
 
-            if (this.isSwimming) {
-                this.playAnimation(this.SWIM_ANIMATION)
-            } else {
-                this.playAnimation(this.IDLE_ANIMATION)
+                if (this.isSwimming) {
+                    this.playAnimation(this.SWIM_ANIMATION)
+                } else {
+                    this.playAnimation(this.IDLE_ANIMATION)
+                }
             }
         }, 1000)
     }
@@ -217,6 +220,19 @@ export default class Character extends MovableObject {
         this.speedY = 15
     }
 
+    die() {
+        gsap.globalTimeline.clear()
+        this.health = 0
+        this.playAnimation(this.DEATH_ANIMATION)
+        this.game.ui.updateHealthbar()
+        this.freeze = true
+        this.isDead = true
+        setTimeout(() => {
+            this.loadImage('../assets/sharkie/dead/7.png')
+        }, 1050)
+        this.game.ui.showDeadContainer()
+    }
+
     slap() {
         if (!this.isShooting && !this.isHitting && !this.isInvincible) {
             this.isHitting = true
@@ -248,7 +264,7 @@ export default class Character extends MovableObject {
         }
     }
     startSwimming(direction) {
-        if (!this.isHitting && !this.isShooting && !this.isInvincible) {
+        if (!this.isHitting && !this.isShooting && !this.isInvincible && !this.isDead) {
             this.playAnimation(this.SWIM_ANIMATION)
         }
 
@@ -271,7 +287,7 @@ export default class Character extends MovableObject {
         }
 
         /**disable animation */
-        if (!this.left && !this.right && !this.isShooting && !this.isHitting && !this.isInvincible) {
+        if (!this.left && !this.right && !this.isShooting && !this.isHitting && !this.isInvincible && !this.isDead) {
             this.playAnimation(this.IDLE_ANIMATION)
         }
 
@@ -349,6 +365,8 @@ export default class Character extends MovableObject {
     update() {
         if (!this.freeze) {
             this.updateSwim()
+            this.applyPhysics()
+        } else if(this.isDead) {
             this.applyPhysics()
         }
     }

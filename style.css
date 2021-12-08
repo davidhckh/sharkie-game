@@ -186,6 +186,25 @@ canvas {
     height: 50px;
 }
 
+/*Dead Container*/
+#dead-container {
+    height: 100%;
+    width: 100%;
+    background: #1616669a;
+}
+
+#dead-label {
+    color: white;
+    font-size: 92px;
+    font-family: 'Fredoka One';
+    margin-bottom: 150px;
+}
+
+#dead-sharkie {
+    height: 130px;
+    margin-top: 60px;
+}
+
 
 /*Responsive Canvas*/
 @media only screen and (max-width: 1920px) {

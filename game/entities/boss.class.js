@@ -102,7 +102,7 @@ export default class Boss extends MovableObject {
     }
 
     attack() {
-        if (!this.isTakingDmg && !this.isDead) {
+        if (!this.isTakingDmg && !this.isDead && !this.game.world.level.character.isDead) {
             if (this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
                 gsap.to(this, { y: -400, delay: 0.25, duration: .5 })
                 gsap.to(this, { y: -200, delay: 0.75, duration: .5 })
@@ -177,7 +177,7 @@ export default class Boss extends MovableObject {
     }
 
     updateMovement() {
-        if (this.isIntroduced && !this.isTakingDmg && !this.isDead) {
+        if (this.isIntroduced && !this.isTakingDmg && !this.isDead && !this.game.world.level.character.isDead) {
             if (!this.drawReverse) {
                 this.x -= this.speed
             } else {
