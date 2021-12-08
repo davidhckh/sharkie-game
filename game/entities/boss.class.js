@@ -3,49 +3,48 @@ import MovableObject from "../movable-object.class.js";
 
 export default class Boss extends MovableObject {
 
-    name = 'boss'
-    height = 1131
-    width = 968
-    y = 0
-    damage = 50
-    health = 100
-    speed = 7
-    hasHitbox = true
-    isIntroducing = false
-    isIntroduced = false
-    drawReverse = false
-    introAtX = 9500
+    name = 'boss';
+    height = 1131;
+    width = 968;
+    y = 0;
+    damage = 50;
+    health = 100;
+    speed = 6;
+    hasHitbox = true;
+    isIntroducing = false;
+    isIntroduced = false;
+    drawReverse = false;
+    introAtX = 9500;
 
-    hitboxRight = 70
-    hitboxLeft = 60
-    hitboxTop = 500
-    hitboxBottom = 200
+    hitboxRight = 70;
+    hitboxLeft = 60;
+    hitboxTop = 500;
+    hitboxBottom = 200;
 
     SWIM_ANIMATION = {
         frames: 13,
         path: '../assets/boss/floating/'
-    }
+    };
 
     INTRO_ANIMATION = {
         frames: 7,
         path: '../assets/boss/intro/'
-    }
+    };
 
     ATTACK_ANIMATION = {
         frames: 6,
         path: '../assets/boss/attack/'
-    }
+    };
 
     HURT_ANIMATION = {
         frames: 4,
         path: '../assets/boss/hurt/'
-    }
+    };
 
     DEAD_ANIMATION = {
         frames: 9,
         path: '../assets/boss/dead/'
-    }
-
+    };
 
     /**
      * constructor
@@ -53,147 +52,191 @@ export default class Boss extends MovableObject {
     constructor() {
         super();
 
-        this.game = new Game()
+        this.game = new Game();
 
-        this.x = this.introAtX
+        this.x = this.introAtX;
 
-        this.healthbar = document.getElementById('final-boss-health-bar')
+        this.healthbar = document.getElementById('final-boss-health-bar');
 
-        this.load()
+        this.load();
     };
 
+    /**load assets */
     load() {
         this.loadImage('')
-        this.loadAnimation(this.SWIM_ANIMATION)
-        this.loadAnimation(this.INTRO_ANIMATION)
-        this.loadAnimation(this.ATTACK_ANIMATION)
-        this.loadAnimation(this.HURT_ANIMATION)
-        this.loadAnimation(this.DEAD_ANIMATION)
-    }
+        this.loadAnimation(this.SWIM_ANIMATION);
+        this.loadAnimation(this.INTRO_ANIMATION);
+        this.loadAnimation(this.ATTACK_ANIMATION);
+        this.loadAnimation(this.HURT_ANIMATION);
+        this.loadAnimation(this.DEAD_ANIMATION);
+    };
 
+    /**intro */
     introduce() {
-        this.isIntroducing = true
+        this.isIntroducing = true;
 
-        this.playAnimation(this.INTRO_ANIMATION)
-        this.playAnimation(this.SWIM_ANIMATION, 900)
+        this.playAnimation(this.INTRO_ANIMATION);
+        this.playAnimation(this.SWIM_ANIMATION, 900);
 
-        gsap.to(this, { duration: 2, delay: 0.5, y: -200 })
+        gsap.to(this, { duration: 2, delay: 0.5, y: -200 });
 
         this.freezeCharacterForIntro()
-        this.game.ui.fadeInBossHealthbar()
-        this.game.world.killAllEnemies()
-    }
+        this.game.ui.fadeInBossHealthbar();
+        this.game.world.killAllEnemies();
+        this.startAttacking();
 
+        this.game.sounds.playSound('../assets/sounds/boss-splash.mp3');
+    };
+
+    /**freeze character for intro */
     freezeCharacterForIntro() {
-        this.game.world.level.character.freeze = true
+        this.game.world.level.character.freeze = true;
 
         setTimeout(() => {
-            this.game.world.level.character.freeze = false
-        }, 1750)
+            this.game.world.level.character.freeze = false;
+        }, 1750);
+    };
 
+    /**start attacking interval every 2 seconds */
+    startAttacking() {
         setTimeout(() => {
-            this.attack()
-            this.isIntroduced = true
+            this.isIntroduced = true;
+            this.attack();
+            this.attackInterval = setInterval(() => {
+                this.attack();
+            }, 2000);
+        }, 2500);
+    };
 
-            setInterval(() => {
-                this.attack()
-            }, 2000)
-        }, 2500)
-    }
-
+    /**attack */
     attack() {
         if (!this.isTakingDmg && !this.isDead && !this.game.world.level.character.isDead) {
-            if (this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
-                gsap.to(this, { y: -400, delay: 0.25, duration: .5 })
-                gsap.to(this, { y: -200, delay: 0.75, duration: .5 })
-            } else {
-                gsap.to(this, { y: 100, delay: 0.25, duration: .5 })
-                gsap.to(this, { y: -200, delay: 0.75, duration: .5 })
-            }
-
+            /**dash towards character */
             if (this.drawReverse) {
-                gsap.to(this, { x: this.x + 400, delay: 0.25, duration: .5 })
+                gsap.to(this, { x: this.x + 400, delay: 0.25, duration: .5 });
             } else {
-                gsap.to(this, { x: this.x - 400, delay: 0.25, duration: .5 })
-            }
+                gsap.to(this, { x: this.x - 400, delay: 0.25, duration: .5 });
+            };
 
-            this.playAnimation(this.ATTACK_ANIMATION)
+            /**animationm and sound */
+            this.playAnimation(this.ATTACK_ANIMATION);
+            this.game.sounds.playSound('../assets/sounds/boss-bite.mp3', false, 0.3, 150);
 
+            /**reset to swim animation after attack */
             this.swimTimeout = setTimeout(() => {
-                this.playAnimation(this.SWIM_ANIMATION)
-            }, 750)
-        }
-    }
+                this.playAnimation(this.SWIM_ANIMATION);
+            }, 750);
+
+            this.moveTowardsCharacter();
+        };
+    };
+
+    /**move boss towards character (up or down) when attacking */
+    moveTowardsCharacter() {
+        if (this.game.world.level.character.y + (this.game.world.level.character.height / 2) < 1080 / 2) {
+            gsap.to(this, { y: -400, delay: 0.25, duration: .5 });
+            gsap.to(this, { y: -200, delay: 0.75, duration: .5 });
+        } else {
+            gsap.to(this, { y: 100, delay: 0.25, duration: .5 });
+            gsap.to(this, { y: -200, delay: 0.75, duration: .5 });
+        };
+    };
 
     takeDmg() {
         if (!this.isTakingDmg && this.isIntroduced && !this.isDead) {
-            this.playAnimation(this.HURT_ANIMATION)
+            /**animations */
+            this.playAnimation(this.HURT_ANIMATION);
 
             this.dmgSwimTimeout = setTimeout(() => {
-                this.playAnimation(this.SWIM_ANIMATION)
-            }, 600)
+                this.playAnimation(this.SWIM_ANIMATION);
+            }, 600);
 
-            clearTimeout(this.swimTimeout)
+            clearTimeout(this.swimTimeout);
 
-            this.isTakingDmg = true
+            /** disable upcoming dmg when boss is taking dmg*/
+            this.isTakingDmg = true;
             setTimeout(() => {
-                this.isTakingDmg = false
-            }, 600)
+                this.isTakingDmg = false;
+            }, 600);
 
-            this.health -= 20
-            this.game.ui.updateBossHealthbar()
+            /**update health */
+            this.health -= 20;
+            this.game.ui.updateBossHealthbar();
+            this.checkForDeath();
 
-            if (this.health == 0) {
-                this.die()
-            }
-        }
-    }
+            this.game.sounds.playSound('../assets/sounds/boss-hurt.mp3');
+        };
+    };
 
+    /**setup death when health == 0 */
+    checkForDeath() {
+        if (this.health == 0) {
+            this.die();
+        };
+    };
+
+    /**setup death */
     die() {
-        clearTimeout(this.swimTimeout)
-        clearTimeout(this.dmgSwimTimeout)
-
-        this.drawReverse = false
-
         this.playAnimation(this.DEAD_ANIMATION)
 
-        gsap.globalTimeline.clear()
-        gsap.to(this, { y: -200, duration: 0.2})
-        gsap.to(this, { y: -this.height, delay: 0.7, duration: 8})
+        gsap.globalTimeline.clear();
+        /**move to center on death */
+        gsap.to(this, { y: -200, duration: 0.2 });
+        /**move up on death*/
+        gsap.to(this, { y: -this.height, delay: 0.7, duration: 8 });
 
-        this.isDead = true
+        this.isDead = true;
 
+        /**stop animation and stick to last image */
         setTimeout(() => {
-            this.loadImage('../assets/boss/dead/8.png')
+            this.loadImage('../assets/boss/dead/8.png');
         }, 1350);
 
-        this.game.win()
-    }
+        this.clearTimeouts();
+        this.game.win();
 
+        this.game.sounds.playSound('../assets/sounds/boss-death.mp3', false, 0.5, 200);
+    };
+
+    /**clear timeouts on death */
+    clearTimeouts() {
+        clearTimeout(this.swimTimeout);
+        clearTimeout(this.dmgSwimTimeout);
+        clearInterval(this.attackInterval);
+    };
+
+    /**play intro if character is nearby */
     updateIntro() {
         if (this.game.world.level.character.x >= this.x - 900 && !this.isIntroducing) {
-            this.introduce()
-        }
-    }
+            this.introduce();
+        };
+    };
 
+    /**update movement every frame */
     updateMovement() {
         if (this.isIntroduced && !this.isTakingDmg && !this.isDead && !this.game.world.level.character.isDead) {
             if (!this.drawReverse) {
-                this.x -= this.speed
+                this.x -= this.speed;
             } else {
-                this.x += this.speed
-            }
+                this.x += this.speed;
+            };
 
-            if (this.x < 200 || this.x + (this.width / 2) - this.hitboxRight < this.game.world.level.character.x) {
-                this.drawReverse = true
-            } else if (this.x >= this.introAtX || this.x + this.hitboxRight  + (this.width / 2) > this.game.world.level.character.x) {
-                this.drawReverse = false
-            }
-        }
-    }
+            this.changeMovementDirection();
+        };
+    };
 
+    /**point towards character or change direction when edge, right or left, is reached*/
+    changeMovementDirection() {
+        if (this.x < 200 || this.x + (this.width / 2) - this.hitboxRight < this.game.world.level.character.x) {
+            this.drawReverse = true;
+        } else if (this.x >= this.introAtX || this.x + this.hitboxRight + (this.width / 2) > this.game.world.level.character.x) {
+            this.drawReverse = false;
+        };
+    };
+
+    /**updates on every frame */
     update() {
-        this.updateIntro()
-        this.updateMovement()
-    }
+        this.updateIntro();
+        this.updateMovement();
+    };
 };

@@ -6,6 +6,17 @@ import Poison from "./entities/poison.class.js";
 import Barrier from "./entities/barrier.class.js";
 import Boss from "./entities/boss.class.js";
 
+/**
+ * add and remove:
+ * - character
+ * - boss
+ * - enemies
+ * - coins
+ * - poision
+ * - barriers
+ * - background objects
+ */
+
 export default class Level {
     /**
      * Character
@@ -57,7 +68,7 @@ export default class Level {
         new Coin(7900, 450),
         new Coin(8100, 450),
         new Coin(8300, 450),
-    ]
+    ];
 
     /**
      * Poison
@@ -68,7 +79,7 @@ export default class Level {
         new Poison(3285, 145),
         new Poison(4825, 780),
         new Poison(7035, 50),
-    ]
+    ];
 
     /**Barriers */
     barriers = [
@@ -81,8 +92,7 @@ export default class Level {
         new Barrier(6000, 0, 2),
         new Barrier(7200, 400, 0),
         new Barrier(7400, -100, 1),
-
-    ]
+    ];
 
     /**
      * Background
@@ -128,5 +138,5 @@ export default class Level {
             path: './assets/landscape/floor/2.png',
             position: 1920
         },
-    ]
-}
+    ];
+};

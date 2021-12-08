@@ -6,12 +6,14 @@ export default class Sounds {
         }, 3000)
     }
 
-    playSound(path, loop = false,volume = 1) {
+    playSound(path, loop = false, volume = 0.5, delay = 0) {
         let audio = new Audio(path)
         audio.volume = volume
         audio.loop = loop
 
-        audio.play()
+        setTimeout(() => {
+            audio.play()
+        }, delay)
     }
 
 

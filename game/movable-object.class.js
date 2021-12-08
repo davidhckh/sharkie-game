@@ -6,21 +6,23 @@ export default class MovableObject extends Object {
     y = 0;
 
     constructor(x, y) {
-        super()
+        super();
 
-        this.game = new Game()
+        this.game = new Game();
 
-        this.x = x
-        this.y = y
-    }
+        this.x = x;
+        this.y = y;
+    };
 
-    /**character.isColliding(enemy) */
+    /**
+     * check if object is colliding with other entity (include hitbox padding)
+     * character.isColliding(enemy) */
     isCollidingWith(object) {
         return (
             this.x + this.hitboxLeft < object.x + object.width - object.hitboxRight && /**left -> right */
             this.x + this.width - this.hitboxRight > object.x + object.hitboxLeft && /**right -> left */
             this.y + this.hitboxTop < object.y + object.height - object.hitboxBottom && /**top -> bottom */
             this.y + this.height - this.hitboxBottom > object.y + object.hitboxTop /**bottom -> top */
-        )
-    }
-}
+        );
+    };
+};

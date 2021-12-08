@@ -6,7 +6,7 @@ import Bubble from './bubble.class.js'
 export default class Character extends MovableObject {
 
     name = 'character'
-    speed = 12
+    speed = 25 //12
     height = 600
     width = 489
     health = 100
@@ -151,10 +151,13 @@ export default class Character extends MovableObject {
 
             if (type == 'electric') {
                 this.playAnimation(this.ELECTRIC_HURT_ANIMATION)
+                this.game.sounds.playSound('../assets/sounds/electro-shock.mp3')
             } else if (type == 'poison') {
                 this.playAnimation(this.POISON_HURT_ANIMATION)
+                this.game.sounds.playSound('../assets/sounds/small-hit.wav')
             } else {
                 this.playAnimation(this.NORMAL_HURT_ANIMATION)
+                this.game.sounds.playSound('../assets/sounds/small-hit.wav')
             }
         }
     }
@@ -217,27 +220,30 @@ export default class Character extends MovableObject {
     }
 
     jump() {
-        this.game.sounds.playSound('../assets/sounds/jump.wav')
+        this.game.sounds.playSound('../assets/sounds/jump.wav', false, 0.4)
         this.speedY = 15
     }
 
     die() {
-        gsap.globalTimeline.clear()
         this.health = 0
         this.playAnimation(this.DEATH_ANIMATION)
         this.game.ui.updateHealthbar()
         this.freeze = true
         this.isDead = true
+        this.jump()
+        this.game.sounds.playSound('../assets/sounds/small-hit.wav')
         setTimeout(() => {
             this.loadImage('../assets/sharkie/dead/7.png')
         }, 1050)
-        this.game.ui.showDeadContainer()
+
+        this.game.lose()
     }
 
     slap() {
         if (!this.isShooting && !this.isHitting && !this.isInvincible) {
             this.isHitting = true
             this.playAnimation(this.SLAP_ANIMATION)
+            this.game.sounds.playSound('../assets/sounds/slap.mp3', false, 0.4, 200)
             setTimeout(() => {
                 if (this.isSwimming) {
                     this.playAnimation(this.SWIM_ANIMATION)
@@ -251,6 +257,7 @@ export default class Character extends MovableObject {
 
     shootBubble() {
         if (!this.isShooting && !this.isHitting && !this.isInvincible) {
+            this.game.sounds.playSound('../assets/sounds/bubble-creation.wav', false, 0.2, 500)
             this.isShooting = true
             this.playAnimation(this.BUBBLE_ANIMATION)
             setTimeout(() => {

@@ -30,8 +30,17 @@ export default class Game {
 
     win() {
         this.world.level.character.freeze = true
-
+        this.sounds.playSound('../assets/sounds/win.mp3', false, 0.4, 2000)
         this.ui.showWinContainer()
+        clearInterval(this.world.level.boss.attackInterval)
+    }
+
+    lose() {
+        this.world.level.character.freeze = true
+        gsap.globalTimeline.clear()
+        clearInterval(this.world.level.boss.attackInterval)
+        this.ui.showDeadContainer()
+        this.sounds.playSound('../assets/sounds/dead-sound.mp3', false, 0.4)
     }
 
     restart() {
