@@ -9,7 +9,7 @@ export default class Boss extends MovableObject {
     y = 0
     damage = 50
     health = 100
-    speed = 5
+    speed = 7
     hasHitbox = true
     isIntroducing = false
     isIntroduced = false

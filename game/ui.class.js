@@ -124,8 +124,7 @@ export default class UI {
         this.collectedPoison = 0
         this.totalPoison = this.game.world.level.poison.length
 
-        poisonContainer.style.color = 'white'
-        poisonContainer.style.boxShadow = 'unset'
+        poisonContainer.classList.remove('unlocked-poison')
 
         this.updatePoison()
     }
@@ -146,10 +145,7 @@ export default class UI {
     unlockPoisonBubbles() {
         let poisonContainer = document.getElementById('poison-container')
 
-        poisonContainer.style.color = '#00ff00'
-        poisonContainer.style.boxShadow = '0 0 15px #00FF00'
-
-        gsap.to(poisonContainer, { yoyo: true, scale: 1.1, duration: 0.5, repeat: 1 })
+        poisonContainer.classList.add('unlocked-poison')
 
         this.game.world.level.character.poisonBubbles = true
     }

@@ -1,4 +1,4 @@
-import Game from "./game.class.js";
+import Game from "../game.class.js";
 
 export default class Drawer {
     constructor() {

@@ -9,6 +9,7 @@ export default class Pufferfish extends MovableObject {
     color = Math.floor(1 + Math.random() * 3)
     isBig = false
     damage = 20
+    drawReverse = true
 
     hitboxRight = 0
     hitboxLeft = 0
@@ -58,11 +59,16 @@ export default class Pufferfish extends MovableObject {
 
     movement() {
         setTimeout(() => {
-            this.movementAnimation = gsap.to(this, { duration: 3, x: this.x - 800, ease: Power1.easeInOut, yoyo: true, repeat: -1})
             this.movementInterval = setInterval(() => {
                 this.changeDrawDirection()
+
+                if(this.drawReverse) {
+                    this.movementAnimation = gsap.to(this, { duration: 3, x: this.x + 800, ease: Power1.easeInOut})
+                } else {
+                    this.movementAnimation = gsap.to(this, { duration: 3, x: this.x - 800, ease: Power1.easeInOut})
+                }
             }, 3000)
-        }, (Math.random() * 4) * 1000) 
+        }, (Math.random() * 2) * 1000) 
     }
 
     changeDrawDirection() {
@@ -78,7 +84,9 @@ export default class Pufferfish extends MovableObject {
             clearInterval(this.interval)
             clearInterval(this.movementInterval)
 
-            this.movementAnimation.kill()
+            if(this.movementAnimation) {
+                this.movementAnimation.kill()
+            }
             this.flyOutOfScene()
 
             setTimeout(() => {
@@ -110,7 +118,7 @@ export default class Pufferfish extends MovableObject {
                     this.getBig()
                 }
             },2500)
-        }, (Math.random() * 3) * 1000)
+        }, (Math.random() * 2.5) * 1000)
     }
 
     getBig() {

@@ -6,7 +6,7 @@ import Bubble from './bubble.class.js'
 export default class Character extends MovableObject {
 
     name = 'character'
-    speed = 20
+    speed = 12
     height = 600
     width = 489
     health = 100
@@ -217,6 +217,7 @@ export default class Character extends MovableObject {
     }
 
     jump() {
+        this.game.sounds.playSound('../assets/sounds/jump.wav')
         this.speedY = 15
     }
 

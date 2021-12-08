@@ -1,7 +1,8 @@
 import World from "./world.class.js";
-import Drawer from "./drawer.class.js";
-import Events from "./events.class.js";
+import Drawer from "./utils/drawer.class.js";
+import Events from "./utils/events.class.js";
 import UI from "./ui.class.js";
+import Sounds from "./utils/sounds.class.js";
 
 export default class Game {
 
@@ -22,6 +23,7 @@ export default class Game {
         this.events = new Events()
         this.world = new World()
         this.ui = new UI()
+        this.sounds = new Sounds()
 
         this.update();
     }

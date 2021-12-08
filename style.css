@@ -157,6 +157,11 @@ canvas {
     right: -53px;
 }
 
+.unlocked-poison {
+    background: #41e041a2;
+    color: white;
+}
+
 /*Win Container*/
 #win-container {
     height: 100%;
