@@ -42,7 +42,7 @@ export default class Boss extends MovableObject {
     }
 
     DEAD_ANIMATION = {
-        frames: 5,
+        frames: 9,
         path: '../assets/boss/dead/'
     }
 
@@ -159,13 +159,13 @@ export default class Boss extends MovableObject {
 
         gsap.globalTimeline.clear()
         gsap.to(this, { y: -200, duration: 0.2})
-        gsap.to(this, { y: -this.height, delay: 0.2, duration: 8})
+        gsap.to(this, { y: -this.height, delay: 0.7, duration: 8})
 
         this.isDead = true
 
         setTimeout(() => {
-            this.loadImage('../assets/boss/dead/4.png')
-        }, 750);
+            this.loadImage('../assets/boss/dead/8.png')
+        }, 1350);
 
         this.game.win()
     }

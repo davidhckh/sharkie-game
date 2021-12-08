@@ -30,8 +30,10 @@ export default class UI {
     /**Win Screen */
     showWinContainer() {
         this.winContainer.classList.remove('hide')
-        gsap.fromTo(this.winContainer, { opacity: 0 }, { opacity: 1, delay: 1.5, duration: .3 })
-        gsap.fromTo(document.getElementById('win-sharkie'), { y: this.game.canvas.height / 2 }, { y: 0, duration: 0.4, delay: 1.5, ease: Power1.easeOut })
+        gsap.fromTo(this.winContainer, { opacity: 0 }, { opacity: 1, delay: 2, duration: .3 })
+        gsap.fromTo(document.getElementById('win-sharkie'), { y: this.game.canvas.height / 2 }, { y: 0, duration: 0.4, delay: 2, ease: Power1.easeOut })
+
+        document.getElementById('win-collected-coins-label').innerHTML = 'You collected ' + this.collectedCoins + ' out of ' + this.totalCoins + ' coins!'
     }
 
     restartButtonClick() {
@@ -77,7 +79,6 @@ export default class UI {
     }
 
     fadeInBossHealthbar() {
-        console.log('ja')
         let container = document.getElementById('final-boss-health-bar-container')
 
         container.classList.remove('hide')
@@ -107,8 +108,13 @@ export default class UI {
 
     /**Poison */
     setupPoison() {
+        let poisonContainer = document.getElementById('poison-container')
+        
         this.collectedPoison = 0
         this.totalPoison = this.game.world.level.poison.length
+
+        poisonContainer.style.color = 'white'
+        poisonContainer.style.boxShadow = 'unset'
 
         this.updatePoison()
     }

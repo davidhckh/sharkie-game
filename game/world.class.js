@@ -23,6 +23,7 @@ export default class World {
         this.repeatBackground()
         this.draw()
 
+
         /**update character */
         if (this.level.character) {
             this.level.character.update()

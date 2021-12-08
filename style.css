@@ -11,6 +11,7 @@ body {
     background: #221b5e;
     overflow: hidden;
     font-family: 'Varela Round', sans-serif;
+    color: white;
 }
 
 .absolute {
@@ -48,12 +49,16 @@ canvas {
     flex-direction: column;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 .button {
     width:200px;
     background-color: #9FC805;
     border-radius: 10px;
     height: 45px;
-    color:white;
     font-size: 20px;
     box-shadow: 0px 4px #718E04;
     text-shadow: 0px 2px 2px #718E04;
@@ -161,7 +166,6 @@ canvas {
 
 #win-label {
     color: white;
-    margin-bottom: 100px;
     font-size: 92px;
     font-family: 'Fredoka One';
 }
@@ -169,6 +173,17 @@ canvas {
 #win-sharkie {
     height: 250px;
     transform: translateX(-270px) translateY(50px);
+}
+
+#win-collected-coins-container {
+    margin: 50px;
+    padding: 0 15px 0 20px;
+    background: rgba(0, 0, 0, 0.205);
+    border-radius: 30px;
+}
+
+#win-collected-coins-container img {
+    height: 50px;
 }
 
 

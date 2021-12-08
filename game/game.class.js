@@ -33,6 +33,7 @@ export default class Game {
     }
 
     restart() {
+        this.events.callbacks.base = {}
         this.world = new World()
         this.ui = new UI()
     }

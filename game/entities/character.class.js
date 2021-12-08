@@ -199,7 +199,7 @@ export default class Character extends MovableObject {
                 this.onCollisionWithPufferfish(object)
             } else if ((object.name == 'coin' || object.name == 'poison') && !object.isCollected) {
                 object.collect()
-            } else if(object.name == 'boss') {
+            } else if (object.name == 'boss') {
                 this.takeDmg(30, 'regular')
             }
         }
