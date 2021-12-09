@@ -68,6 +68,7 @@ canvas {
     cursor: pointer;
     font-weight: 600;
     letter-spacing: 1px;
+    text-align: center;
 }
 
 .button:hover {
@@ -131,7 +132,70 @@ canvas {
     100% {
       transform: scale(1);
     }
-  }
+}
+
+/*Ingame Top right*/
+#ingame-top-right {
+    display: flex;
+    align-items: flex-end;
+    right: 0;
+    padding: 12px;
+}
+
+/*Ingame Menu*/
+#ingame-menu {
+    right: 0;
+    margin-bottom: 10px;
+}
+
+.menu-button {
+    height: 32px;
+    width: 32px;
+    background: rgb(54, 162, 250);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    margin-left: 15px;
+    transition: 100ms;
+}
+
+.menu-button:hover {
+    transform: scale(1.1);
+}
+
+.menu-button img {
+    height: 22px;
+}
+
+/*Coin and Poison Containers**/
+.amount-container {
+    background: rgba(0, 0, 0, 0.2);
+    top: 3vh;
+    right: 45px;
+    height: 39px;
+    width: 130px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+    font-size: 22px;
+    padding-right: 43px;
+    margin: 20px 0;
+    margin-right: 10px;
+}
+
+.amount-container img {
+    right: -10px;
+    height: 80px;
+}
+
+/*Poison Container*/
+.unlocked-poison {
+    background: #41e041a2;
+    color: white;
+}
 
 /*Health Bars*/
 .health-bar-container {
@@ -181,43 +245,6 @@ canvas {
     border: 3px white solid;
     border-radius: 50%;
     height: 70px;
-}
-
-/*Coin Contaienr**/
-.amount-container {
-    background: rgba(0, 0, 0, 0.2);
-    top: 3vh;
-    right: 45px;
-    height: 39px;
-    width: 130px;
-    border-radius: 40px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-weight: 600;
-    color: white;
-    font-size: 22px;
-    padding-right: 43px;
-}
-
-#coin-icon {
-    top: -30px;
-    right: -50px;
-}
-
-/*Poison Container*/
-#poison-container {
-    top: 110px;
-}
-
-#poison-icon {
-    top: -40px;
-    right: -53px;
-}
-
-.unlocked-poison {
-    background: #41e041a2;
-    color: white;
 }
 
 /*Win Container*/
@@ -289,19 +316,15 @@ canvas {
         left: 10px;
     }
 
-    .amount-container {
-        transform: scale(0.8);
-        right: 15px;
-        top: 2vh
-    }
-
-    #poison-container {
-        top: 90px;
-    }
-
     #final-boss-health-bar-container {
         transform: scale(0.85);
         bottom: 20px;
+    }
+
+    #ingame-top-right {
+        transform: scale(0.8);
+        top: -20px;
+        right: -20px;
     }
 }
 
@@ -312,65 +335,53 @@ canvas {
         top: 10px;
     }
 
-    .amount-container {
-        transform: scale(0.6);
-        top: 1.5vh;
-        right: -3px;
-    }
-
-    #poison-container {
-        top: 70px;
-    } 
-
     #final-boss-health-bar-container {
         transform: scale(0.65);
         bottom: 15px;
     }
+
+    #ingame-top-right {
+        transform: scale(0.6);
+        top: -40px;
+        right: -40px;
+    }
 }
 
-@media(max-width: 700px) {
+@media(max-width: 550px) {
     #health-bar-container {
         transform: scale(0.4);
         left: -70px;
         top: 5px;
     }
 
-    .amount-container {
-        transform: scale(0.4);
-        top: 0.5vh;
-        right: -30px;
-    }
-
-    #poison-container {
-        top: 40px;
-    } 
-
     #final-boss-health-bar-container {
         transform: scale(0.45);
         bottom: 3px;
     }
+
+    #ingame-top-right {
+        transform: scale(0.5);
+        top: -50px;
+        right: -50px;
+    }
 }
 
-@media(max-width: 500px) {
+@media(max-width: 450px) {
     #health-bar-container {
         transform: scale(0.3);
         left: -90px;
         top: -2px;
     }
 
-    .amount-container {
-        transform: scale(0.3);
-        top: 0;
-        right: -42px;
-    }
-
-    #poison-container {
-        top: 30px;
-    } 
-
     #final-boss-health-bar-container {
         transform: scale(0.35);
         bottom: 2px;
+    }
+
+    #ingame-top-right {
+        transform: scale(0.4);
+        top: -60px;
+        right: -60px;
     }
 }
 

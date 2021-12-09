@@ -25,25 +25,7 @@ export default class Game {
         this.ui = new UI()
 
         this.update();
-        this.onPlayButtonClick();
     }
-
-    onPlayButtonClick() {
-        document.getElementById('play-button').addEventListener('click', () => {
-            if(!this.sounds) {
-                this.sounds = new Sounds();
-                this.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
-
-                this.world.level.character.freeze = false
-    
-                gsap.to(document.getElementById('opening-screen'), {opacity: 0, duration: .4})
-    
-                setTimeout(() => {
-                    document.getElementById('opening-screen').classList.add('hide');
-                }, 500)
-            }
-        });
-    };
 
     win() {
         this.world.level.character.freeze = true

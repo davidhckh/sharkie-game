@@ -1,12 +1,14 @@
-import BackgroundObject from "./background-object.class.js"
+import Sounds from "./utils/sounds.class.js"
 import Game from "./game.class.js"
 
 export default class UI {
     constructor() {
         this.game = new Game()
 
-        this.defineElements()
+        this.onPlay()
         this.setup()
+        this.onMuteSounds()
+        this.onMuteMusic()
     }
 
     defineElements() {
@@ -16,17 +18,84 @@ export default class UI {
         this.deadContainer = document.getElementById('dead-container')
         this.healthbar = document.getElementById('health-bar')
         this.bossHealthbar = document.getElementById('final-boss-health-bar')
+        this.soundButton = document.getElementById('sound-button')
+        this.musicButton = document.getElementById('music-button')
     }
 
     setup() {
-        this.winContainer.classList.add('hide')
-        this.deadContainer.classList.add('hide')
-
+        this.defineElements()
         this.setupCoins()
         this.setupPoison()
         this.updateHealthbar()
         this.restartButtonClick()
         this.updateBossHealthbar()
+        this.setupSoundsButton()
+        this.setupMusicButton()
+
+        this.winContainer.classList.add('hide')
+        this.deadContainer.classList.add('hide')
+    }
+
+    /**on play button click */ 
+    onPlay() {
+        this.game.events.on('play', () => {
+            if(!this.game.sounds) {
+                this.game.sounds = new Sounds();
+                this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+    
+                this.game.world.level.character.freeze = false
+    
+                gsap.to(document.getElementById('opening-screen'), {opacity: 0, duration: .4})
+    
+                setTimeout(() => {
+                    document.getElementById('opening-screen').classList.add('hide');
+                }, 500)
+            }
+        })
+    }
+
+    setupSoundsButton() {
+        if(localStorage.getItem('soundsMuted') == 'true') {
+            this.soundButton.style.background ='gray'
+        }
+    }
+
+    onMuteSounds() {
+        this.game.events.on('mute-sounds', () => {
+            if(this.game.sounds.soundsMuted) {
+                this.game.sounds.soundsMuted = false
+                this.soundButton.style.background = 'rgb(54, 162, 250)'
+                this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+                localStorage.setItem('soundsMuted', false)
+            } else {
+                this.game.sounds.soundsMuted = true
+                this.soundButton.style.background ='gray'
+                localStorage.setItem('soundsMuted', true)
+            }
+        })
+    }
+
+    setupMusicButton() {
+        if(localStorage.getItem('musicMuted') == 'true') {
+            this.musicButton.style.background = 'gray'
+        }
+    }
+
+    onMuteMusic() {
+        this.game.events.on('mute-music', () => {
+            if(this.game.sounds.musicMuted) {
+                this.game.sounds.musicMuted = false
+                this.musicButton.style.background = 'rgb(54, 162, 250)'
+                this.game.sounds.resumeMusic()
+                localStorage.setItem('musicMuted', false)
+            } else {
+                this.game.sounds.musicMuted = true
+                this.musicButton.style.background ='gray'
+                this.game.sounds.pauseAllMusic()
+                localStorage.setItem('musicMuted', true)
+            }
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+        })
     }
 
     /**Win Screen */
@@ -44,12 +113,7 @@ export default class UI {
     }
 
     restartButtonClick() {
-        document.getElementById('restart-button').addEventListener('click', () => {
-            this.game.restart()
-            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
-        })
-
-        document.getElementById('dead-restart-button').addEventListener('click', () => {
+        this.game.events.on('restart', () => {
             this.game.restart()
             this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
         })
