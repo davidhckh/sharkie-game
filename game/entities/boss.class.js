@@ -83,6 +83,7 @@ export default class Boss extends MovableObject {
         this.freezeCharacterForIntro()
         this.game.ui.fadeInBossHealthbar();
         this.game.world.killAllEnemies();
+        this.game.sounds.playBossMusic();
         this.startAttacking();
 
         this.game.sounds.playSound('../assets/sounds/boss-splash.mp3');
@@ -152,12 +153,7 @@ export default class Boss extends MovableObject {
             }, 600);
 
             clearTimeout(this.swimTimeout);
-
-            /** disable upcoming dmg when boss is taking dmg*/
-            this.isTakingDmg = true;
-            setTimeout(() => {
-                this.isTakingDmg = false;
-            }, 600);
+            this.makeInvincible();
 
             /**update health */
             this.health -= 20;
@@ -166,6 +162,14 @@ export default class Boss extends MovableObject {
 
             this.game.sounds.playSound('../assets/sounds/boss-hurt.mp3');
         };
+    };
+
+    /** disable upcoming dmg when boss is taking dmg*/
+    makeInvincible() {
+        this.isTakingDmg = true;
+        setTimeout(() => {
+            this.isTakingDmg = false;
+        }, 600);
     };
 
     /**setup death when health == 0 */
@@ -195,6 +199,7 @@ export default class Boss extends MovableObject {
         this.clearTimeouts();
         this.game.win();
 
+        this.game.sounds.fadeOutAllMusic()
         this.game.sounds.playSound('../assets/sounds/boss-death.mp3', false, 0.5, 200);
     };
 

@@ -41,12 +41,14 @@ export default class Game {
         clearInterval(this.world.level.boss.attackInterval)
         this.ui.showDeadContainer()
         this.sounds.playSound('../assets/sounds/dead-sound.mp3', false, 0.4)
+        this.sounds.fadeOutAllMusic()
     }
 
     restart() {
         this.events.callbacks.base = {}
         this.world = new World()
         this.ui = new UI()
+        this.sounds.playMainMusic()
     }
 
     /**update on every frame */

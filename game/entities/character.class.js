@@ -235,7 +235,6 @@ export default class Character extends MovableObject {
         setTimeout(() => {
             this.loadImage('../assets/sharkie/dead/7.png')
         }, 1050)
-
         this.game.lose()
     }
 
