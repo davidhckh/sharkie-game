@@ -61,6 +61,10 @@ export default class UI {
 
         this.game.world.level.character.freeze = true
 
+        if(this.questShown) {
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+        }
+
         gsap.fromTo(this.controlsContainer, {scale: 0}, {scale: 1, duration: .2})
     }
     
