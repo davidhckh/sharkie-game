@@ -46,10 +46,12 @@ export default class UI {
     restartButtonClick() {
         document.getElementById('restart-button').addEventListener('click', () => {
             this.game.restart()
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
         })
 
         document.getElementById('dead-restart-button').addEventListener('click', () => {
             this.game.restart()
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
         })
     }
 

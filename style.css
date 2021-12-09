@@ -75,6 +75,64 @@ canvas {
     box-shadow: none;
 }
 
+/*Opening Screen*/
+#opening-screen {
+    background: url('./assets/ui-images/menu.png');
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background-size: cover;
+}
+
+#opening-header {
+    color: white;
+    font-size: 128px;
+    font-family: 'Fredoka One', cursive;
+    margin-bottom: 180px;
+    animation: breathing 5s ease-in-out infinite;
+    text-shadow: 1px 1px #3798C5,
+    2px 2px #3798C5,
+    3px 3px #3798C5,
+    4px 4px #3798C5,
+    6px 6px #4A43AE,
+    6px 6px #4A43AE,
+    7px 7px #4A43AE,
+    8px 8px #4A43AE,
+    0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#opening-sharkie {
+    height: 250px;
+    transform: translateX(-230px) translateY(-170px) rotate(30deg);
+    z-index: -1;
+}
+
+#play-button {
+    height: 60px;
+    width: 250px;
+    font-size: 28px;
+    box-shadow: 0px 7px #718E04;
+}
+
+#play-button:hover {
+    box-shadow: none;
+    bottom: -7px
+}
+
+@keyframes breathing {
+    0% {
+      transform: scale(1);
+    }
+  
+    50% {
+      transform: scale(0.96);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }
+
 /*Health Bars*/
 .health-bar-container {
     background: linear-gradient(white, #AAE8FF);

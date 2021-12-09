@@ -95,6 +95,9 @@ export default class Pufferfish extends MovableObject {
             if (object.name == 'boss' && this.poisonBubble) {
                 object.takeDmg();
             };
+            if(object.name == 'jellyfish' && object.type == 'electric') {
+                this.game.sounds.playSound('../assets/sounds/short-electric-shock.mp3');
+            };
         };
     };
 

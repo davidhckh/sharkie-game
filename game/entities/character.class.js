@@ -19,6 +19,8 @@ export default class Character extends MovableObject {
     left = false
     right = false
 
+    freeze = true
+
     speedY = 0
     acceleration = 0.5
 
