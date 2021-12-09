@@ -1,9 +1,12 @@
+import Game from "../game.class.js";
 import EventEmitter from "./event-emitter.class.js";
 
 export default class Events extends EventEmitter {
 
     constructor() {
         super();
+
+        this.game = new Game();
 
         /**
          * trigger events in event emitter
@@ -25,15 +28,27 @@ export default class Events extends EventEmitter {
         });
 
         document.getElementById('sound-button').addEventListener('click', () => {
-            this.trigger('mute-sounds');
+            this.game.ui.muteSounds();
         });
 
         document.getElementById('play-button').addEventListener('click', () => {
-            this.trigger('play');
+            this.game.ui.playClick();
         });
 
         document.getElementById('music-button').addEventListener('click', () => {
-            this.trigger('mute-music');
+            this.game.ui.muteMusic();
+        });
+        
+        document.getElementById('control-button').addEventListener('click', () => {
+            this.game.ui.openControls();
+        });
+
+        document.getElementById('controls-ok-button').addEventListener('click', () => {
+            this.game.ui.showQuest();
+        });
+
+        document.getElementById('quest-ok-button').addEventListener('click', () => {
+            this.game.ui.closeTutorial();
         });
     };
 };

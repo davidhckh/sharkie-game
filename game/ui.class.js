@@ -5,10 +5,7 @@ export default class UI {
     constructor() {
         this.game = new Game()
 
-        this.onPlay()
         this.setup()
-        this.onMuteSounds()
-        this.onMuteMusic()
     }
 
     defineElements() {
@@ -20,6 +17,10 @@ export default class UI {
         this.bossHealthbar = document.getElementById('final-boss-health-bar')
         this.soundButton = document.getElementById('sound-button')
         this.musicButton = document.getElementById('music-button')
+        this.controlButton = document.getElementById('control-button')
+        this.tutorialContainer = document.getElementById('tutorial-container')
+        this.controlsContainer = document.getElementById('controls-container')
+        this.questContainer = document.getElementById('quest-dialog-container')
     }
 
     setup() {
@@ -37,21 +38,47 @@ export default class UI {
     }
 
     /**on play button click */ 
-    onPlay() {
-        this.game.events.on('play', () => {
-            if(!this.game.sounds) {
-                this.game.sounds = new Sounds();
-                this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+    playClick() {
+        if(!this.game.sounds) {
+            this.game.sounds = new Sounds();
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+
+            this.openControls()
+
+            gsap.to(document.getElementById('opening-screen'), {opacity: 0, duration: .4})
+
+            setTimeout(() => {
+                document.getElementById('opening-screen').classList.add('hide');
+            }, 500)
+        }
+    }
+
+    /**On Controls Button Click */
+    openControls() {
+        this.tutorialContainer.classList.remove('hide')
+        this.controlsContainer.classList.remove('hide')
+        this.questContainer.classList.add('hide')
+
+        this.game.world.level.character.freeze = true
+
+        gsap.fromTo(this.controlsContainer, {scale: 0}, {scale: 1, duration: .2})
+    }
     
-                this.game.world.level.character.freeze = false
-    
-                gsap.to(document.getElementById('opening-screen'), {opacity: 0, duration: .4})
-    
-                setTimeout(() => {
-                    document.getElementById('opening-screen').classList.add('hide');
-                }, 500)
-            }
-        })
+    showQuest() {
+        if(this.questShown) {
+            this.closeTutorial()
+        } else {
+            this.questShown = true
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+            this.controlsContainer.classList.add('hide')
+            this.questContainer.classList.remove('hide')
+        }
+    }
+
+    closeTutorial() {
+        this.tutorialContainer.classList.add('hide')
+        this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+        this.game.world.level.character.freeze = false
     }
 
     setupSoundsButton() {
@@ -60,19 +87,17 @@ export default class UI {
         }
     }
 
-    onMuteSounds() {
-        this.game.events.on('mute-sounds', () => {
-            if(this.game.sounds.soundsMuted) {
-                this.game.sounds.soundsMuted = false
-                this.soundButton.style.background = 'rgb(54, 162, 250)'
-                this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
-                localStorage.setItem('soundsMuted', false)
-            } else {
-                this.game.sounds.soundsMuted = true
-                this.soundButton.style.background ='gray'
-                localStorage.setItem('soundsMuted', true)
-            }
-        })
+    muteSounds() {
+        if(this.game.sounds.soundsMuted) {
+            this.game.sounds.soundsMuted = false
+            this.soundButton.style.background = 'rgb(54, 162, 250)'
+            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
+            localStorage.setItem('soundsMuted', false)
+        } else {
+            this.game.sounds.soundsMuted = true
+            this.soundButton.style.background ='gray'
+            localStorage.setItem('soundsMuted', true)
+        }
     }
 
     setupMusicButton() {
@@ -81,21 +106,19 @@ export default class UI {
         }
     }
 
-    onMuteMusic() {
-        this.game.events.on('mute-music', () => {
-            if(this.game.sounds.musicMuted) {
-                this.game.sounds.musicMuted = false
-                this.musicButton.style.background = 'rgb(54, 162, 250)'
-                this.game.sounds.resumeMusic()
-                localStorage.setItem('musicMuted', false)
-            } else {
-                this.game.sounds.musicMuted = true
-                this.musicButton.style.background ='gray'
-                this.game.sounds.pauseAllMusic()
-                localStorage.setItem('musicMuted', true)
-            }
-            this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
-        })
+    muteMusic() {
+        if(this.game.sounds.musicMuted) {
+            this.game.sounds.musicMuted = false
+            this.musicButton.style.background = 'rgb(54, 162, 250)'
+            this.game.sounds.resumeMusic()
+            localStorage.setItem('musicMuted', false)
+        } else {
+            this.game.sounds.musicMuted = true
+            this.musicButton.style.background ='gray'
+            this.game.sounds.pauseAllMusic()
+            localStorage.setItem('musicMuted', true)
+        }
+        this.game.sounds.playSound('../assets/sounds/button-click.mp3', false, 0.2)
     }
 
     /**Win Screen */

@@ -26,7 +26,6 @@
             <img id="health-icon" class="absolute icon" src="assets/icons/life-icon.png"></img>
         </div>
 
-
         <!--top-right-->
         <div id="ingame-top-right" class="column absolute">
             <div id="ingame-menu" class="row">
@@ -51,6 +50,70 @@
             <div id="poison-container" class="amount-container">
                 <img id="poison-icon" class="absolute icon" src="assets/icons/posion-icon.png"></img>
                 <span id="poison-amount-label">0</span>
+            </div>
+        </div>
+
+        <!------------------------------Tutorial Container--------------------->
+        <div id="tutorial-container" class="absolute center hide">
+            <!--Controls-->
+            <div id="controls-container" class="column tutorial-dialog-container hide">
+                <div class="column">
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="controls-move-container" class="row">
+                                    <div class="controls-key center">
+                                        <span>‹</span>
+                                    </div>
+                                    <div class="controls-key center">
+                                        <span>›</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="controls-label">Move</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="controls-space" class="controls-key center">
+                                    <span>SPACE</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="controls-label">Jump</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="controls-key center">
+                                    <span>X</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="controls-label">Shoot bubble</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="controls-key center">
+                                    <span>Y</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="controls-label">Slap</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="controls-ok-button" class="button center">Ok</div>
+            </div>
+
+            <!--Quest-->
+            <div id="quest-dialog-container" class="center column tutorial-dialog-container">
+                <img src="assets/items/poison-animated/0.png">
+                <span>Collect all the poison to unlock poisonous bubbles and defeat the final boss.</span>
+                <div id="quest-ok-button" class="button center">Let's go!</div>
             </div>
         </div>
 

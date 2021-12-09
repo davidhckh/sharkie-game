@@ -134,6 +134,75 @@ canvas {
     }
 }
 
+/*Tutorial Dialogs*/
+#tutorial-container {
+    height: 100%;
+    width: 100%;
+}
+
+.tutorial-dialog-container {
+    height: 400px;
+    width: 600px;
+    background: #4335bd;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+}
+
+#quest-dialog-container {
+    justify-content: space-between;
+    font-size: 18px;
+    text-align: center;
+}
+
+#quest-dialog-container span {
+    margin: 0 100px;
+}
+
+#quest-dialog-container img {
+    height: 180px;
+    background: #392da7;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    padding: 10px 0;
+}
+
+/*Controls*/
+.controls-key {
+    background: #392da7;
+    border-radius: 20px;
+    padding: 15px;
+    width: 20px;
+    font-weight: bold;
+    border: 3px solid #574bc7; 
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+td {
+    width: 50%;
+    padding-bottom: 10px;
+}
+
+#controls-move-container {
+    margin: 0 auto;
+    width: 150px;
+}
+
+#controls-space{
+    width: 180px;
+}
+
+.controls-label {
+    font-size: 18px;
+}
+
+#controls-ok-button{
+    margin: 0 auto;
+}
+
 /*Ingame Top right*/
 #ingame-top-right {
     display: flex;
@@ -154,7 +223,7 @@ canvas {
     background: rgb(54, 162, 250);
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     margin-left: 15px;
     transition: 100ms;
 }
