@@ -77,10 +77,10 @@ export default class UI {
 
     /**show quest after controls during tutorial (only if tutorial wasn't played yet) */
     showQuest() {
-        if (this.questShown) {
+        if (this.game.questShown) {
             this.closeTutorial();
         } else {
-            this.questShown = true;
+            this.game.questShown = true;
 
             /**hide controls and show quest */
             this.controlsContainer.classList.add('hide');
