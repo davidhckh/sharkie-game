@@ -15,9 +15,11 @@
     <div id="game-container">
         <!--Opening Screen-->
         <div id="opening-screen" class="absolute center column">
-            <span id="opening-header">Sharkie</span>
-            <div id="play-button" class="button center">Play</div>
-            <img src="assets/ui-images/sharkie-celebrating.png" id="opening-sharkie" class="absolute">
+            <div id="opening-content" class="center column">
+                <span id="opening-header">Sharkie</span>
+                <div id="play-button" class="button center">Play</div>
+                <img src="assets/ui-images/sharkie-celebrating.png" id="opening-sharkie" class="absolute">
+            </div>
         </div>
 
         <!--health container-->
@@ -55,7 +57,8 @@
 
         <!------------------------------Tutorial Container--------------------->
         <div id="tutorial-container" class="absolute center hide">
-            <!--Controls-->
+            <div id="tutorial-content" class="center">
+                <!--Controls-->
             <div id="controls-container" class="column tutorial-dialog-container hide">
                 <div class="column">
                     <table>
@@ -115,6 +118,7 @@
                 <span>Collect all the poison to unlock poisonous bubbles and defeat the final boss.</span>
                 <div id="quest-ok-button" class="button center">Let's go!</div>
             </div>
+            </div>
         </div>
 
         <!--final boss health bar-->
@@ -125,20 +129,24 @@
 
         <!--Win Container-->
         <div id="win-container" class="absolute center column">
-            <span id="win-label">You Win!</span>
-            <div id="win-collected-coins-container" class="row center">
-                <span id="win-collected-coins-label">You collected 0 out of 20 coins.</span>
-                <img src="assets/icons/coin-icon.png">
+            <div class="result-content center column">
+                <span id="win-label">You Win!</span>
+                <div id="win-collected-coins-container" class="row center">
+                    <span id="win-collected-coins-label">You collected 0 out of 20 coins.</span>
+                    <img src="assets/icons/coin-icon.png">
+                </div>
+                <div id="restart-button" class="button center">Restart</div>
+                <img src="assets/ui-images/sharkie-celebrating.png" id="win-sharkie" class="absolute">
             </div>
-            <div id="restart-button" class="button center">Restart</div>
-            <img src="assets/ui-images/sharkie-celebrating.png" id="win-sharkie" class="absolute">
         </div>
 
         <!--Dead Container-->
         <div id="dead-container" class="absolute center column">
-            <span id="dead-label">You died.</span>
-            <div id="dead-restart-button" class="button center">Try again</div>
-            <img src="assets/ui-images/dead-sharkie.png" id="dead-sharkie">
+            <div class="result-content center column">
+                <span id="dead-label">You died.</span>
+                <div id="dead-restart-button" class="button center">Try again</div>
+                <img src="assets/ui-images/dead-sharkie.png" id="dead-sharkie">
+            </div>
         </div>
 
         <!--canvas-->

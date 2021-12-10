@@ -90,7 +90,7 @@ canvas {
     color: white;
     font-size: 128px;
     font-family: 'Fredoka One', cursive;
-    margin-bottom: 180px;
+    margin-bottom: 120px;
     animation: breathing 5s ease-in-out infinite;
     text-shadow: 1px 1px #3798C5,
     2px 2px #3798C5,
@@ -328,6 +328,7 @@ td {
     color: white;
     font-size: 92px;
     font-family: 'Fredoka One';
+    white-space: nowrap;
 }
 
 #win-sharkie {
@@ -358,6 +359,7 @@ td {
     font-size: 92px;
     font-family: 'Fredoka One';
     margin-bottom: 150px;
+    white-space: nowrap;
 }
 
 #dead-sharkie {
@@ -396,6 +398,10 @@ td {
         top: -20px;
         right: -20px;
     }
+
+    #opening-content {
+        transform: scale(0.8);
+    }
 }
 
 @media(max-width: 900px) {
@@ -414,6 +420,23 @@ td {
         transform: scale(0.6);
         top: -40px;
         right: -40px;
+    }
+
+    #opening-content {
+        transform: scale(0.6);
+    }
+
+    #opening-sharkie {
+        height: 200px;
+        transform: translateX(-230px) translateY(-150px) rotate(30deg);
+    }
+
+    #tutorial-content {
+        transform: scale(0.7);
+    }
+
+    .result-content {
+        transform: scale(0.63); 
     }
 }
 
@@ -434,6 +457,22 @@ td {
         top: -50px;
         right: -50px;
     }
+
+    #opening-content {
+        transform: scale(0.5);
+    }
+
+    #tutorial-content {
+        transform: scale(0.5);
+    }
+
+    .result-content {
+        transform: scale(0.5); 
+    }
+
+    #dead-label {
+        margin-bottom: 100px;
+    }
 }
 
 @media(max-width: 450px) {
@@ -453,5 +492,22 @@ td {
         top: -60px;
         right: -60px;
     }
+
+    #opening-content {
+        transform: scale(0.4);
+    }
+
+    #tutorial-content {
+        transform: scale(0.4);
+    }
+
+    .result-content {
+        transform: scale(0.4); 
+    }
+
+    #dead-label {
+        margin-bottom: 50px;
+    }
 }
+
 
