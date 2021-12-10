@@ -160,7 +160,7 @@ export default class Character extends MovableObject {
             this.becomeInvincible();
             this.jump();
             
-            this.playDmgAnimation();
+            this.playDmgAnimation(type);
         };
     };
 
@@ -169,7 +169,7 @@ export default class Character extends MovableObject {
      * - poison
      * - normal hit
      */
-    playDmgAnimation() {
+    playDmgAnimation(type) {
         if (type == 'electric') {
             this.playAnimation(this.ELECTRIC_HURT_ANIMATION);
             this.game.sounds.playSound('../assets/sounds/electro-shock.mp3');
