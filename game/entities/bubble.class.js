@@ -53,38 +53,38 @@ export default class Pufferfish extends MovableObject {
     /**set starting direction based on character draw direction*/
     setPosition() {
         if (this.character.drawReverse) {
-            this.x = this.character.x + 50
-            this.y = this.character.y + this.character.height / 2 + 20
+            this.x = this.character.x + 50;
+            this.y = this.character.y + this.character.height / 2 + 20;
         } else {
-            this.x = this.character.x + this.character.width - 130
-            this.y = this.character.y + this.character.height / 2 + 20
-        }
-    }
+            this.x = this.character.x + this.character.width - 130;
+            this.y = this.character.y + this.character.height / 2 + 20;
+        };
+    };
 
     /**start movement from sharkie's facing direction*/
     move() {
         if (this.left) {
-            gsap.to(this, { duration: 4, x: this.x - 2100 })
+            gsap.to(this, { duration: 4, x: this.x - 2100 });
         } else {
-            gsap.to(this, { duration: 4, x: this.x + 2100 })
-        }
-    }
+            gsap.to(this, { duration: 4, x: this.x + 2100 });
+        };
+    };
 
     /**check collision with other entities every 50ms*/
     collisionCheck() {
         this.collisionInterval = setInterval(() => {
             /**enemies */
             this.game.world.level.enemies.forEach(enemy => {
-                this.checkCollisionsWith(enemy)
-            })
+                this.checkCollisionsWith(enemy);
+            });
             /**barriers */
             this.game.world.level.barriers.forEach(barrier => {
-                this.checkCollisionsWith(barrier)
-            })
+                this.checkCollisionsWith(barrier);
+            });
             /**boss */
-            this.checkCollisionsWith(this.game.world.level.boss)
-        }, 50)
-    }
+            this.checkCollisionsWith(this.game.world.level.boss);
+        }, 50);
+    };
 
     /**when bubble is colliding with other entity */
     checkCollisionsWith(object) {
