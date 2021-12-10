@@ -159,6 +159,8 @@ export default class Character extends MovableObject {
             /**become invincible and jump */
             this.becomeInvincible();
             this.jump();
+            
+            this.playDmgAnimation();
         };
     };
 
