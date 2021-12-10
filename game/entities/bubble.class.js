@@ -70,15 +70,18 @@ export default class Pufferfish extends MovableObject {
         }
     }
 
-    /**check collision with other entities*/
+    /**check collision with other entities every 50ms*/
     collisionCheck() {
         this.collisionInterval = setInterval(() => {
+            /**enemies */
             this.game.world.level.enemies.forEach(enemy => {
                 this.checkCollisionsWith(enemy)
             })
+            /**barriers */
             this.game.world.level.barriers.forEach(barrier => {
                 this.checkCollisionsWith(barrier)
             })
+            /**boss */
             this.checkCollisionsWith(this.game.world.level.boss)
         }, 50)
     }
@@ -86,15 +89,19 @@ export default class Pufferfish extends MovableObject {
     /**when bubble is colliding with other entity */
     checkCollisionsWith(object) {
         if (this.isCollidingWith(object)) {
+            /**self destruct */
             if (object.name == 'jellyfish' || object.name == 'pufferfish' || object.name == 'barrier' || object.name == 'boss') {
                 this.selfDestruct();
             };
+            /**kill jellyfish */
             if (object.name == 'jellyfish' && object.type == 'regular' && !object.isDead) {
                 object.die();
             };
+            /**hurt boss */
             if (object.name == 'boss' && this.poisonBubble) {
                 object.takeDmg();
             };
+            /**electric jellyfish pop sound */
             if(object.name == 'jellyfish' && object.type == 'electric') {
                 this.game.sounds.playSound('../assets/sounds/short-electric-shock.mp3');
             };

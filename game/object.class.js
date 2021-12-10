@@ -1,6 +1,8 @@
 export default class Object {
+    
     drawReverse = false;
 
+    /**hitbox padding */
     hasHitbox = true;
     hitboxBottom = 0;
     hitboxLeft = 0;

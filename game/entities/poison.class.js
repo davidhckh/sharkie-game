@@ -50,7 +50,6 @@ export default class Poison extends Object {
         this.game.ui.addPoison();
 
         this.remove();
-
         this.playSound();
     };
 
@@ -68,5 +67,5 @@ export default class Poison extends Object {
     /**remove from draw array */
     remove() {
         this.game.world.level.poison.splice(this.game.world.level.poison.indexOf(this), 1)
-    }
-}
+    };;
+};

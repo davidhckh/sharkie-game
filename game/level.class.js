@@ -7,7 +7,8 @@ import Barrier from "./entities/barrier.class.js";
 import Boss from "./entities/boss.class.js";
 
 /**
- * add and remove:
+ * Level design
+ * put following here:
  * - character
  * - boss
  * - enemies

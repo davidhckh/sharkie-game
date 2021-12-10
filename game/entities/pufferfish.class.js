@@ -6,6 +6,7 @@ export default class Pufferfish extends MovableObject {
     name='pufferfish';
     height = 160;
     width = 195;
+    
     /**get one of 3 color types */
     color = Math.floor(1 + Math.random() * 3);
     isBig = false;
@@ -18,6 +19,7 @@ export default class Pufferfish extends MovableObject {
     hitboxTop = 0;
     hitboxBottom = 0 ;   
 
+    /**animations */
     SWIM_ANIMATION = {
         frames: 5,
         path: '../assets/puffer/swim/' + this.color + '-'
@@ -136,6 +138,7 @@ export default class Pufferfish extends MovableObject {
         gsap.set(getBigOrSmall, {delay: Math.random() * 2.5, onRepeat: getBigOrSmall,repeat: -1, repeatDelay: 2.5});
     };
 
+    /**get big with transition */
     getBig() {
         this.isBig = true;
 
@@ -143,6 +146,7 @@ export default class Pufferfish extends MovableObject {
         this.playAnimation(this.SWIM_BIG_ANIMATION, 750);
     };
 
+    /**get small with reverse transition */
     getSmall() {
         this.isBig = false;
 

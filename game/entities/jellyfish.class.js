@@ -21,6 +21,7 @@ export default class Pufferfish extends MovableObject {
 
     isDead = false;
 
+    /**animations */
     SWIM_ANIMATION = {
         frames: 4,
     };
@@ -38,9 +39,9 @@ export default class Pufferfish extends MovableObject {
         this.game = new Game();
 
         this.x = x;
+        /**set type and load type images */
         this.type = type;
         this.SWIM_ANIMATION.path = '../assets/jellyfish/' + this.type + '/' + this.color + '-';
-
         if (this.type == 'regular') {
             this.DEATH_ANIMATION.path = '../assets/jellyfish/' + this.type + '-dead/' + this.color + '-';
         };

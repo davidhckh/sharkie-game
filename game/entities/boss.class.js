@@ -6,14 +6,18 @@ export default class Boss extends MovableObject {
     name = 'boss';
     height = 1131;
     width = 968;
-    y = 0;
     damage = 50;
     health = 100;
     speed = 6;
+    y = 0;
+
     hasHitbox = true;
+
     isIntroducing = false;
     isIntroduced = false;
+
     drawReverse = false;
+
     introAtX = 9500;
 
     hitboxRight = 70;
