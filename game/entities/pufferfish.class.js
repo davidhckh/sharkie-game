@@ -62,7 +62,7 @@ export default class Pufferfish extends MovableObject {
         this.loadAnimation(this.SWIM_BIG_ANIMATION);
     };
 
-    /**starts movement interval  every 3 seconds*/
+    /**starts movement interval  every 3 seconds and change draw direction*/
     movement() {
         let movement = () => {
             this.changeDrawDirection();

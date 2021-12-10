@@ -33,7 +33,7 @@ export default class Barrier extends MovableObject {
      * height
      * width
      * position
-     * hitbox
+     * hitbox paddings
      */
     setupBarrier0() {
         this.img = this.game.barrier0;
