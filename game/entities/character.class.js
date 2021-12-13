@@ -136,7 +136,7 @@ export default class Character extends MovableObject {
                 this.startSwimming('right');
             } else if (event.code == 'ArrowLeft' && !event.repeat && !this.freeze) {
                 this.startSwimming('left');
-            } else if (event.code == 'Space' && !event.repeat && !this.freeze) {
+            } else if ((event.code == 'Space' || event.code == 'ArrowUp') && !event.repeat && !this.freeze) {
                 this.jump();
             } else if (event.key == 'y' && !event.repeat && !this.freeze) {
                 this.slap();
