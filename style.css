@@ -192,6 +192,11 @@ td {
     width: 150px;
 }
 
+#controls-jump-container {
+    margin: 0 auto;
+    width: 250px;
+}
+
 #controls-space{
     width: 120px;
 }
