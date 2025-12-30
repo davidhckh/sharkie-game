@@ -2,7 +2,7 @@
 
 A thrilling underwater adventure game where you control Sharkie, a brave shark on a quest to collect treasures and defeat enemies in the deep ocean!
 
-[![Live Demo](https://sharkie.david-hckh.com)](https://sharkie.david-hckh.com)
+[https://sharkie.david-hckh.com](https://sharkie.david-hckh.com)
 
 ## Gameplay
 
@@ -23,7 +23,7 @@ Navigate through treacherous waters, battle various sea creatures, and face off 
 - **Defeat enemies** using bubble attacks and fin slaps
 - **Face the boss** and emerge victorious!
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -46,7 +46,7 @@ Navigate through treacherous waters, battle various sea creatures, and face off 
 
 3. **Open your browser** and navigate to `http://localhost:8000`
 
-## ✨ Features
+## Features
 
 - **Smooth Character Movement**: Fluid swimming and jumping mechanics
 - **Combat System**: Bubble projectiles and fin slap attacks
