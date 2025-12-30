@@ -71,7 +71,11 @@ export default class Object {
 
         /**update current frame */
         if (this.currentFrame == animation.frames - 1) {
-            this.currentFrame = 0;
+            // Check if animation should loop, default to true for backward compatibility
+            if (animation.loop !== false) {
+                this.currentFrame = 0;
+            }
+            // If loop is false, stay on the last frame
         } else {
             this.currentFrame++;
         };

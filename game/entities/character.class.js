@@ -46,41 +46,49 @@ export default class Character extends MovableObject {
   SWIM_ANIMATION = {
     frames: 5,
     path: "../assets/sharkie/swim/",
+    loop: true,
   };
 
   IDLE_ANIMATION = {
     frames: 18,
     path: "../assets/sharkie/idle/",
+    loop: true,
   };
 
   SLAP_ANIMATION = {
     frames: 3,
     path: "../assets/sharkie/attack/fin-slap/",
+    loop: false,
   };
 
   BUBBLE_ANIMATION = {
     frames: 4,
     path: "../assets/sharkie/attack/bubble-tap/",
+    loop: false,
   };
 
   NORMAL_HURT_ANIMATION = {
     frames: 1,
     path: "../assets/sharkie/hurt/",
+    loop: false,
   };
 
   ELECTRIC_HURT_ANIMATION = {
     frames: 2,
     path: "../assets/sharkie/hurt/electric/",
+    loop: false,
   };
 
   POISON_HURT_ANIMATION = {
     frames: 5,
     path: "../assets/sharkie/hurt/poison/",
+    loop: false,
   };
 
   DEATH_ANIMATION = {
     frames: 8,
     path: "../assets/sharkie/dead/",
+    loop: false,
   };
 
   constructor() {

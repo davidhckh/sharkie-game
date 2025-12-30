@@ -27,26 +27,31 @@ export default class Boss extends MovableObject {
   SWIM_ANIMATION = {
     frames: 13,
     path: "../assets/boss/floating/",
+    loop: true,
   };
 
   INTRO_ANIMATION = {
     frames: 7,
     path: "../assets/boss/intro/",
+    loop: false,
   };
 
   ATTACK_ANIMATION = {
     frames: 6,
     path: "../assets/boss/attack/",
+    loop: false,
   };
 
   HURT_ANIMATION = {
     frames: 4,
     path: "../assets/boss/hurt/",
+    loop: false,
   };
 
   DEAD_ANIMATION = {
     frames: 9,
     path: "../assets/boss/dead/",
+    loop: false,
   };
 
   /**

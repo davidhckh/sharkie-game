@@ -24,10 +24,12 @@ export default class Pufferfish extends MovableObject {
     /**animations */
     SWIM_ANIMATION = {
         frames: 4,
+        loop: true,
     };
 
     DEATH_ANIMATION = {
         frames: 4,
+        loop: false,
     };
 
     /**

@@ -22,17 +22,20 @@ export default class Pufferfish extends MovableObject {
     /**animations */
     SWIM_ANIMATION = {
         frames: 5,
-        path: '../assets/puffer/swim/' + this.color + '-'
+        path: '../assets/puffer/swim/' + this.color + '-',
+        loop: true,
     };
 
     SWIM_BIG_ANIMATION = {
         frames: 5,
-        path: '../assets/puffer/swim-big/' + this.color + '-'
+        path: '../assets/puffer/swim-big/' + this.color + '-',
+        loop: true,
     };
 
     TRANSITION_ANIMATION = {
         frames: 5,
-        path: '../assets/puffer/transition/' + this.color + '-'
+        path: '../assets/puffer/transition/' + this.color + '-',
+        loop: false,
     };
 
 

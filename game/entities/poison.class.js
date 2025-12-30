@@ -17,7 +17,8 @@ export default class Poison extends Object {
 
     POISON_ANIMATION = {
         frames: 8,
-        path: '../assets/items/poison-animated/'
+        path: '../assets/items/poison-animated/',
+        loop: true,
     };
 
     /**

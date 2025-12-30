@@ -13,7 +13,8 @@ export default class Coin extends Object {
 
     COIN_ANIMATION = {
         frames: 4,
-        path: '../assets/items/coin-animated/'
+        path: '../assets/items/coin-animated/',
+        loop: true,
     };
 
     /**
