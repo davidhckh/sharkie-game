@@ -406,15 +406,15 @@ export default class Character extends MovableObject {
       !this.barrierRight &&
       this.x < this.game.world.level.boss.introAtX
     ) {
-      this.x += this.speed;
-      this.game.world.camera_target_x -= this.speed;
+      this.x += this.speed * this.game.deltaTime;
+      this.game.world.camera_target_x -= this.speed * this.game.deltaTime;
     } else if (
       this.left &&
       !this.barrierLeft &&
       this.game.world.camera_target_x < 0
     ) {
-      this.x -= this.speed;
-      this.game.world.camera_target_x += this.speed;
+      this.x -= this.speed * this.game.deltaTime;
+      this.game.world.camera_target_x += this.speed * this.game.deltaTime;
     }
   }
 
@@ -432,9 +432,9 @@ export default class Character extends MovableObject {
   /**apply sink */
   applySink() {
     if (this.y <= 530 && !this.barrierBottom) {
-      this.y -= this.speedY;
+      this.y -= this.speedY * this.game.deltaTime;
       if (this.speedY > -8) {
-        this.speedY -= this.acceleration;
+        this.speedY -= this.acceleration * this.game.deltaTime;
       }
     }
   }
@@ -442,11 +442,11 @@ export default class Character extends MovableObject {
   /** apply jump if possible*/
   applyJump() {
     if (!this.barrierTop) {
-      this.y -= this.speedY;
+      this.y -= this.speedY * this.game.deltaTime;
     } else {
       this.speedY = 0;
     }
-    this.speedY -= this.acceleration;
+    this.speedY -= this.acceleration * this.game.deltaTime;
 
     /**maximum jump height */
     if (this.y < -250) {

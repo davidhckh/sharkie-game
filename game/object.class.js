@@ -1,5 +1,5 @@
 export default class Object {
-    
+
     drawReverse = false;
 
     /**hitbox padding */
@@ -8,6 +8,10 @@ export default class Object {
     hitboxLeft = 0;
     hitboxRight = 0;
     hitboxTop = 0;
+
+    /**animation timing */
+    animationTime = 0;
+    animationFrameTime = 150; // milliseconds per frame
 
 
     /**load image and replace animation */
@@ -37,16 +41,25 @@ export default class Object {
             /**reset current animation */
             this.currentFrame = 0;
             this.currentMaximumFrame = animation.currentAnimationTotalFrames;
+            this.animationTime = 0;
 
             /**end current animation */
             clearInterval(this.animationInterval);
 
-            /**next frame */
-            this.nextFrame(animation)
-            this.animationInterval = setInterval(() => {
-                this.nextFrame(animation);
-            }, 150);
+            this.currentAnimation = animation;
         }, delay);
+    };
+
+    /**update animation timing (called every frame) */
+    updateAnimation(deltaTime) {
+        if (this.currentAnimation) {
+            this.animationTime += deltaTime * 16.67; // Convert back to milliseconds
+
+            if (this.animationTime >= this.animationFrameTime) {
+                this.animationTime -= this.animationFrameTime;
+                this.nextFrame(this.currentAnimation);
+            }
+        }
     };
 
     /**play next frame */

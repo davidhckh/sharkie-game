@@ -32,12 +32,29 @@ export default class World {
     /**update character */
     if (this.level.character) {
       this.level.character.update();
+      this.level.character.updateAnimation(this.game.deltaTime);
     }
 
     /**update boss */
     if (this.level.boss) {
       this.level.boss.update();
+      this.level.boss.updateAnimation(this.game.deltaTime);
     }
+
+    /**update enemies */
+    this.level.enemies.forEach((enemy) => {
+      enemy.updateAnimation(this.game.deltaTime);
+    });
+
+    /**update coins */
+    this.level.coins.forEach((coin) => {
+      coin.updateAnimation(this.game.deltaTime);
+    });
+
+    /**update poison */
+    this.level.poison.forEach((poison) => {
+      poison.updateAnimation(this.game.deltaTime);
+    });
   }
 
   /**kill all enemies, when boss introduces */

@@ -250,9 +250,9 @@ export default class Boss extends MovableObject {
       !this.game.world.level.character.isDead
     ) {
       if (!this.drawReverse) {
-        this.x -= this.speed;
+        this.x -= this.speed * this.game.deltaTime;
       } else {
-        this.x += this.speed;
+        this.x += this.speed * this.game.deltaTime;
       }
 
       this.changeMovementDirection();

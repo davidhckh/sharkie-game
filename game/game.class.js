@@ -80,6 +80,11 @@ export default class Game {
 
     /**update on every frame */
     update() {
+        // Calculate delta time for frame-rate independent movement
+        const now = performance.now();
+        this.deltaTime = (now - (this.lastFrameTime || now)) / 16.67; // Normalize to 60fps baseline
+        this.lastFrameTime = now;
+
         if (this.world) {
             this.world.update();
         };
