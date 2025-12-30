@@ -5,7 +5,7 @@ import Bubble from "./bubble.class.js";
 export default class Character extends MovableObject {
   /**details */
   name = "character";
-  speed = 12;
+  speed = 6;
   height = 600;
   width = 489;
   health = 100;
@@ -22,7 +22,7 @@ export default class Character extends MovableObject {
 
   /**for physics */
   speedY = 0;
-  acceleration = 0.5;
+  acceleration = 0.2;
 
   /**hitbox padding */
   hitboxLeft = 95;
@@ -117,11 +117,11 @@ export default class Character extends MovableObject {
   }
 
   onKeyUp() {
-    /**stop swimming on key up (arrow right or left)*/
+    /**stop swimming on key up (arrow keys and WASD)*/
     this.game.events.on("keyup", () => {
-      if (event.code == "ArrowRight") {
+      if (event.code == "ArrowRight" || event.key.toLowerCase() == "d") {
         this.stopSwimming("right");
-      } else if (event.code == "ArrowLeft") {
+      } else if (event.code == "ArrowLeft" || event.key.toLowerCase() == "a") {
         this.stopSwimming("left");
       }
     });
@@ -130,12 +130,22 @@ export default class Character extends MovableObject {
   onKeyDown() {
     /**start swimming, jump, slap and shoot on key down */
     this.game.events.on("keydown", () => {
-      if (event.code == "ArrowRight" && !event.repeat && !this.freeze) {
+      if (
+        (event.code == "ArrowRight" || event.key.toLowerCase() == "d") &&
+        !event.repeat &&
+        !this.freeze
+      ) {
         this.startSwimming("right");
-      } else if (event.code == "ArrowLeft" && !event.repeat && !this.freeze) {
+      } else if (
+        (event.code == "ArrowLeft" || event.key.toLowerCase() == "a") &&
+        !event.repeat &&
+        !this.freeze
+      ) {
         this.startSwimming("left");
       } else if (
-        (event.code == "Space" || event.code == "ArrowUp") &&
+        (event.code == "Space" ||
+          event.code == "ArrowUp" ||
+          event.key.toLowerCase() == "w") &&
         !event.repeat &&
         !this.freeze
       ) {
@@ -261,7 +271,7 @@ export default class Character extends MovableObject {
   /**jump character and play sound */
   jump() {
     this.game.sounds.playSound("../assets/sounds/jump.wav", false, 0.4);
-    this.speedY = 15;
+    this.speedY = 10;
   }
 
   /**die */
