@@ -7,7 +7,7 @@ export default class Boss extends MovableObject {
   width = 968;
   damage = 50;
   health = 100;
-  speed = 2;
+  speed = 4;
   y = 0;
 
   hasHitbox = true;
