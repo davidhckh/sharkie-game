@@ -3,73 +3,85 @@ import Game from "./game.class.js";
 import Level from "./level.class.js";
 
 export default class World {
-    background = [];
-    camera_x = 0;
-    current_world_repetitions = 0;
-    level = new Level();
-    bubbles = [];
+  background = [];
+  camera_x = 0;
+  camera_target_x = 0;
+  current_world_repetitions = 0;
+  level = new Level();
+  bubbles = [];
 
-    constructor() {
-        this.game = new Game();
-    };
+  constructor() {
+    this.game = new Game();
+  }
 
-    /**update on every frame */
-    update() {
-        this.game.drawer.clear();
+  /**lerp camera position for smooth movement */
+  lerp(start, end, factor) {
+    return start + (end - start) * factor;
+  }
 
-        this.repeatBackground();
-        this.draw();
+  /**update on every frame */
+  update() {
+    this.game.drawer.clear();
 
-        /**update character */
-        if (this.level.character) {
-            this.level.character.update();
-        };
+    /**lerp camera position for smooth movement */
+    this.camera_x = this.lerp(this.camera_x, this.camera_target_x, 0.06);
 
-        /**update boss */
-        if (this.level.boss) {
-            this.level.boss.update();
-        };
-    };
+    this.repeatBackground();
+    this.draw();
 
-    /**kill all enemies, when boss introduces */
-    killAllEnemies() {
-        this.level.enemies.forEach((enemy) => {
-            enemy.die();
-        });
-    };
+    /**update character */
+    if (this.level.character) {
+      this.level.character.update();
+    }
 
-    /**draw all elements on each frame */
-    draw() {
-        /**flip */
-        this.game.drawer.ctx.translate(this.camera_x, 0);
+    /**update boss */
+    if (this.level.boss) {
+      this.level.boss.update();
+    }
+  }
 
-        /**draw elements */
-        this.game.drawer.drawAll(this.background);
-        this.game.drawer.drawAll(this.level.coins);
-        this.game.drawer.drawAll(this.level.poison);
-        this.game.drawer.drawAll(this.level.enemies);
-        this.game.drawer.drawAll(this.bubbles);
-        this.game.drawer.draw(this.level.character);
-        this.game.drawer.drawAll(this.level.barriers);
-        this.game.drawer.draw(this.level.boss);
+  /**kill all enemies, when boss introduces */
+  killAllEnemies() {
+    this.level.enemies.forEach((enemy) => {
+      enemy.die();
+    });
+  }
 
-        /**flip back */
-        this.game.drawer.ctx.translate(-this.camera_x, 0);
-    };
+  /**draw all elements on each frame */
+  draw() {
+    /**flip */
+    this.game.drawer.ctx.translate(this.camera_x, 0);
 
-    /**repeat background when camera_x is smaller than -1920 */
-    repeatBackground() {
-        if (this.camera_x <= -this.current_world_repetitions * 1920) {
-            let increase_x_by = this.current_world_repetitions * 1920 * 2;
+    /**draw elements */
+    this.game.drawer.drawAll(this.background);
+    this.game.drawer.drawAll(this.level.coins);
+    this.game.drawer.drawAll(this.level.poison);
+    this.game.drawer.drawAll(this.level.enemies);
+    this.game.drawer.drawAll(this.bubbles);
+    this.game.drawer.draw(this.level.character);
+    this.game.drawer.drawAll(this.level.barriers);
+    this.game.drawer.draw(this.level.boss);
 
-            /**new add new background object to background array */
-            for (let i = 0; i < this.level.backgroundFiles.length; i++) {
-                this.background.push(
-                    new BackgroundObject(this.level.backgroundFiles[i].path, this.level.backgroundFiles[i].position + increase_x_by)
-                );
-            };
+    /**flip back */
+    this.game.drawer.ctx.translate(-this.camera_x, 0);
+  }
 
-            this.current_world_repetitions++;
-        };
-    };
-};
+  /**repeat background when camera_x is smaller than -1920 */
+  repeatBackground() {
+    if (this.camera_x <= -this.current_world_repetitions * 1920) {
+      let increase_x_by = this.current_world_repetitions * 1920 * 2;
+
+      /**new add new background object to background array */
+      for (let i = 0; i < this.level.backgroundFiles.length; i++) {
+        this.background.push(
+          new BackgroundObject(
+            this.level.backgroundFiles[i].path,
+            this.level.backgroundFiles[i].position + increase_x_by
+          )
+        );
+      }
+
+      this.current_world_repetitions++;
+    }
+  }
+}
