@@ -5,7 +5,7 @@ import Bubble from "./bubble.class.js";
 export default class Character extends MovableObject {
   /**details */
   name = "character";
-  speed = 6;
+  speed = 8;
   height = 600;
   width = 489;
   health = 100;
