@@ -3,7 +3,7 @@ import Game from "./game.class.js";
 import Level from "./level.class.js";
 
 export default class World {
-  background = [];
+  backgroundLayers = [];
   camera_x = 0;
   camera_target_x = 0;
   current_world_repetitions = 0;
@@ -12,6 +12,17 @@ export default class World {
 
   constructor() {
     this.game = new Game();
+    this.initializeBackgroundLayers();
+  }
+
+  /**initialize background layers with parallax */
+  initializeBackgroundLayers() {
+    this.level.backgroundLayers.forEach((layer) => {
+      this.backgroundLayers.push({
+        parallax: layer.parallax,
+        objects: [],
+      });
+    });
   }
 
   /**lerp camera position for smooth movement */
@@ -66,11 +77,12 @@ export default class World {
 
   /**draw all elements on each frame */
   draw() {
-    /**flip */
+    /**draw background layers with parallax */
+    this.drawBackgroundLayers();
+
+    /**draw game elements with camera translation */
     this.game.drawer.ctx.translate(this.camera_x, 0);
 
-    /**draw elements */
-    this.game.drawer.drawAll(this.background);
     this.game.drawer.drawAll(this.level.coins);
     this.game.drawer.drawAll(this.level.poison);
     this.game.drawer.drawAll(this.level.enemies);
@@ -83,20 +95,29 @@ export default class World {
     this.game.drawer.ctx.translate(-this.camera_x, 0);
   }
 
-  /**repeat background when camera_x is smaller than -1920 */
+  /**draw background layers with individual parallax speeds */
+  drawBackgroundLayers() {
+    this.backgroundLayers.forEach((layer) => {
+      const parallaxOffset = this.camera_x * layer.parallax;
+      this.game.drawer.ctx.translate(parallaxOffset, 0);
+      this.game.drawer.drawAll(layer.objects);
+      this.game.drawer.ctx.translate(-parallaxOffset, 0);
+    });
+  }
+
+  /**repeat background layers when camera_x is smaller than -1920 */
   repeatBackground() {
     if (this.camera_x <= -this.current_world_repetitions * 1920) {
       let increase_x_by = this.current_world_repetitions * 1920 * 2;
 
-      /**new add new background object to background array */
-      for (let i = 0; i < this.level.backgroundFiles.length; i++) {
-        this.background.push(
-          new BackgroundObject(
-            this.level.backgroundFiles[i].path,
-            this.level.backgroundFiles[i].position + increase_x_by
-          )
-        );
-      }
+      /**add new background objects to each layer */
+      this.level.backgroundLayers.forEach((layer, layerIndex) => {
+        layer.images.forEach((image) => {
+          this.backgroundLayers[layerIndex].objects.push(
+            new BackgroundObject(image.path, image.position + increase_x_by)
+          );
+        });
+      });
 
       this.current_world_repetitions++;
     }
