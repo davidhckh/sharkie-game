@@ -98,7 +98,7 @@ export default class World {
   /**draw background layers with individual parallax speeds */
   drawBackgroundLayers() {
     this.backgroundLayers.forEach((layer) => {
-      const parallaxOffset = this.camera_x * layer.parallax;
+      const parallaxOffset = Math.floor(this.camera_x * layer.parallax);
       this.game.drawer.ctx.translate(parallaxOffset, 0);
       this.game.drawer.drawAll(layer.objects);
       this.game.drawer.ctx.translate(-parallaxOffset, 0);
